@@ -13,13 +13,24 @@
 
     <!-- Default Appender -->
     <appender name="DEFAULT-APPENDER" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="file" value="${catalina.home}/logs/dota.log"/>
+        <param name="file" value="./logs/easy.log"/>
         <param name="append" value="true"/>
         <param name="encoding" value="UTF-8"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="[%r][%p][%t] %d{HH:mm:ss,SSS} method:%l %m%n"/>
         </layout>
     </appender>
+
+    <!-- easy logger -->
+    <logger name="com.easy" additivity="true">
+        <appender-ref ref="DEFAULT-APPENDER"/>
+    </logger>
+
+    <!--sql logger-->
+    <logger name="java.sql" additivity="true">
+        <level value="debug"></level>
+        <appender-ref ref="DEFAULT-APPENDER"/>
+    </logger>
 
     <!-- root logger -->
     <root>

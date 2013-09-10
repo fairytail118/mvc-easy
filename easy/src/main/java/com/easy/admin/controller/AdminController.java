@@ -76,6 +76,8 @@ public class AdminController extends BaseController {
      */
     @RequestMapping(value = "/admin_list")
     public String list(Page<Admin> page, Admin admin, HttpServletRequest request, ModelMap model) {
+    	
+    	admin.put("keyword", "王奕");
         
         //设置查询条件
         page.setCriteria(admin);

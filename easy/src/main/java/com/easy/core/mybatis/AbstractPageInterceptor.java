@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractPageInterceptor implements Interceptor {
 
     /** 日志对象 */
-    protected final static Logger LOG = LoggerFactory.getLogger(AbstractPageInterceptor.class);
+    protected final static Logger log = LoggerFactory.getLogger(AbstractPageInterceptor.class);
 
     /**
      * 
@@ -48,7 +48,9 @@ public abstract class AbstractPageInterceptor implements Interceptor {
 
         String pageSQL = getPageSql(sql, rowBounds.getOffset(), rowBounds.getLimit());
 
-        LOG.info("生成的分页SQL为:{}", pageSQL);
+        if(log.isInfoEnabled()){
+        	log.info("生成的分页SQL为:{}", pageSQL.replace("\n\t\t", " ").replace("\n\t", " ").replace("\n", " "));
+        }
 
         //设置新的分页sql
         metaStatementHandler.setValue("delegate.boundSql.sql", pageSQL);
