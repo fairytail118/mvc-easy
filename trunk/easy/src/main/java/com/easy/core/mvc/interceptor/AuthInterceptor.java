@@ -42,7 +42,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         log.info("preHandle");
-        return false;
+        return true;
     }
 
     /**
