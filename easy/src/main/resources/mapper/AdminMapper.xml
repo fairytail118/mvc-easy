@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easy.dao.AdminDao">
+
+	<!-- 增加操作 -->
+	<insert id="create" parameterType="Admin" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO
+			admin(
+				createTime,createUser,modifyTime,modifyUser,name,email,loginName,password,isLocked,isEnabled,isSuper
+			)
+		VALUES(
+			#{createTime},#{createUser},#{modifyTime},#{modifyUser},#{name},#{email},#{loginName},#{password},#{isLocked},#{isEnabled},#{isSuper}
+		)
+	</insert>
+
+	<!-- 更新操作 -->
+	<update id="update" parameterType="Admin">
+		UPDATE
+			ADMIN
+		SET
+			createTime = #{createTime},
+			createUser = #{createUser},
+			modifyTime = #{modifyTime},
+			modifyUser = #{modifyUser},
+			name = #{name},
+			email = #{email},
+			loginName = #{loginName},
+			password = #{password},
+			isLocked = #{isLocked},
+			isEnabled = #{isEnabled},
+			isSuper = #{isSuper}
+		WHERE
+			id = #{id}
+	</update>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKeys" parameterType="long">
+		DELETE FROM
+			admin
+		WHERE
+			id in
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 根据主键查询 -->
+	<select id="getByPrimaryKey" resultMap="resultMap" parameterType="long">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			admin
+		WHERE
+			id = #{id}
+	</select>
+	
+	<!-- 根据参数查询列表 -->
+	<select id="selectByCriteria" resultMap="resultMap" parameterType="Admin">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			admin
+		WHERE
+			<include refid="defaultCriteria"/>
+	</select>
+	
+	<!-- 根据参数查询数量-->
+	<select id="countByCriteria" resultType="int" parameterType="long">
+		SELECT
+			count(*)
+		FROM
+			admin
+		WHERE
+			<include refid="defaultCriteria"/>
+	</select>
+	
+	<!-- 默认的查询条件 -->
+	<sql id="defaultCriteria">
+		
+	</sql>
+	
+	<!-- 默认的数据库字段 -->
+	<sql id="columns">
+		id,createTime,createUser,modifyTime,modifyUser,name,email,loginName,password,isLocked,isEnabled,isSuper
+	</sql>
+
+
+	<!-- 默认的数据库映射 -->
+	<resultMap type="Admin" id="resultMap">
+		<id property="id" column="id" />
+		<result property="createTime" column="createTime" />
+		<result property="createUser" column="createUser" />
+		<result property="modifyTime" column="modifyTime" />
+		<result property="modifyUser" column="modifyUser" />
+		<result property="name" column="name" />
+		<result property="email" column="email" />
+		<result property="loginName" column="loginName" />
+		<result property="password" column="password" />
+		<result property="isLocked" column="isLocked" />
+		<result property="isEnabled" column="isEnabled" />
+		<result property="isSuper" column="isSuper" />
+	</resultMap>
+</mapper>
