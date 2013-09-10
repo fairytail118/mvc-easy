@@ -38,7 +38,7 @@
 
 	<!-- freemarker视图 -->
 	<bean id="freemarkerViewResolver" class="com.easy.core.mvc.freemarker.RichFreeMarkerViewResolver">
-		<property name="prefix" value="/WEB-INF/templates/" />
+		<property name="prefix" value="templates/" />
 		<property name="suffix" value=".ftl" />
 		<property name="contentType" value="text/html; charset=UTF-8" />
 		<property name="exposeRequestAttributes" value="false" />
@@ -107,7 +107,7 @@
 		<property name="exceptionMappings">
 			<props>
 				<!-- 这里你可以根据需要定义N多个错误异常转发 -->
-				<prop key="com.easy.core.exception.easyException">error/error</prop>
+				<prop key="com.easy.core.exception.EasyException">error/error</prop>
 				<!-- 数据库错误(dbError.jsp) -->
 				<prop key="java.sql.SQLException">error/error</prop>
 				<!-- 缺少参数 -->
