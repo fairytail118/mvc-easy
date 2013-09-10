@@ -6,7 +6,7 @@ package com.easy.admin.dao;
 import java.util.List;
 
 import com.easy.admin.entity.Admin;
-import com.easy.common.Page;
+import com.easy.core.common.Page;
 
 /**
  * 管理员Dao

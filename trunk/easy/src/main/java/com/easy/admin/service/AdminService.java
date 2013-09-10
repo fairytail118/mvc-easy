@@ -4,7 +4,7 @@
 package com.easy.admin.service;
 
 import com.easy.admin.entity.Admin;
-import com.easy.common.Page;
+import com.easy.core.common.Page;
 
 /**
  * 管理员Service

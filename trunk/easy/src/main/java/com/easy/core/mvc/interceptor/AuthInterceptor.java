@@ -42,7 +42,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
                              Object handler) throws Exception {
         log.info("preHandle");
-        return true;
+        return false;
     }
 
     /**
@@ -55,6 +55,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
                            Object handler, ModelAndView modelAndView) throws Exception {
 
         log.info("postHandle");
+        
     }
 
     /**

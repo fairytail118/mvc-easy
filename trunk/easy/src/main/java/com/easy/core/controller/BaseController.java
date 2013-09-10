@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.controller;
+package com.easy.core.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
