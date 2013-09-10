@@ -65,8 +65,8 @@
 		<include refid="columns"/>
 		FROM
 			admin
-		WHERE
-			<include refid="defaultCriteria"/>
+		<include refid="defaultCriteria"/>
+		<include refid="orderByClause"/>
 	</select>
 	
 	<!-- 根据参数查询数量-->
@@ -75,13 +75,21 @@
 			count(*)
 		FROM
 			admin
-		WHERE
-			<include refid="defaultCriteria"/>
+		<include refid="defaultCriteria"/>
 	</select>
 	
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
-		
+		<where>
+			<if test="criteria.keyword!=null and criteria.keyword!=''">
+				AND name like "%"#{criteria.keyword}"%"
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 排序字段 -->
+	<sql id="orderByClause">
+		${orderByClause}
 	</sql>
 	
 	<!-- 默认的数据库字段 -->
