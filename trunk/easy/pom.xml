@@ -149,6 +149,13 @@
 		</dependency>
 	</dependencies>
 	
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<url>http://183.129.158.178:8081/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+	
 	<build>
 		<finalName>easy-war-${project.version}</finalName>
 		<pluginManagement>
