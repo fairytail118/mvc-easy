@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.easy.admin.dao.AdminDao;
 import com.easy.admin.entity.Admin;
 import com.easy.admin.service.AdminService;
-import com.easy.common.Page;
+import com.easy.core.common.Page;
 
 /**
  * 管理员 ServiceImpl
@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * @see com.easy.admin.service.AdminService#page(com.easy.common.Page)
+     * @see com.easy.admin.service.AdminService#page(com.easy.core.common.Page)
      */
     @Override
     public void page(Page<Admin> page) {

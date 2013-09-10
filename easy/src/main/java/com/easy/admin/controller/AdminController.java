@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easy.admin.entity.Admin;
 import com.easy.admin.service.AdminService;
-import com.easy.common.Page;
-import com.easy.controller.BaseController;
+import com.easy.core.common.Page;
+import com.easy.core.controller.BaseController;
 import com.easy.core.mvc.result.Result;
 
 /**
@@ -27,84 +27,84 @@ import com.easy.core.mvc.result.Result;
 @RequestMapping("/admin")
 public class AdminController extends BaseController {
 
-    /** 管理员service */
-    @Autowired
-    private AdminService adminService;
+	/** 管理员service */
+	@Autowired
+	private AdminService adminService;
 
-    /**
-     * 进入编辑或者新增
-     * 
-     * @param id
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/admin_input")
-    public String input(@RequestParam(value = "id", required = false) Long id, ModelMap model) {
+	/**
+	 * 进入编辑或者新增
+	 * 
+	 * @param request
+	 * @param model
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/admin_input")
+	public String input(HttpServletRequest request, ModelMap model,
+			@RequestParam(value = "id", required = false) Long id) {
 
-        if (id != null) {
-            Admin admin = adminService.getByPrimaryKey(id);
-            model.put("admin", admin);
-        }
+		if (id != null) {
+			Admin admin = adminService.getByPrimaryKey(id);
+			model.put("admin", admin);
+		}
 
-        return "admin/input";
-    }
+		return "admin/input";
+	}
 
-    /**
-     * 进入保存
-     * 
-     * @param admin
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/admin_save")
-    public String save(Admin admin, HttpServletRequest request, ModelMap model) {
-        
-        adminService.save(admin);
+	/**
+	 * 进入保存
+	 * 
+	 * @param request
+	 * @param model
+	 * @param admin
+	 * @return
+	 */
+	@RequestMapping(value = "/admin_save")
+	public String save(HttpServletRequest request, ModelMap model, Admin admin) {
 
-        return "redirect:admin_list";
-    }
+		adminService.save(admin);
 
-    /**
-     * 进入列表
-     * 
-     * @param page
-     * @param admin
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/admin_list")
-    public String list(Page<Admin> page, Admin admin, HttpServletRequest request, ModelMap model) {
-    	
-    	admin.put("keyword", "王奕");
-        
-        //设置查询条件
-        page.setCriteria(admin);
-        
-        adminService.page(page);
-        
-        return "admin/list";
-    }
+		return "redirect:admin_list";
+	}
 
-    /**
-     * 批量删除
-     * 
-     * @param key
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/delete")
-    @ResponseBody
-    public Result delete(Long[] key, HttpServletRequest request, ModelMap model) {
-        try {
-            adminService.deleteByPrimaryKeys(key);
-            return new Result();
-        }
-        catch (Exception e) {
-            log.error("admin删除失败", e);
-            return new Result(e.getMessage());
-        }
-    }
+	/**
+	 * 进入列表
+	 * 
+	 * @param request
+	 * @param model
+	 * @param page
+	 * @param admin
+	 * @return
+	 */
+	@RequestMapping(value = "/admin_list")
+	public String list(HttpServletRequest request, ModelMap model,
+			Page<Admin> page, Admin admin) {
+
+		// 设置查询条件
+		page.setCriteria(admin);
+
+		adminService.page(page);
+
+		return "admin/list";
+	}
+
+	/**
+	 * 批量删除
+	 * 
+	 * @param request
+	 * @param model
+	 * @param key
+	 * @return
+	 */
+	@RequestMapping(value = "/delete")
+	@ResponseBody
+	public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
+		try {
+			adminService.deleteByPrimaryKeys(key);
+			return new Result();
+		} catch (Exception e) {
+			log.error("admin删除失败", e);
+			return new Result(e.getMessage());
+		}
+	}
 }

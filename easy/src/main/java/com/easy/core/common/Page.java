@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.common;
+package com.easy.core.common;
 
 import java.io.Serializable;
 import java.util.List;

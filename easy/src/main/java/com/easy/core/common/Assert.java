@@ -1,7 +1,7 @@
 /**
  * cxybj.com Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.common;
+package com.easy.core.common;
 
 import com.easy.core.exceptions.ParamException;
 

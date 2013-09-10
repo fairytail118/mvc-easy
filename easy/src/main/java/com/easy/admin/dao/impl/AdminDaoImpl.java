@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.easy.admin.dao.AdminDao;
 import com.easy.admin.entity.Admin;
-import com.easy.common.Page;
+import com.easy.core.common.Page;
 import com.easy.core.dao.impl.MyBatisGenericDao;
 
 /**
@@ -72,7 +72,7 @@ public class AdminDaoImpl extends MyBatisGenericDao implements AdminDao {
     }
 
     /**
-     * @see com.easy.admin.dao.AdminDao#page(com.easy.common.Page)
+     * @see com.easy.admin.dao.AdminDao#page(com.easy.core.common.Page)
      */
     @Override
     public void page(Page<Admin> page) {
