@@ -3,6 +3,8 @@
  */
 package com.easy.core.validator;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 
  * @author wy
@@ -15,9 +17,9 @@ public interface FieldValidator<T> {
 	 * 验证,从页面过来的都是string
 	 * 
 	 * @param validator
-	 * @param value
+	 * @param request
 	 * @return
 	 */
-	boolean isValid(T validator,String value);
+	ValidatorResult isValid(T validator,HttpServletRequest request);
 	
 }
