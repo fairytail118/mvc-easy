@@ -21,7 +21,7 @@ public class RegexUtil {
 	 * @param email
 	 * @return
 	 */
-	public static boolean verificationEmail(String email) {
+	public static boolean validEmail(String email) {
 		String regex = "^(([a-zA-Z0-9]*[-_\\.]?)*[a-zA-Z0-9]+)*@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$";
 		if (StringUtils.isBlank(email)) {
 			return false;

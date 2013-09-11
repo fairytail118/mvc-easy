@@ -18,6 +18,8 @@
 	<plugins>
 		<plugin interceptor="com.easy.core.mybatis.MysqlPageInterceptor">
 		</plugin>
+		<plugin interceptor="com.easy.core.mybatis.DefaultValueInterceptor">
+		</plugin>
 	</plugins>
 
 	<mappers>

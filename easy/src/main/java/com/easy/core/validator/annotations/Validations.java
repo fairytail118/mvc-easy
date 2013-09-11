@@ -49,10 +49,10 @@ public @interface Validations {
 	public StringLengthValidator[] stringLengthValidators() default {};
 
 	/**
-	 * 异常中断
+	 * 验证错误中断
 	 * 
 	 * @return
 	 */
-	public boolean interrupt() default true;
+	public boolean interruptForError() default true;
 
 }

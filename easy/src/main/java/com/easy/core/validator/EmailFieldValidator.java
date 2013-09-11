@@ -6,6 +6,7 @@ package com.easy.core.validator;
 import javax.servlet.http.HttpServletRequest;
 
 import com.easy.core.validator.annotations.EmailValidator;
+import com.easy.core.validator.util.RegexUtil;
 
 /**
  * 
@@ -19,19 +20,25 @@ public class EmailFieldValidator extends AbstractFieldValidator<EmailValidator> 
 	 *      javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	public ValidatorResult isValid(EmailValidator validator, HttpServletRequest request) {
+	public ValidatorResult isValid(EmailValidator validator,
+			HttpServletRequest request) {
 
 		String[] emails = getParameters(validator.field(), request);
-		
-		if(emails.length==0){
-			return null;
-		}
-		
-		for(String email:emails){
-			
+
+		// 为空，该字段没提交？
+		if (emails.length == 0) {
+			return new ValidatorResult(emails, validator.key(),
+					validator.message());
 		}
 
-		return null;
+		for (String email : emails) {
+			if (!RegexUtil.validEmail(email)) {
+				return new ValidatorResult(emails, validator.key(),
+						validator.message());
+			}
+		}
+
+		return new ValidatorResult(emails);
 	}
 
 }

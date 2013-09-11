@@ -32,30 +32,35 @@ public class ValidatorResult implements Serializable {
 	private String message;
 
 	/**
+	 * 资源文件的key
+	 */
+	private String key;
+
+	/**
+	 * 默认的成功构造
+	 * 
+	 */
+	public ValidatorResult(String[] values) {
+		super();
+		this.success = true;
+		this.values = values;
+	}
+
+	/**
+	 * 失败的构造
 	 * 
 	 * @param success
 	 * @param values
-	 */
-	public ValidatorResult(boolean success, String[] values) {
-		super();
-		this.success = success;
-		this.values = values;
-	}
-	
-
-	/**
-	 * @param success
-	 * @param values
+	 * @param key
 	 * @param message
 	 */
-	public ValidatorResult(boolean success, String[] values, String message) {
+	public ValidatorResult(String[] values, String key, String message) {
 		super();
-		this.success = success;
+		this.success = false;
 		this.values = values;
+		this.key = key;
 		this.message = message;
 	}
-
-
 
 	/**
 	 * 设置参数
@@ -124,6 +129,14 @@ public class ValidatorResult implements Serializable {
 	public String getMessage() {
 		return message;
 	}
-	
+
+	/**
+	 * Getter method for property <tt>key</tt>.
+	 * 
+	 * @return property value of key
+	 */
+	public String getKey() {
+		return key;
+	}
 
 }
