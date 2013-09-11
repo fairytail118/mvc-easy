@@ -48,4 +48,11 @@ public @interface Validations {
 	 */
 	public StringLengthValidator[] stringLengthValidators() default {};
 
+	/**
+	 * 异常中断
+	 * 
+	 * @return
+	 */
+	public boolean interrupt() default true;
+
 }
