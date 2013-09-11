@@ -3,8 +3,6 @@
  */
 package com.easy.core.test.admin.service;
 
-import java.util.Date;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -33,15 +31,9 @@ public class AdminServiceTest extends EasyTest {
 
 		admin.setPassword("123456");
 
-		admin.setCreateTime(new Date());
-
-		admin.setCreateUser("admin");
-
-		admin.setModifyTime(new Date());
-
-		admin.setModifyUser("admin");
-
 		adminService.save(admin);
+		adminService.save(admin);
+		
 
 	}
 

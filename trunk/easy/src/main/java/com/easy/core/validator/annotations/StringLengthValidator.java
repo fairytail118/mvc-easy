@@ -14,44 +14,44 @@ import java.lang.annotation.Target;
  * @author wy
  * @version v 0.1 2013-9-10 下午10:34:47 wy Exp $
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface StringLengthValidator {
-	
+
 	/**
 	 * 是否去除左右空格
 	 * 
 	 * @return
 	 */
 	boolean trim() default true;
-	
+
 	/**
 	 * 最小长度
 	 */
-    String minLength() default "";
+	int minLength() default 0;
 
-    /**
-     *  最大长度
-     */
-    String maxLength() default "";
+	/**
+	 * 最大长度
+	 */
+	int maxLength() default Integer.MAX_VALUE;
 
-    /**
-     * 文字消息
-     * 
-     * @return
-     */
-    String message() default "";
+	/**
+	 * 文字消息
+	 * 
+	 * @return
+	 */
+	String message() default "";
 
-    /**
-     * 资源文件key
-     */
-    String key() default "";
+	/**
+	 * 资源文件key
+	 */
+	String key() default "";
 
-    /**
-     * 字段
-     * 
-     * @return
-     */
-    String field() default "";
+	/**
+	 * 字段
+	 * 
+	 * @return
+	 */
+	String field() default "";
 
 }

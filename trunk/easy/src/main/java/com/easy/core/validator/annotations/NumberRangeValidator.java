@@ -36,6 +36,13 @@ public @interface NumberRangeValidator {
 	String min() default "";
 
 	/**
+	 * 是否小数
+	 * 
+	 * @return
+	 */
+	boolean decimals() default false;
+
+	/**
 	 * 最大
 	 */
 	String max() default "";

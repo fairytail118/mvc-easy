@@ -3,6 +3,8 @@
  */
 package com.easy.core.validator;
 
+import java.util.LinkedHashMap;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -38,6 +40,19 @@ public abstract class AbstractFieldValidator<T> implements FieldValidator<T> {
 		}
 
 		return values;
+	}
+	
+	/**
+	 * 获取提示信息
+	 * 
+	 * @param message 消息
+	 * @param key 资源文件的key
+	 * @param validParam 验证参数
+	 * @return
+	 */
+	public String getMessage(String message,String key,LinkedHashMap<String, String> validParam){
+		//TODO	暂时不处理资源文件
+		return message;
 	}
 
 }
