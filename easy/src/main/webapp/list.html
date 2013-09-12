@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>后台管理</title>
+<link href="admin/css/base.css" rel="stylesheet" type="text/css" />
+<link href="admin/css/admin.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="top_bg">
+		<div class="top">
+			<div class="top_logo">&nbsp;</div>
+			<span class="top_link">管理员：<a href="#">webmis</a>&nbsp;&nbsp;[&nbsp;&nbsp;测试部-测试用户&nbsp;&nbsp;]&nbsp;&nbsp;<a href="http://webmis.ksphp.com/admin/index_c/loginOut.html"><b>注销</b></a></span>
+		</div>
+		<div class="top_nav">
+			<div class="title">
+				<b>管理菜单</b></a>
+			</div>
+			<div class="nav">
+				<ul class="nav_menu">
+					<li><a href="javascript:;" class="nav_an1"><em class="ico-home"></em>&nbsp;首页</a></li>
+					<li class="lines">&nbsp;</li>
+					<li><a href="javascript:;" class="nav_an2"><em class="ico-system"></em>&nbsp;系统</a></li>
+					<li class="lines">&nbsp;</li>
+					<li><a href="javascript:;" class="nav_an2"><em class="ico-web"></em>&nbsp;网站</a></li>
+					<li class="lines">&nbsp;</li>
+					<li><a href="javascript:;" class="nav_an2"><em class="ico-help"></em>&nbsp;帮助</a></li>
+				</ul>
+			</div>
+			<div class="other">
+				<a href="javascript:;" class="UI" title="显示/隐藏">&nbsp;</a>
+			</div>
+		</div>
+		<div class="top_nav_bg">&nbsp;</div>
+		<table class="tb_ct">
+			<tr>
+				<td class="tb_left">
+					<div class="menu">
+						<div class="menu_title">
+							------ <span>首页</span> ------
+						</div>
+						<div class="menu_ct">
+							<div class="menuOne">
+								<div class="menu_an_bg1 UI">
+									<span class="title">桌面</span><span class="jia UI">&nbsp;</span>
+								</div>
+								<ul class="menu_list">
+									<li><a href="http://webmis.ksphp.com/admin/welcome.html"><em class="ico-user1"></em>&nbsp;&nbsp;用户首页</a></li>
+								</ul>
+								<div class="menu_an_bg1 UI">
+									<span class="title">帐号管理</span><span class="jia UI">&nbsp;</span>
+								</div>
+								<ul class="menu_list">
+									<li><a href="http://webmis.ksphp.com/admin/sys_change_passwd.html"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
+								</ul>
+							</div>
+							<div class="menuOne display_none">
+								<div class="menu_an_bg1 UI">
+									<span class="title">系统管理</span><span class="jia UI">&nbsp;</span>
+								</div>
+								<ul class="menu_list">
+									<li><a href="http://webmis.ksphp.com/admin/sys_menus.html"><em class="ico-menu"></em>&nbsp;&nbsp;菜单管理</a></li>
+									<li><a href="http://webmis.ksphp.com/admin/sys_menus_action.html"><em class="ico-menuA"></em>&nbsp;&nbsp;菜单动作</a></li>
+									<li><a href="http://webmis.ksphp.com/admin/sys_config.html"><em class="ico-system2"></em>&nbsp;&nbsp;系统配置</a></li>
+									<li><a href="http://webmis.ksphp.com/admin/sys_filemanager.html"><em class="ico-fileM"></em>&nbsp;&nbsp;文件管理</a></li>
+								</ul>
+								<div class="menu_an_bg1 UI" onclick="menuTwo('12')">
+									<span class="title">系统日志</span><span class="jia UI">&nbsp;</span>
+								</div>
+								<ul class="menu_list">
+									<li><a href="http://webmis.ksphp.com/admin/sys_admin_login_log.html"><em class="ico-logs1"></em>&nbsp;&nbsp;登录日志</a></li>
+								</ul>
+								<div class="menu_an_bg1 UI" onclick="menuTwo('23')">
+									<span class="title">数据库</span><span class="jia UI">&nbsp;</span>
+								</div>
+								<ul class="menu_list">
+									<li><a href="http://webmis.ksphp.com/admin/sys_db_backup.html"><em class="ico-exp"></em>&nbsp;&nbsp;数据备份</a></li>
+									<li><a href="http://webmis.ksphp.com/admin/sys_db_restore.html"><em class="ico-imp"></em>&nbsp;&nbsp;数据恢复</a></li>
+								</ul>
+							</div>
+							<!-- # End -->
+
+							<!-- 自定义菜单 -->
+							<div class="menuOne display_none">
+								<div class="menu_an_bg1 UI" onclick="menuTwo('17')">
+									<span class="title">内容管理</span><span class="jia UI">&nbsp;</span>
+								</div>
+								<ul class="menu_list">
+									<li><a href="http://webmis.ksphp.com/admin/web_news.html"><em class=""></em>&nbsp;&nbsp;新闻管理</a></li>
+									<li><a href="http://webmis.ksphp.com/admin/web_class.html"><em class=""></em>&nbsp;&nbsp;导航管理</a></li>
+									<li><a href="http://webmis.ksphp.com/admin/web_html.html"><em class=""></em>&nbsp;&nbsp;静态页面</a></li>
+								</ul>
+							</div>
+							<!-- # End -->
+						</div>
+					</div>
+				</td>
+				<td class="tb_line">
+					<div class="UI tu" title="显示/隐藏">&nbsp;</div>
+				</td>
+				<td class="tb_right">
+					<table class="action">
+						<tr>
+							<td class="title">新闻管理</td>
+							<td>
+								<ul class="action_ct">
+									<li><a href="http://webmis.ksphp.com/admin/web_news.html"><em class="ico-list"></em>&nbsp;列表</a></li>
+									<li><a href="#" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
+									<li><a href="#" id="ico-add"><em class="ico-add"></em>&nbsp;添加</a></li>
+									<li><a href="#" id="ico-edit"><em class="ico-edit"></em>&nbsp;编辑</a></li>
+									<li><a href="#" id="ico-del"><em class="ico-del"></em>&nbsp;删除</a></li>
+									<li><a href="#" id="ico-audit"><em class="ico-audit"></em>&nbsp;审核</a></li>
+									<li><a href="#" id="ico-chart"><em class="ico-chart"></em>&nbsp;图表</a></li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+					<div class="line">&nbsp;</div> <!-- Content -->
+					<table class="table_list">
+						<tr class="title" id="news_table">
+							<td width="20"><a href="#" id="checkboxY"></a><a href="#" id="checkboxN"></a></td>
+							<td>ID</td>
+							<td>标题</td>
+							<td>所属</td>
+							<td>来源</td>
+							<td>作者</td>
+							<td width="120">发布时间</td>
+							<td>浏览</td>
+							<td width="40">审核</td>
+						</tr>
+						<tbody id="listBG">
+							<tr>
+								<td><input type="checkbox" value="2" /></td>
+								<td>2</td>
+								<td style="text-align: left;"><a href="#" onclick="newsShow(2);return false;">国际空间站决定弃用 Windows 启用 Linux</a></td>
+								<td style="text-align: left;">新闻中心(2) > 行业新闻(3) ></td>
+								<td>KSPHP</td>
+								<td>KSPHP</td>
+								<td>2013-05-16 10:40:30</td>
+								<td>0</td>
+								<td><span class="green">通过</span></td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" value="1" /></td>
+								<td>1</td>
+								<td style="text-align: left;"><a href="#" onclick="newsShow(1);return false;">微软开发者解释为什么Windows内核落后于Linux</a></td>
+								<td style="text-align: left;">新闻中心(2) > 企业动向(4) ></td>
+								<td>KSPHP</td>
+								<td>KSPHP</td>
+								<td>2013-05-16 10:36:19</td>
+								<td>0</td>
+								<td><span class="green">通过</span></td>
+							</tr>
+						</tbody>
+					</table>
+					<div class="page">
+						<div class="pagelist">
+							<span class="page_cur">1</span><span><a href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=15">2</a></span><span><a
+								href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=30">3</a></span><span><a href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=15">下一页</a></span><span><a
+								href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=285">末页</a></span><span>共<b> 287 </b>条
+							</span>
+						</div>
+					</div> <!-- Content End -->
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="copyright">
+		Built by KSPHP and the <a href="http://www.ksphp.com/" target="_blank"><b>KSPHP.COM</b></a> community
+	</div>
+	<script language="javascript" src="admin/js/jquery-1.4.2.min.js"></script>
+	<script language="javascript" src="admin/js/admin.js"></script>
+	<script language="javascript" src="admin/js/easy.js"></script>
+</body>
+</html>
