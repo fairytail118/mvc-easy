@@ -13,12 +13,13 @@
 	<mvc:default-servlet-handler />
 
 	<!-- 激活@Controller模式 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven /><!-- <mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的 -->
+	
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="com.easy.*.controller">
 	</context:component-scan>
 
-	<context:annotation-config />
+	<context:annotation-config /><!-- 此配置是为了能在项目中使用@Autowired，@Resource等注释，在context:component-scan中已经包含，可以不要 -->
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
@@ -78,9 +79,10 @@
 		</property>
 	</bean>
 
-	<bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
-		p:defaultEncoding="UTF-8">
+
+	<!-- 文件上传配置 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
+		<property name="defaultEncoding"><value>UTF-8</value></property>
 		<property name="maxUploadSize">
 			<value>104857600</value>
 		</property>
@@ -88,20 +90,9 @@
 			<value>4096</value>
 		</property>
 	</bean>
+	
 	<!-- 异常处理类 -->
 	<bean id="exceptionHandler" class="com.easy.core.mvc.CustomHandlerExceptionResolver" />
-
-	<bean
-		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop
-					key="org.springframework.web.bind.MissingServletRequestParameterException">/WEB-INF/error/requiredParameter.html</prop>
-				<prop key="org.springframework.beans.TypeMismatchException">/WEB-INF/error/mismatchParameter.html</prop>
-				<prop key="org.springframework.web.bind.ServletRequestBindingException">/WEB-INF/error/bindException.html</prop>
-			</props>
-		</property>
-	</bean>
 
 	<!-- 系统错误转发配置[并记录错误日志] -->
 	<bean
