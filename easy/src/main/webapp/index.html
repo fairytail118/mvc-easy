@@ -5,6 +5,9 @@
 <title>后台管理</title>
 <link href="admin/css/base.css" rel="stylesheet" type="text/css" />
 <link href="admin/css/admin.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="admin/js/jquery-1.7.2.min.js"></script>
+<script language="javascript" src="admin/js/admin.js"></script>
+<script language="javascript" src="admin/js/easy.js"></script>
 </head>
 <body>
 	<div class="top_bg">
@@ -45,7 +48,9 @@
 									<span class="title">桌面</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="http://webmis.ksphp.com/admin/welcome.html"><em class="ico-user1"></em>&nbsp;&nbsp;用户首页</a></li>
+									<li><a target="mainframe" href="content.html"><em class="ico-user1"></em>&nbsp;&nbsp;用户首页</a></li>
+									<li><a target="mainframe" href="list.html"><em class="ico-user1"></em>&nbsp;&nbsp;用户首页</a></li>
+									<li><a target="mainframe" href="input.html"><em class="ico-user1"></em>&nbsp;&nbsp;用户首页</a></li>
 								</ul>
 								<div class="menu_an_bg1 UI">
 									<span class="title">帐号管理</span><span class="jia UI">&nbsp;</span>
@@ -54,7 +59,7 @@
 									<li><a href="http://webmis.ksphp.com/admin/sys_change_passwd.html"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
 								</ul>
 							</div>
-							<div class="menuOne display_none">
+							<div class="menuOne display_n">
 								<div class="menu_an_bg1 UI">
 									<span class="title">系统管理</span><span class="jia UI">&nbsp;</span>
 								</div>
@@ -81,7 +86,7 @@
 							<!-- # End -->
 
 							<!-- 自定义菜单 -->
-							<div class="menuOne display_none">
+							<div class="menuOne display_n">
 								<div class="menu_an_bg1 UI" onclick="menuTwo('17')">
 									<span class="title">内容管理</span><span class="jia UI">&nbsp;</span>
 								</div>
@@ -96,96 +101,10 @@
 					</div>
 				</td>
 				<td class="tb_line">
-					<div class="UI tu" title="显示/隐藏">&nbsp;</div>
+					<div class="UI left_show" title="显示/隐藏">&nbsp;</div>
 				</td>
 				<td class="tb_right">
-					<table class="action">
-						<tr>
-							<td class="title">用户首页</td>
-							<td>
-								<ul class="action_ct">
-									<li><a href="http://webmis.ksphp.com/admin/welcome.html"><em class="ico-list"></em>&nbsp;列表</a></li>
-								</ul>
-							</td>
-						</tr>
-					</table>
-					<div class="line">&nbsp;</div> <!-- Content -->
-					<table class="table_list">
-						<tr>
-							<td colspan="4" class="title" style="font-weight: normal;" align="left">&nbsp;&nbsp;管理员：webmis&nbsp;&nbsp; 部门：测试部&nbsp;&nbsp; 姓名：测试用户</td>
-						</tr>
-						<tbody id="listBG1">
-							<tr>
-								<td colspan="4" align="left"><b>用户信息</b></td>
-							</tr>
-							<tr>
-								<td width="100" align="right">IP地址:</td>
-								<td>183.129.158.178</td>
-								<td width="100" align="right">操作系统:</td>
-								<td>Mac OS X</td>
-							</tr>
-							<tr>
-								<td align="right">浏览器:</td>
-								<td>Chrome</td>
-								<td align="right">浏览器版本:</td>
-								<td>29.0.1547.65</td>
-							</tr>
-							<tr>
-								<td align="right">用户请求:</td>
-								<td colspan="3" align="left">Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.65 Safari/537.36</td>
-							</tr>
-						</tbody>
-						<tbody id="listBG2">
-							<tr>
-								<td colspan="4" align="left"><b>服务器信息</b></td>
-							</tr>
-							<tr>
-								<td align="right">IP地址:</td>
-								<td>222.56.42.154</td>
-								<td align="right">服务器端口:</td>
-								<td>80</td>
-							</tr>
-							<tr>
-								<td align="right">主机名:</td>
-								<td>webmis.ksphp.com</td>
-								<td align="right">后台地址:</td>
-								<td>http://webmis.ksphp.com/admin/</td>
-							</tr>
-							<tr>
-								<td align="right">服务器软件:</td>
-								<td>Apache/2.2.22 (Ubuntu)</td>
-								<td align="right">访问页面:</td>
-								<td>/admin/welcome.html</td>
-							</tr>
-						</tbody>
-						<tbody id="listBG3">
-							<tr>
-								<td colspan="4" align="left"><b>数据库信息</b></td>
-							</tr>
-							<tr>
-								<td align="right">配置文件:</td>
-								<td colspan="3" align="left">http://webmis.ksphp.com/admin/app/config/database.php</td>
-							</tr>
-							<tr>
-								<td align="right">数据库类型:</td>
-								<td>mysql</td>
-								<td align="right">主机名:</td>
-								<td>localhost</td>
-							</tr>
-							<tr>
-								<td align="right">用户名:</td>
-								<td>webmis</td>
-								<td align="right">数据库名:</td>
-								<td>webmis</td>
-							</tr>
-							<tr>
-								<td align="right">表前缀:</td>
-								<td>wmis_</td>
-								<td align="right">编码:</td>
-								<td>utf8</td>
-							</tr>
-						</tbody>
-					</table> <br> <br> <!-- Content End -->
+					<!-- Content --> <iframe src="content.html" frameborder="0" width="100%" name="mainframe" height="100%"></iframe> <!-- Content End -->
 				</td>
 			</tr>
 		</table>
@@ -193,8 +112,5 @@
 	<div class="copyright">
 		Built by KSPHP and the <a href="http://www.ksphp.com/" target="_blank"><b>KSPHP.COM</b></a> community
 	</div>
-	<script language="javascript" src="admin/js/jquery-1.4.2.min.js"></script>
-	<script language="javascript" src="admin/js/admin.js"></script>
-	<script language="javascript" src="admin/js/easy.js"></script>
 </body>
 </html>

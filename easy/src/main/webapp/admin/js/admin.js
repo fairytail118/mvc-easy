@@ -7,8 +7,31 @@ $(function(){
 	//菜单高度
 	autoMenuHeight();
 	
+	//顶部显示隐藏
+	$(".top_nav .other").click(function(){
+		if($(".top_bg .top").is(":hidden")){
+			$(".top_bg .top").slideDown('fast');
+		}else{
+			$(".top_bg .top").slideUp('fast');
+		}
+		return false;
+	});
+	
+	//显示、隐藏左侧菜单
+	$('td.tb_line div').click(function(){
+		if($("td.tb_left").is(":hidden")){
+			$("td.tb_left").show();
+		}else{
+			$("td.tb_left").hide();
+		}
+		return false;
+	});
+	
 	//一级菜单
 	$(".nav_menu li a").click(function(){
+		if($("td.tb_left").is(":hidden")){
+			$("td.tb_left").show();
+		}
 		var title = $(this).text();
 		$('.menu div.menu_title span').text(title);
 		$(".nav_menu li a").attr('class','nav_an2');
@@ -83,9 +106,8 @@ function showMenu(url){
  * 菜单高度适应
  */
 function autoMenuHeight(){
-	
 	var winHeight = 0;
-	var minheight=450;//设置最小高度
+	var minheight=500;//设置最小高度
 	var the_height=0;
 	if (window.innerHeight)
 		winHeight = window.innerHeight;
@@ -98,6 +120,7 @@ function autoMenuHeight(){
 		the_height=(winHeight-135);
 	}
 	$("td.tb_left").css("height",the_height+"px");
+	$("td.tb_right").css("height",the_height+"px");
 }
 
 //页面大小调整
