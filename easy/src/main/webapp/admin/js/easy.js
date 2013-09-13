@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
+
 (function(config) {
 	config['extendDrag'] = true; // 注意，此配置参数只能在这里使用全局配置，在调用窗口的传参数使用无效
 	config['lock'] = true;
@@ -11,10 +12,12 @@
 	config['okVal'] = '确定';
 	config['cancelVal'] = '取消';
 	// [more..]
-})($.dialog.setting);
+})(topWin().topWin().$.dialog.setting);
 
 $(function() {
+
 	$.easy = {
+
 		/**
 		 * alert弹出框
 		 * 
@@ -22,19 +25,19 @@ $(function() {
 		 *            可以是string，表示提示内容，或者{title:标题,content:提示内容}
 		 */
 		alert : function(content, ok) {
-			$.dialog.alert(content, ok);
+			topWin().$.dialog.alert(content, ok);
 		},
 		/**
 		 * 确认选择框
 		 */
 		confirm : function(ok, cancel) {
-			$.dialog.confirm(ok, cancel);
+			topWin().$.dialog.confirm(ok, cancel);
 		},
 		/**
 		 * 提示消息
 		 */
 		tip : function(content) {
-			$.dialog.tips(content);
+			topWin().$.dialog.tips(content);
 		}
 
 	}
@@ -46,3 +49,13 @@ $(function() {
 	// 搜索条件
 
 });
+
+/**
+ * 顶级
+ */
+function topWin() {
+	if (window != top) {
+		return top;
+	}
+	return window;
+}
