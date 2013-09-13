@@ -1,6 +1,10 @@
 @CHARSET "utf-8";
 
-@font-face {font-family: 'icomoon'; src:url('../fonts/icomoon.ttf'); src:url('../fonts/icomoon.eot')\9;}
+@font-face {font-family: 'icomoon'; src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;}
 
 /** 表格*/
 .table{width: 100%; border-collapse: collapse; text-align: center; border-top: #6FB737 2px solid;}
