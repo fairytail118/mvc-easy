@@ -2,7 +2,6 @@
 /* 基础元素 */
 body,div,span,ul,li,table,tr,td,input,a,h1,h2,h3,h4{margin: 0; padding: 0;}
 body,textarea{font-family: arial,simsun,宋体,sans-serif; font-size: 12px;}
-body{background: url("images/bg.png") #F4F7FA;}
 img{border: none;}
 ul{list-style: none;}
 em{color: #6FB737; font-family: 'icomoon'; font-style: normal; font-weight: normal;}
@@ -13,7 +12,17 @@ input, textarea{box-shadow 0.2s linear 0s; box-shadow: 0 1px 1px rgba(0, 0, 0, 0
 input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(153, 153, 153, 0.6); outline: 0 none;}
 .input{height: 22px; line-height: 22px; border: #999 1px solid; background: #EFF4FA; display: inline-block; padding: 0 5px;}
 
-.display_none{display: none}
+/**显示*/
+.display_n{display: none}
+.display_b{display: block;}
+
+/**文字位置*/
+.text_r{text-align: right}
+.text_l{text-align: left}
+.text_c{text-align: center}
+
+
+
 
 /** color*/
 .c666{color: #666;}
@@ -22,4 +31,11 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 .red{color: #D34600;}
 
 /**width */
+.w20{width: 20px;}
+.w40{width:40px;}
 .w80{width: 80px;}
+.w120{width: 120px;}
+
+
+/**height*/
+.h120{height: 120px;}
