@@ -32,7 +32,7 @@ public class AdminServiceTest extends EasyTest {
 		admin.setPassword("123456");
 
 		adminService.save(admin);
-		adminService.save(admin);
+		//adminService.save(admin);
 		
 
 	}

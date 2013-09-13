@@ -69,7 +69,6 @@ public class AdminController extends BaseController {
 
 	/**
 	 * 进入列表
-	 * 
 	 * @param request
 	 * @param model
 	 * @param page
@@ -84,7 +83,7 @@ public class AdminController extends BaseController {
 		page.setCriteria(admin);
 
 		adminService.page(page);
-
+		model.addObject("page", page);
 		return "admin/list";
 	}
 
