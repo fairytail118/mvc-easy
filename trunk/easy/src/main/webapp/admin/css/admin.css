@@ -1,6 +1,6 @@
 @CHARSET "utf-8";
 
-@font-face {font-family: 'icomoon'; src:url('../fonts/icomoon.ttf');}
+@font-face {font-family: 'icomoon'; src:url('../fonts/icomoon.ttf'); src:url('../fonts/icomoon.eot')\9;}
 
 /** 表格*/
 .table{width: 100%; border-collapse: collapse; text-align: center; border-top: #6FB737 2px solid;}
@@ -94,7 +94,6 @@
 /** button */
 .btn_submit{cursor: pointer; height: 32px; padding: 0 15px; border-radius: 5px; box-shadow: 1px 1px 3px #999;border: #999 1px solid; background-color: #F2F2F2; color: #666;background: url("../imgs/admin_top_nav_x.jpg") repeat-x;}
 .btn_submit:hover{cursor: pointer; height: 32px; padding: 0 15px; border-radius: 5px; box-shadow: 1px 1px 3px #999;border: #999 1px solid; background-color: #F2F2F2; color: #fff;background: url("../imgs/admin_top_nav_x.jpg") repeat-x 0 -35px;}
-
 
 /* ICO 图标 */
 .ico-home:before {content: "\e000";}
