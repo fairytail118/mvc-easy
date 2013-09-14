@@ -182,6 +182,7 @@
 					<configuration>
 						<path>/easy</path>
 						<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
+						<uriEncoding>utf-8</uriEncoding>
 					</configuration>
 				</plugin>
 				<plugin>
