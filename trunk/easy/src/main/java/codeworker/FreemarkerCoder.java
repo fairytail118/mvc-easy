@@ -145,7 +145,7 @@ public class FreemarkerCoder {
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
 		datas.put("pkname", pkname);
-		Map<String, String> colum=JdbcTableMetedataReader.getTableCloums("admin");
+		Map<String, String> colum=JdbcTableMetedataReader.getTableCloums(entityTableName);
 		datas.put("insert_sql", JdbcTableMetedataReader.getMybatisInsertSql(colum, entityTableName, pkname));
 		datas.put("update_sql", JdbcTableMetedataReader.getMybatisUpdateSql(colum, entityTableName, pkname));
 		datas.put("delete_sql", JdbcTableMetedataReader.getMybatisDeleteSql(entityTableName, pkname));
