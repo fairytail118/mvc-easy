@@ -29,5 +29,8 @@ public class RichFreeMarkerView extends FreeMarkerView {
                                                                                        throws Exception {
         super.exposeHelpers(model, request);
         model.put(CONTEXT_PATH, request.getContextPath());
+        //增加系统的配置信息
+        
+        
     }
 }

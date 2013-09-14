@@ -102,7 +102,6 @@ public class AdminController extends BaseController {
 	@ResponseBody
 	public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
 		try {
-			Thread.sleep(3000);
 			adminService.deleteByPrimaryKeys(key);
 			return new Result();
 		} catch (Exception e) {

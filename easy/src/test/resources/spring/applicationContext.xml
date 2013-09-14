@@ -44,19 +44,39 @@
 		/> -->
 
 	<!-- 数据源 -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"> 
+		<property name="driverClass" value="${jdbc.driverClassName}" /> <property 
+		name="jdbcUrl" value="${jdbc.url}" /> <property name="user" value="${jdbc.username}" 
+		/> <property name="password" value="${jdbc.password}" /> <property name="autoCommitOnClose" 
+		value="true" /> <property name="checkoutTimeout" value="${cpool.checkoutTimeout}" 
+		/> <property name="initialPoolSize" value="${cpool.minPoolSize}" /> <property 
+		name="minPoolSize" value="${cpool.minPoolSize}" /> <property name="maxPoolSize" 
+		value="${cpool.maxPoolSize}" /> <property name="maxIdleTime" value="${cpool.maxIdleTime}" 
+		/> <property name="acquireIncrement" value="${cpool.acquireIncrement}" /> 
+		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}" 
+		/> </bean> -->
+
+	<!-- 采用bonecp数据源 -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
 		<property name="driverClass" value="${jdbc.driverClassName}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
+		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<property name="autoCommitOnClose" value="true" />
-		<property name="checkoutTimeout" value="${cpool.checkoutTimeout}" />
-		<property name="initialPoolSize" value="${cpool.minPoolSize}" />
-		<property name="minPoolSize" value="${cpool.minPoolSize}" />
-		<property name="maxPoolSize" value="${cpool.maxPoolSize}" />
-		<property name="maxIdleTime" value="${cpool.maxIdleTime}" />
+		<!-- 设置每多少秒检查数据库中的空闲连接数 -->
+		 <property name="idleConnectionTestPeriodInMinutes" value="${cpool.checkoutTimeout}"/>
+		<!-- 设置连接空闲时间 -->
+		<property name="idleMaxAgeInMinutes" value="${cpool.maxIdleTime}" />
+		<!-- 设置每个分区中的最大连接数 -->
+		<property name="maxConnectionsPerPartition" value="${cpool.maxPoolSize}" />
+		<!-- 设置每个分区中的最小连接数  -->
+		<property name="minConnectionsPerPartition" value="${cpool.minPoolSize}" />
+		<!-- 设置分区 分区数为3 -->
+		<property name="partitionCount" value="3" />
+		<!-- 当连接池中的连接耗尽的时候 BoneCP一次同时获取的连接数 -->
 		<property name="acquireIncrement" value="${cpool.acquireIncrement}" />
-		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}" />
+		<!-- 连接释放处理 线程数-->
+		<!-- <property name="releaseHelperThreads" value="2" /> -->
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -83,6 +103,8 @@
 			<tx:method name="get*" read-only="true" />
 			<tx:method name="load*" read-only="true" />
 			<tx:method name="find*" read-only="true" />
+			<tx:method name="list*" read-only="true" />
+			<tx:method name="page*" read-only="true" />
 			<tx:method name="*" read-only="true" />
 		</tx:attributes>
 	</tx:advice>
