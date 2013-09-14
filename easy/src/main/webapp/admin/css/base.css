@@ -35,7 +35,12 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 .w40{width:40px;}
 .w80{width: 80px;}
 .w120{width: 120px;}
+.w150{width: 150px;}
+.w200{width: 200px;}
 
 
 /**height*/
 .h120{height: 120px;}
+
+/**边距*/
+.ml5{margin-left: 5px}

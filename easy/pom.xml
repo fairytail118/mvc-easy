@@ -182,7 +182,6 @@
 					<configuration>
 						<path>/easy</path>
 						<warSourceDirectory>${basedir}/src/main/webapp</warSourceDirectory>
-						<port>80</port>
 					</configuration>
 				</plugin>
 				<plugin>

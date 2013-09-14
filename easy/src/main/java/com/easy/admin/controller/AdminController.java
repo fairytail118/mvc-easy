@@ -69,6 +69,7 @@ public class AdminController extends BaseController {
 
 	/**
 	 * 进入列表
+	 * 
 	 * @param request
 	 * @param model
 	 * @param page
@@ -77,13 +78,15 @@ public class AdminController extends BaseController {
 	 */
 	@RequestMapping(value = "/admin_list")
 	public String list(HttpServletRequest request, ModelMap model,
-			Page<Admin> page, Admin admin) {
+			@RequestParam(value = "page", defaultValue = "1") int currentPage,
+			Admin admin) {
 
+		Page<Admin> page = new Page<Admin>();
+		page.setCurrentPage(currentPage);
 		// 设置查询条件
 		page.setCriteria(admin);
-
 		adminService.page(page);
-		model.addObject("page", page);
+		model.put("page", page);
 		return "admin/list";
 	}
 
@@ -95,15 +98,16 @@ public class AdminController extends BaseController {
 	 * @param key
 	 * @return
 	 */
-	@RequestMapping(value = "/delete")
+	@RequestMapping(value = "/admin_delete")
 	@ResponseBody
 	public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
 		try {
+			Thread.sleep(3000);
 			adminService.deleteByPrimaryKeys(key);
 			return new Result();
 		} catch (Exception e) {
 			log.error("admin删除失败", e);
-			return new Result(e.getMessage());
+			return new Result(e);
 		}
 	}
 }

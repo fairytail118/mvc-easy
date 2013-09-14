@@ -1718,4 +1718,27 @@ lhgdialog.tips = function( content, time, icon, callback )
 	.time(time || 1.5, reIcon);
 };
 
+/**
+ * 加载数据
+ * @param	{String}	提示的内容
+ * 
+ */
+lhgdialog.load = function(content)
+{
+	return loadDialog = lhgdialog({
+		id: 'Load',
+		zIndex: _zIndex(),
+		icon: 'loading.gif',
+		title: false,
+		cancel: false,
+		fixed: true,
+		lock: false,
+		resize: false
+	})
+	.content(content);
+	
+};
+
+
+
 })( this.jQuery||this.lhgcore, this.lhgdialog );
