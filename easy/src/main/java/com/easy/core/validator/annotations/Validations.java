@@ -24,9 +24,14 @@ public @interface Validations {
 	public EmailValidator[] emailValidators() default {};
 
 	/**
+	 * 数字范围验证
+	 */
+	public NumberRangeValidator[] numberRangeValidators() default {};
+
+	/**
 	 * 数字验证
 	 */
-	public NumberRangeValidator[] numberValidators() default {};
+	public NumberValidator[] numberValidators() default {};
 
 	/**
 	 * 正则验证

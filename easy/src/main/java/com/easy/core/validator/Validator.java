@@ -3,8 +3,6 @@
  */
 package com.easy.core.validator;
 
-import java.lang.reflect.Method;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.validation.Errors;
@@ -27,7 +25,7 @@ public interface Validator {
 	 * @param request
 	 * @param method
 	 */
-	public void valid(Validations validations, Errors errors, Method method,
+	public void valid(Validations validations, Errors errors,
 			HttpServletRequest request);
 
 }

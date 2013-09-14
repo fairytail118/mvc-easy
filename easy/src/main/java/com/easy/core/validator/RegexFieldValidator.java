@@ -25,9 +25,9 @@ public class RegexFieldValidator extends AbstractFieldValidator<RegexValidator> 
 
 		String[] values = getParameters(validator.field(), request);
 
-		ValidatorResult failResult = new ValidatorResult(values,
-				validator.key(), validator.message()).putValidParam("regex",
-				validator.regex());
+		ValidatorResult failResult = new ValidatorResult(validator.field(),
+				values, validator.key(), validator.message()).putValidParam(
+				"regex", validator.regex());
 
 		// 为空，该字段没提交？
 		if (values.length == 0) {

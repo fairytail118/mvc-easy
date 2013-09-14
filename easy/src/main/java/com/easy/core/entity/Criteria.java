@@ -30,6 +30,9 @@ public class Criteria implements Serializable {
 	/** 排序字段 */
 	protected transient String orderByClause;
 
+	/** 查询关键字 */
+	protected transient String keyword;
+
 	/**
 	 * Getter method for property <tt>distinct</tt>.
 	 * 
@@ -66,6 +69,34 @@ public class Criteria implements Serializable {
 	 */
 	public void setOrderByClause(String orderByClause) {
 		this.orderByClause = orderByClause;
+	}
+
+	/**
+	 * Getter method for property <tt>keyword</tt>.
+	 * 
+	 * @return property value of keyword
+	 */
+	public String getKeyword() {
+		return keyword;
+	}
+
+	/**
+	 * Setter method for property <tt>keyword</tt>.
+	 * 
+	 * @param keyword
+	 *            value to be assigned to property keyword
+	 */
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	/**
+	 * Getter method for property <tt>criteria</tt>.
+	 * 
+	 * @return property value of criteria
+	 */
+	public Map<String, Object> getCriteria() {
+		return criteria;
 	}
 
 	/**

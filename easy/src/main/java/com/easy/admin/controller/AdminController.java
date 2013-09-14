@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,6 +18,7 @@ import com.easy.admin.service.AdminService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
 import com.easy.core.mvc.result.Result;
+import com.easy.core.validator.annotations.Validations;
 
 /**
  * 
@@ -37,11 +39,17 @@ public class AdminController extends BaseController {
 	 * @param request
 	 * @param model
 	 * @param id
+	 * @param errors
 	 * @return
 	 */
+	@Validations(requiredStringValidators = {
+
+	}, stringLengthValidators = {
+
+	})
 	@RequestMapping(value = "/admin_input")
 	public String input(HttpServletRequest request, ModelMap model,
-			@RequestParam(value = "id", required = false) Long id) {
+			@RequestParam(value = "id", required = false) Long id, Errors errors) {
 
 		if (id != null) {
 			Admin admin = adminService.getByPrimaryKey(id);

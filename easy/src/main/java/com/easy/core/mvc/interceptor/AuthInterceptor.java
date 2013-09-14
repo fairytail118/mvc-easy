@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,7 +45,11 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		log.info("preHandle");
+		String requestWith = request.getHeader("X-Requested-With");
+		// 如果是ajax请求
+		if (StringUtils.endsWithIgnoreCase("XMLHttpRequest", requestWith)) {
+
+		}
 		return true;
 	}
 
@@ -72,7 +77,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
 		// 结束加入cookie
-		CookieUtils.addCriteria(request, response);
 	}
 
 }

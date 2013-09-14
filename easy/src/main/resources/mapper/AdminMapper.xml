@@ -23,17 +23,41 @@
 		UPDATE
 			ADMIN
 		SET
+		<set>
+			<if test="createTime!=null">
 			createTime = #{createTime},
+			</if>
+			<if test="createUser!=null">
 			createUser = #{createUser},
+			</if>
+			<if test="modifyTime!=null">
 			modifyTime = #{modifyTime},
+			</if>
+			<if test="modifyUser!=null">
 			modifyUser = #{modifyUser},
+			</if>
+			<if test="name!=null">
 			name = #{name},
+			</if>
+			<if test="email!=null">
 			email = #{email},
+			</if>
+			<if test="loginName!=null">
 			loginName = #{loginName},
+			</if>
+			<if test="password!=null">
 			password = #{password},
+			</if>
+			<if test="isLocked!=null">
 			isLocked = #{isLocked},
+			</if>
+			<if test="isEnabled!=null">
 			isEnabled = #{isEnabled},
-			isSuper = #{isSuper}
+			</if>
+			<if test="isSuper!=null">
+			isSuper = #{isSuper},
+			</if>
+		</set>
 		WHERE
 			id = #{id}
 	</update>
@@ -81,15 +105,18 @@
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
 		<where>
-			<if test="criteria.keyword!=null and criteria.keyword!=''">
-				AND name like "%"#{criteria.keyword}"%"
+			<!-- 关键字查询字段 -->
+			<if test="keyword!=null and keyword!=''">
+				AND name like "%"#{keyword}"%"
 			</if>
 		</where>
 	</sql>
 	
 	<!-- 排序字段 -->
 	<sql id="orderByClause">
-		${orderByClause}
+		<if test="orderByClause!=null">
+			${orderByClause}
+		</if>
 	</sql>
 	
 	<!-- 默认的数据库字段 -->

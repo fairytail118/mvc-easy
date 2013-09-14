@@ -26,9 +26,9 @@ public class NumberRangeFieldValidator extends
 
 		String[] numbers = getParameters(validator.field(), request);
 
-		ValidatorResult failResult = new ValidatorResult(numbers,
-				validator.key(), validator.message()).putValidParam("min",
-				validator.min()).putValidParam("max", validator.max());
+		ValidatorResult failResult = new ValidatorResult(validator.field(),
+				numbers, validator.key(), validator.message()).putValidParam(
+				"min", validator.min()).putValidParam("max", validator.max());
 
 		// 为空，该字段没提交？
 		if (numbers.length == 0) {
