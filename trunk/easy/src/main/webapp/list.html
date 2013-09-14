@@ -10,19 +10,17 @@
 <script type="text/javascript" src="admin/js/easy.js"></script>
 </head>
 <body>
-	<form action="http://webmis.ksphp.com/admin/web_class/addData.html" method="post" name="listform">
+	<form action="http://webmis.ksphp.com/admin/web_class/addData.html" method="post" name="listForm">
 		<table class="action">
 			<tr>
 				<td class="title">新闻管理</td>
 				<td>
 					<ul class="action_ct">
 						<li><a href="http://webmis.ksphp.com/admin/web_news.html"><em class="ico-list"></em>&nbsp;列表</a></li>
-						<li><a href="#" onclick="$.easy.confirm('你妹你选一个',function(){})" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
-						<li><a href="#" onclick="$.easy.tip('操作成功')" id="ico-add"><em class="ico-add"></em>&nbsp;添加</a></li>
-						<li><a href="#" id="ico-edit"><em class="ico-edit"></em>&nbsp;编辑</a></li>
-						<li><a href="#" id="ico-del"><em class="ico-del"></em>&nbsp;删除</a></li>
-						<li><a href="#" id="ico-audit"><em class="ico-audit"></em>&nbsp;审核</a></li>
-						<li><a href="#" id="ico-chart"><em class="ico-chart"></em>&nbsp;图表</a></li>
+						<li><a href="javascript:$.easy.search();" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
+						<li><a href="#" id="ico-add"><em class="ico-add"></em>&nbsp;添加</a></li>
+						<li><a href="javascript:;" url="http://www.youlema.com?" onclick="$(this).easy_edit()" id="ico-edit"><em class="ico-edit"></em>&nbsp;编辑</a></li>
+						<li><a href="javascript:;" url="admin/admin_delete" onclick="$(this).easy_del()"  id="ico-del"><em class="ico-del"></em>&nbsp;删除</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -31,9 +29,9 @@
 		<div class="line">&nbsp;</div>
 		<!-- Content -->
 		<table class="table_list">
-			<tr class="title" id="news_table">
-				<td width="20"><a href="#" id="checkboxY"></a><a href="#" id="checkboxN"></a></td>
-				<td>ID123</td>
+			<tr class="title">
+				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
+				<td>ID</td>
 				<td>标题</td>
 				<td>所属</td>
 				<td>来源</td>
@@ -42,9 +40,9 @@
 				<td>浏览</td>
 				<td width="40">审核</td>
 			</tr>
-			<tbody id="listBG">
+			<tbody>
 				<tr>
-					<td><input type="checkbox" value="2" /></td>
+					<td><input type="checkbox" name="key" value="2" /></td>
 					<td>2</td>
 					<td style="text-align: left;"><a href="#" onclick="newsShow(2);return false;">国际空间站决定弃用 Windows 启用 Linux</a></td>
 					<td style="text-align: left;">新闻中心(2) > 行业新闻(3) ></td>
@@ -55,13 +53,24 @@
 					<td><span class="green">通过</span></td>
 				</tr>
 				<tr>
-					<td><input type="checkbox" value="1" /></td>
-					<td>1</td>
-					<td style="text-align: left;"><a href="#" onclick="newsShow(1);return false;">微软开发者解释为什么Windows内核落后于Linux</a></td>
-					<td style="text-align: left;">新闻中心(2) > 企业动向(4) ></td>
+					<td><input type="checkbox" name="key" value="2" /></td>
+					<td>2</td>
+					<td style="text-align: left;"><a href="#" onclick="newsShow(2);return false;">国际空间站决定弃用 Windows 启用 Linux</a></td>
+					<td style="text-align: left;">新闻中心(2) > 行业新闻(3) ></td>
 					<td>KSPHP</td>
 					<td>KSPHP</td>
-					<td>2013-05-16 10:36:19</td>
+					<td>2013-05-16 10:40:30</td>
+					<td>0</td>
+					<td><span class="green">通过</span></td>
+				</tr>
+				<tr>
+					<td><input type="checkbox" name="key" value="2" /></td>
+					<td>2</td>
+					<td style="text-align: left;"><a href="#" onclick="newsShow(2);return false;">国际空间站决定弃用 Windows 启用 Linux</a></td>
+					<td style="text-align: left;">新闻中心(2) > 行业新闻(3) ></td>
+					<td>KSPHP</td>
+					<td>KSPHP</td>
+					<td>2013-05-16 10:40:30</td>
 					<td>0</td>
 					<td><span class="green">通过</span></td>
 				</tr>
@@ -76,30 +85,10 @@
 			</div>
 		</div>
 		<!-- search -->
-		<table class="serarch_box">
+		<table class="search_box display_n">
 			<tr>
-				<td class="width text_r">所属:</td>
-				<td><input type="text" name="class" class="input" style="width: 40%;" /><span class="c666">&nbsp;&nbsp;如：:3:9:12:</span></td>
-			</tr>
-			<tr>
-				<td class="text_r">标题:</td>
-				<td><input type="text" name="title" class="input" style="width: 90%;" /></td>
-			</tr>
-			<tr>
-				<td class="text_r">来源:</td>
-				<td><input type="text" name="source" class="input" style="width: 60%;" /></td>
-			</tr>
-			<tr>
-				<td class="text_r">作者:</td>
-				<td><input type="text" name="author" class="input" style="width: 60%;" /></td>
-			</tr>
-			<tr>
-				<td class="text_r">发布时间:</td>
-				<td><input type="text" name="ctime" class="input" style="width: 60%;" /></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" class="btn_submit" name="search" value="搜索" /></td>
+				<td class="w80 text_r">关键字:</td>
+				<td><input type="text" name="keyword" class="input w150" value=""/></td>
 			</tr>
 		</table>
 	</form>

@@ -77,7 +77,7 @@
 .table_add td{padding: 5px;}
 
 /**搜索框*/
-.serach_box{width: 360px;border-collapse: collapse;}
+.search_box{width: 360px;border-collapse: collapse;}
 .search_box td{padding: 5px;}
 
 /** 列表导航*/
@@ -87,6 +87,11 @@
 .action .title{width: 80px; color: #666; text-align: center; font-weight: bold; border-right: #BBB 1px solid; background: #FFF;}
 .action_ct li{float: left; padding: 0 8px;}
 .action_ct li a:hover em{color: #FF6600;}
+
+/**多选框*/
+.check_box a{font-family: 'icomoon'; font-style: normal; font-weight: normal; padding: 2px 6px;}
+a.check_all:before {content: "\e0f0";}
+a.check_none:before {content: "\e0ef";}
 
 /** 分页*/
 .page{height: 50px; line-height: 50px; text-align: center; color: #999;}

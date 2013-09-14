@@ -13,6 +13,10 @@ import org.slf4j.LoggerFactory;
  */
 public class BaseController {
 
-    protected final Logger log = LoggerFactory.getLogger(getClass());
+	/** 日志 */
+	protected final Logger log = LoggerFactory.getLogger(getClass());
+
+	/** 是否重定向过来 */
+	public final static String RELOAD = "realod";
 
 }
