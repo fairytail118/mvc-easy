@@ -25,8 +25,8 @@ public class StringLengthFieldValidator extends
 
 		String[] values = getParameters(validator.field(), request);
 
-		ValidatorResult failResult = new ValidatorResult(values,
-				validator.key(), validator.message());
+		ValidatorResult failResult = new ValidatorResult(validator.field(),
+				values, validator.key(), validator.message());
 
 		// 为空，该字段没提交？
 		if (values.length == 0) {

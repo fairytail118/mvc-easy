@@ -27,14 +27,14 @@ public class EmailFieldValidator extends AbstractFieldValidator<EmailValidator> 
 
 		// 为空，该字段没提交？
 		if (emails.length == 0) {
-			return new ValidatorResult(emails, validator.key(),
-					validator.message());
+			return new ValidatorResult(validator.field(), emails,
+					validator.key(), validator.message());
 		}
 
 		for (String email : emails) {
 			if (!RegexUtil.validEmail(email)) {
-				return new ValidatorResult(emails, validator.key(),
-						validator.message());
+				return new ValidatorResult(validator.field(), emails,
+						validator.key(), validator.message());
 			}
 		}
 

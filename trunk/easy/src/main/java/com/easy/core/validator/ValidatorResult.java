@@ -24,7 +24,11 @@ public class ValidatorResult implements Serializable {
 	/** 验证器中的参数 */
 	private final Map<String, String> validParam = new LinkedHashMap<String, String>();
 
+	/** 获取的值 */
 	private String[] values;
+
+	/** 验证的字段 */
+	private String field;
 
 	/**
 	 * 消息
@@ -49,13 +53,16 @@ public class ValidatorResult implements Serializable {
 	/**
 	 * 失败的构造
 	 * 
+	 * @param field
 	 * @param success
 	 * @param values
 	 * @param key
 	 * @param message
 	 */
-	public ValidatorResult(String[] values, String key, String message) {
+	public ValidatorResult(String field, String[] values, String key,
+			String message) {
 		super();
+		this.field = field;
 		this.success = false;
 		this.values = values;
 		this.key = key;
@@ -137,6 +144,15 @@ public class ValidatorResult implements Serializable {
 	 */
 	public String getKey() {
 		return key;
+	}
+
+	/**
+	 * Getter method for property <tt>field</tt>.
+	 * 
+	 * @return property value of field
+	 */
+	public String getField() {
+		return field;
 	}
 
 }
