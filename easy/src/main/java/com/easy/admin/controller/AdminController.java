@@ -5,6 +5,7 @@ package com.easy.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -63,9 +64,7 @@ public class AdminController extends BaseController {
 	 * @param admin
 	 * @return
 	 */
-	@Validations(requiredStringValidators = { 
-			@RequiredStringValidator(field = "name", key = "admin.name", trim = true) }, 
-			stringLengthValidators = { @StringLengthValidator(field = "name", key = "admin.name.length", trim = true, maxLength = "12", minLength = "6") }
+	@Validations(requiredStringValidators = { @RequiredStringValidator(field = "name", key = "admin.name", trim = true) }, stringLengthValidators = { @StringLengthValidator(field = "name", key = "admin.name.length", trim = true, maxLength = "12", minLength = "6") }
 
 	)
 	@RequestMapping(value = "/admin_save")
@@ -74,6 +73,11 @@ public class AdminController extends BaseController {
 		if (RequestUtils.hasErrors(request)) {
 			return "admin/admin_input";
 		}
+
+		Admin entity = new Admin();
+		//拷贝，去掉重复的
+		BeanUtils.copyProperties(admin, entity, new String[] { "createUser",
+				"createTime", "modifyUser", "modifyTime" });
 
 		adminService.save(admin);
 
