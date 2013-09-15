@@ -19,6 +19,7 @@ import com.easy.core.controller.BaseController;
 import com.easy.core.mvc.result.Result;
 import com.easy.core.utils.RequestUtils;
 import com.easy.core.validator.annotations.RequiredStringValidator;
+import com.easy.core.validator.annotations.StringLengthValidator;
 import com.easy.core.validator.annotations.Validations;
 
 /**
@@ -62,7 +63,11 @@ public class AdminController extends BaseController {
 	 * @param admin
 	 * @return
 	 */
-	@Validations(requiredStringValidators = { @RequiredStringValidator(field = "name", key = "admin.name", trim = true) })
+	@Validations(requiredStringValidators = { 
+			@RequiredStringValidator(field = "name", key = "admin.name", trim = true) }, 
+			stringLengthValidators = { @StringLengthValidator(field = "name", key = "admin.name.length", trim = true, maxLength = "12", minLength = "6") }
+
+	)
 	@RequestMapping(value = "/admin_save")
 	public String save(HttpServletRequest request, ModelMap model, Admin admin) {
 
@@ -70,7 +75,7 @@ public class AdminController extends BaseController {
 			return "admin/input";
 		}
 
-		// adminService.save(admin);
+		adminService.save(admin);
 
 		return "redirect:admin_list";
 	}

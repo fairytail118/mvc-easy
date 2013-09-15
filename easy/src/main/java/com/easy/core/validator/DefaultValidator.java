@@ -46,16 +46,22 @@ public class DefaultValidator extends AbstractValidator implements
 		Map<String, String> map = new LinkedHashMap<String, String>();
 
 		for (ValidatorResult r : list) {
-			String msg = r.getMessage();
-			if (StringUtils.isNotBlank(r.getKey())) {
-				msg = messageSource.getMessage(r.getKey(), r.getValues(),
-						r.getMessage(), request.getLocale());
+			// 如果包含字段
+			if (map.containsKey(r.getField())) {
+				continue;
 			}
-			if (StringUtils.isEmpty(msg)) {
+			String msg = null;
+			if (StringUtils.isNotBlank(r.getKey())) {
+				msg = messageSource.getMessage(r.getKey(), r.getValidParam()
+						.values().toArray(), request.getLocale());
+			}
+			if (StringUtils.isBlank(msg) && StringUtils.isBlank(r.getMessage())) {
 				log.warn(
 						"表单验证field:{}时根据key{}默认message{}获取的验证错误字符串为空",
 						new String[] { r.getField(), r.getKey(), r.getMessage() });
 				msg = "无对应的message";
+			} else if (StringUtils.isBlank(msg)) {
+				msg = r.getMessage();
 			}
 			map.put(r.getField(), msg);
 		}
