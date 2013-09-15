@@ -42,22 +42,13 @@
 					<td>${(item.loginName)!"&nbsp;"}</td>
 					<td>${(item.email)!"&nbsp;"}</td>
 					<td><#if item.isLocked??&&item.isLocked == true> 锁定 <#else> 未锁定 </#if></td>
-					<td>${(item.isEnabled)!"&nbsp;"}</td>
-					<td>${(item.isSuper)!"&nbsp;"}</td>
+					<td>${(item.isEnabled??&&item.isEnabled)?string('启用','禁用')}</td>
+					<td>${(item.isSuper??&&item.isSuper)?string('是','否')}</td>
 				</tr>
 				</#list>
 			</tbody>
 		</table>
-		<div class="page">
-			<div class="pagelist">
-				<span class="page_cur">1</span>
-				<span><a href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=15">2</a></span>
-				<span><a href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=30">3</a></span>
-				<span><a href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=15">下一页</a></span>
-				<span><a href="http://webmis.ksphp.com/admin/sys_admin_login_log/index.html?&amp;per_page=285">末页</a></span>
-				<span>共<b> 287 </b>条</span>
-			</div>
-		</div>
+		<#include "/templates/common/page.ftl">
 		<!-- search -->
 		<table class="search_box display_n">
 			<tr>

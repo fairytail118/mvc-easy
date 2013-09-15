@@ -5,6 +5,7 @@ package com.easy.core.test.admin.service;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
 
 import com.easy.admin.entity.Admin;
@@ -31,9 +32,16 @@ public class AdminServiceTest extends EasyTest {
 
 		admin.setPassword("123456");
 
-		adminService.save(admin);
-		//adminService.save(admin);
-		
+		admin.setIsEnabled(true);
+		admin.setIsLocked(false);
+
+		for (int i = 0; i < 10000; i++) {
+			admin.setName(RandomStringUtils.random(10, "项目是一个定制框架它源自一个在线新闻Web站点于2005年以开源的形式被释放出来Django框架的核心组件有"));
+			admin.setIsSuper(i % 5 == 0);
+			admin.setId(null);
+			adminService.save(admin);
+		}
+		// adminService.save(admin);
 
 	}
 
