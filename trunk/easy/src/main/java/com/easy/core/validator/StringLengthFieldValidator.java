@@ -5,6 +5,8 @@ package com.easy.core.validator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.easy.core.validator.annotations.StringLengthValidator;
 
 /**
@@ -28,15 +30,25 @@ public class StringLengthFieldValidator extends
 		ValidatorResult failResult = new ValidatorResult(validator.field(),
 				values, validator.key(), validator.message());
 
+		if (StringUtils.isNotBlank(validator.minLength())) {
+			failResult.putValidParam("minLength", validator.minLength());
+		}
+		if (StringUtils.isNotBlank(validator.maxLength())) {
+			failResult.putValidParam("maxLength", validator.maxLength());
+		}
+
 		// 为空，该字段没提交？
 		if (values.length == 0) {
 			return failResult;
 		}
 
 		int min = 0;
-		int max = validator.maxLength();
-		if (validator.minLength() > 0) {
-			min = validator.minLength();
+		int max = Integer.MAX_VALUE;
+		if (StringUtils.isNotBlank(validator.maxLength())) {
+			max = Integer.valueOf(validator.maxLength());
+		}
+		if (StringUtils.isNotBlank(validator.minLength())) {
+			min = Integer.valueOf(validator.minLength());
 		}
 		if (max < min && max <= 0) {
 			throw new ValidatorException("字符串最大长度" + max + "小于"

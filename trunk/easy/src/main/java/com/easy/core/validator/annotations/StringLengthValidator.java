@@ -28,12 +28,12 @@ public @interface StringLengthValidator {
 	/**
 	 * 最小长度
 	 */
-	int minLength() default 0;
+	String minLength() default "";
 
 	/**
 	 * 最大长度
 	 */
-	int maxLength() default Integer.MAX_VALUE;
+	String maxLength() default "";
 
 	/**
 	 * 文字消息

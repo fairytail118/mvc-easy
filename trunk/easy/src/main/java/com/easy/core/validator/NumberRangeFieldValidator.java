@@ -5,6 +5,8 @@ package com.easy.core.validator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.easy.core.validator.annotations.NumberRangeValidator;
 import com.easy.core.validator.util.RegexUtil;
 
@@ -27,9 +29,13 @@ public class NumberRangeFieldValidator extends
 		String[] numbers = getParameters(validator.field(), request);
 
 		ValidatorResult failResult = new ValidatorResult(validator.field(),
-				numbers, validator.key(), validator.message()).putValidParam(
-				"min", validator.min()).putValidParam("max", validator.max());
-
+				numbers, validator.key(), validator.message());
+		if (StringUtils.isNotBlank(validator.min())) {
+			failResult.putValidParam("min", validator.min());
+		}
+		if (StringUtils.isNotBlank(validator.max())) {
+			failResult.putValidParam("max", validator.max());
+		}
 		// 为空，该字段没提交？
 		if (numbers.length == 0) {
 			return failResult;
