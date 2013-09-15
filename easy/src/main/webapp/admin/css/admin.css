@@ -1,10 +1,16 @@
 @CHARSET "utf-8";
 
-@font-face {font-family: 'icomoon'; src:url('../fonts/icomoon.eot');
+@font-face {font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
 	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon.svg#icomoon') format('svg'),
+		url('../fonts/icomoon.woff') format('woff'),
 		url('../fonts/icomoon.ttf') format('truetype');
 	font-weight: normal;
-	font-style: normal;}
+	font-style: normal;
+}
+	
+	
 
 /** 表格*/
 .table{width: 100%; border-collapse: collapse; text-align: center; border-top: #6FB737 2px solid;}
@@ -86,12 +92,13 @@
 .action td{padding: 0 5px;}
 .action .title{width: 80px; color: #666; text-align: center; font-weight: bold; border-right: #BBB 1px solid; background: #FFF;}
 .action_ct li{float: left; padding: 0 8px;}
+.action_ct li.history{float: right; padding: 0 8px;}
 .action_ct li a:hover em{color: #FF6600;}
 
 /**多选框*/
 .check_box a{font-family: 'icomoon'; font-style: normal; font-weight: normal; padding: 2px 6px;}
-a.check_all:before {content: "\e0f0";}
-a.check_none:before {content: "\e0ef";}
+a.check_all:before {content: "\e054";}
+a.check_none:before {content: "\e055";}
 
 /** 分页*/
 .page{height: 50px; line-height: 50px; text-align: center; color: #999;}
@@ -104,35 +111,41 @@ a.check_none:before {content: "\e0ef";}
 .btn_submit{cursor: pointer; height: 32px; padding: 0 15px; border-radius: 5px; box-shadow: 1px 1px 3px #999;border: #999 1px solid; background-color: #F2F2F2; color: #666;background: url("../imgs/admin_top_nav_x.jpg") repeat-x;}
 .btn_submit:hover{cursor: pointer; height: 32px; padding: 0 15px; border-radius: 5px; box-shadow: 1px 1px 3px #999;border: #999 1px solid; background-color: #F2F2F2; color: #fff;background: url("../imgs/admin_top_nav_x.jpg") repeat-x 0 -35px;}
 
+/**表单验证*/
+label.error{color:red; white-space:nowrap; background:url(../imgs/error.png) no-repeat left center;padding-left:18px;margin-left: 5px}
+label.success{color:#71b83d; background:url(../imgs/right.png) no-repeat left center;padding-left:18px;margin-left: 5px}
+label.loading{padding-left:20px; background:url(../imgs/onLoad.gif) no-repeat left center;padding-left:18px;margin-left: 5px}
+
+
 /* ICO 图标 */
-.ico-home:before {content: "\e000";}
-.ico-system:before {content: "\e085";}
-.ico-web:before {content: "\e1a6";}
-.ico-help:before {content: "\e0eb";}
+.ico-home:before {content: "\21";}
+.ico-system:before {content: "\e00e";}
+.ico-web:before {content: "\e0ca";}
+.ico-help:before {content: "\e037";}
 
 .ico-disktop:before {content: "\e201";}
-.ico-user:before {content: "\e06b";}
-.ico-user1:before {content: "\e066";}
-.ico-pwd:before {content: "\e07c";}
+.ico-user:before {content: "\69";}
+.ico-pwd:before {content: "\e005";}
 
-.ico-system1:before {content: "\e084";}
-.ico-system2:before {content: "\e080";}
-.ico-menu:before {content: "\e02a";}
-.ico-menuA:before {content: "\e205";}
-.ico-admin:before {content: "\e067";}
-.ico-fileM:before {content: "\e02b";}
+.ico-menu:before {content: "\e0b3";}
+.ico-setting:before {content: "\e00f";}
 
-.ico-logs:before {content: "\e02e";}
-.ico-logs1:before {content: "\e02d";}
+.icon-locked:before {content: "\e00b";}
+.icon-unlocked:before {content: "\e00c";}
 
-.ico-db:before {content: "\e1f2";}
+.ico-logs:before {content: "\49";}
+.ico-db:before {content: "\51";}
 
-.ico-list:before {content: "\e0f2";}
-.ico-search:before {content: "\e074";}
-.ico-add:before {content: "\e1ce";}
-.ico-edit:before {content: "\e006";}
-.ico-del:before {content: "\e0ed";}
-.ico-audit:before {content: "\e1be";}
-.ico-chart:before {content: "\e1cd";}
-.ico-exp:before {content: "\e119";}
-.ico-imp:before {content: "\e115";}
+.ico-new:before {content: "\36";}
+.ico-copy:before {content: "\37";}
+
+
+
+.ico-list:before {content: "\e0cb";}
+.ico-history:before {content: "\4e";}
+
+.ico-search:before {content: "\7d";}
+.ico-add:before {content: "\e093";}
+.ico-edit:before {content: "\25";}
+.ico-del:before {content: "\e009";}
+.ico-audit:before {content: "\e08a";}
