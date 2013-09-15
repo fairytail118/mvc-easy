@@ -42,6 +42,6 @@ public @interface RequiredStringValidator {
 	 * 
 	 * @return
 	 */
-	String field() default "";
+	String field();
 
 }

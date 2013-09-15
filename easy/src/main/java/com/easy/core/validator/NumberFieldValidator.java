@@ -37,11 +37,11 @@ public class NumberFieldValidator extends
 		for (String num : numbers) {
 			// 整数判断
 			if (!validator.decimals()) {
-				if (!RegexUtil.valid("([-]{0,1})[1-9]\\d+", num)) {
+				if (!RegexUtil.valid("^([-]{0,1})[1-9]\\d+$", num)) {
 					return failResult;
 				}
 
-			} else if (!RegexUtil.valid("([-]{0,1})[1-9]\\d+(\\.)?\\d+", num)) {
+			} else if (!RegexUtil.valid("^([-]{0,1})[1-9]\\d+(\\.)?\\d+$", num)) {
 				return failResult;
 			}
 		}

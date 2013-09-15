@@ -3,6 +3,9 @@
  */
 package com.easy.core.utils;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -14,7 +17,10 @@ import org.apache.commons.lang.StringUtils;
  * @version v 0.1 2013-9-10 下午9:26:44 wy Exp $
  */
 public class RequestUtils {
-	
+
+	/** 表单的错误 */
+	public final static String FORM_ERROR = "formErros";
+
 	/**
 	 * 获取访问者IP
 	 * 
@@ -27,6 +33,11 @@ public class RequestUtils {
 	 * @return
 	 */
 	public static String getIpAddr(HttpServletRequest request) {
+
+		/**
+		 * request = ((ServletRequestAttributes) RequestContextHolder
+		 * .getRequestAttributes()).getRequest();
+		 */
 		String ip = request.getHeader("X-Real-IP");
 		if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
 			return ip;
@@ -43,6 +54,47 @@ public class RequestUtils {
 		} else {
 			return request.getRemoteAddr();
 		}
+	}
+
+	/**
+	 * 设置表单的错误
+	 * 
+	 * @param request
+	 * @param map
+	 */
+	public static void setFormErrors(HttpServletRequest request,
+			Map<String, String> map) {
+
+		if (map != null && !map.isEmpty()) {
+			request.setAttribute(FORM_ERROR, map);
+		}
+
+	}
+
+	/**
+	 * 获取表单的错误信息
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> getFormErrors(HttpServletRequest request) {
+		Map<String, String> map = (Map<String, String>) request
+				.getAttribute(FORM_ERROR);
+		if (map == null) {
+			map = new LinkedHashMap<String, String>();
+		}
+
+		return map;
+	}
+
+	/**
+	 * 是否有表单错误
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static boolean hasErrors(HttpServletRequest request) {
+		return !getFormErrors(request).isEmpty();
 	}
 
 }

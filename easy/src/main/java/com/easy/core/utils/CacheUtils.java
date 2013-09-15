@@ -21,11 +21,11 @@ import org.springframework.stereotype.Component;
  * @version v 0.1 2013-9-14 下午2:59:58 wy Exp $
  */
 @Component
-public class CacheUtil {
+public class CacheUtils {
 
 	/** 日志 */
 	protected final static Logger log = LoggerFactory
-			.getLogger(CacheUtil.class);
+			.getLogger(CacheUtils.class);
 
 	/** 对应的ehcache.xml中的缓存名称 */
 	public final static String DEFAULT_EASY_CACHE = "easyCache";
@@ -40,7 +40,7 @@ public class CacheUtil {
 	 */
 	@Autowired
 	public void setCacheManager(CacheManager cacheManager) {
-		CacheUtil.cacheManager = cacheManager;
+		CacheUtils.cacheManager = cacheManager;
 	}
 
 	/**

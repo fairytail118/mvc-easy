@@ -35,6 +35,6 @@ public @interface EmailValidator {
      * 
      * @return
      */
-    String field() default "";
+    String field();
 
 }

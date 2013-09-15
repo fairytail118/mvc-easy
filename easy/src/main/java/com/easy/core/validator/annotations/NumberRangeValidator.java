@@ -52,5 +52,5 @@ public @interface NumberRangeValidator {
 	 * 
 	 * @return
 	 */
-	String field() default "";
+	String field();
 }

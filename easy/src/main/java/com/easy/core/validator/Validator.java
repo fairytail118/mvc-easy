@@ -3,9 +3,9 @@
  */
 package com.easy.core.validator;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
-import org.springframework.validation.Errors;
+import javax.servlet.http.HttpServletRequest;
 
 import com.easy.core.validator.annotations.Validations;
 
@@ -21,11 +21,10 @@ public interface Validator {
 	 * 验证数据
 	 * 
 	 * @param validations
-	 * @param errors
 	 * @param request
-	 * @param method
+	 * @return 返回 字段-对应message
 	 */
-	public void valid(Validations validations, Errors errors,
+	public Map<String, String> valid(Validations validations,
 			HttpServletRequest request);
 
 }

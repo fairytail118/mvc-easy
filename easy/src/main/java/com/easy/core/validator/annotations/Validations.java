@@ -53,11 +53,4 @@ public @interface Validations {
 	 */
 	public StringLengthValidator[] stringLengthValidators() default {};
 
-	/**
-	 * 验证错误中断
-	 * 
-	 * @return
-	 */
-	public boolean interruptForError() default true;
-
 }
