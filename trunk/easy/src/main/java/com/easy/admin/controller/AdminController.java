@@ -52,7 +52,7 @@ public class AdminController extends BaseController {
 			model.put("admin", admin);
 		}
 
-		return "admin/input";
+		return "admin/admin_input";
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class AdminController extends BaseController {
 		page.setCriteria(admin);
 		adminService.page(page);
 		model.put("page", page);
-		return "admin/list";
+		return "admin/admin_list";
 	}
 
 	/**
