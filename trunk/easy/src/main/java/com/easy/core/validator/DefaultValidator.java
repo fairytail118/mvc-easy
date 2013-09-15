@@ -3,134 +3,71 @@
  */
 package com.easy.core.validator;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-
-import com.easy.core.validator.annotations.EmailValidator;
-import com.easy.core.validator.annotations.NumberRangeValidator;
-import com.easy.core.validator.annotations.NumberValidator;
-import com.easy.core.validator.annotations.RegexValidator;
-import com.easy.core.validator.annotations.RequiredStringValidator;
-import com.easy.core.validator.annotations.RequiredValidator;
-import com.easy.core.validator.annotations.StringLengthValidator;
-import com.easy.core.validator.annotations.Validations;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.util.Assert;
 
 /**
  * 
  * @author wy
- * @version v 0.1 2013-9-10 下午10:58:30 wy Exp $
+ * @version v 0.1 2013-9-15 上午9:12:32 wy Exp $
  */
-public class DefaultValidator implements Validator {
+public class DefaultValidator extends AbstractValidator implements
+		InitializingBean {
+
+	/** 资源文件支持 */
+	private ResourceBundleMessageSource messageSource;
 
 	/**
-	 * @see com.easy.core.validator.Validator#valid(com.easy.core.validator.annotations.Validations,
-	 *      org.springframework.validation.Errors,
+	 * Setter method for property <tt>MessageSource</tt>.
+	 * 
+	 * @param MessageSource
+	 *            value to be assigned to property MessageSource
+	 */
+	public void setMessageSource(ResourceBundleMessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
+	/**
+	 * @see com.easy.core.validator.AbstractValidator#handleResult(java.util.List,
 	 *      javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	public void valid(Validations validations, Errors errors,
+	public Map<String, String> handleResult(List<ValidatorResult> list,
 			HttpServletRequest request) {
-		List<ValidatorResult> list = new ArrayList<ValidatorResult>();
 
-		// 邮箱验证
-		EmailFieldValidator emailFieldValidator = new EmailFieldValidator();
-		ValidatorResult result = null;
+		Map<String, String> map = new LinkedHashMap<String, String>();
 
-		for (EmailValidator validator : validations.emailValidators()) {
-			result = emailFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-
-		// 数字验证
-		NumberFieldValidator numberFieldValidator = new NumberFieldValidator();
-		for (NumberValidator validator : validations.numberValidators()) {
-			result = numberFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-
-		// 数字范围
-		NumberRangeFieldValidator numberRangeFieldValidator = new NumberRangeFieldValidator();
-		for (NumberRangeValidator validator : validations
-				.numberRangeValidators()) {
-			result = numberRangeFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-
-		// 正则验证
-		RegexFieldValidator regexFieldValidator = new RegexFieldValidator();
-		for (RegexValidator validator : validations.regexValidators()) {
-			result = regexFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-
-		// 必填字段
-		RequiredFieldValidator requiredFieldValidator = new RequiredFieldValidator();
-		for (RequiredValidator validator : validations.requiredValidators()) {
-			result = requiredFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-
-		// 必填字符
-		RequiredStringFieldValidator requiredStringFieldValidator = new RequiredStringFieldValidator();
-		for (RequiredStringValidator validator : validations
-				.requiredStringValidators()) {
-			result = requiredStringFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-		// 字符串长度
-		StringLengthFieldValidator stringLengthFieldValidator = new StringLengthFieldValidator();
-		for (StringLengthValidator validator : validations
-				.stringLengthValidators()) {
-			result = stringLengthFieldValidator.isValid(validator, request);
-			if (result.isSuccess()) {
-				continue;
-			}
-			list.add(result);
-		}
-
-		if (list.isEmpty()) {
-			return;
-		}
-
-		// 如果错误中断
-		if (validations.interruptForError()) {
-
-			result = list.get(0);
-
-			ValidationUtils.rejectIfEmpty(errors, result.getField(),
-					result.getKey(), result.getValidParam().values().toArray(),
-					result.getMessage());
-
-			return;
-		}
 		for (ValidatorResult r : list) {
-			ValidationUtils.rejectIfEmpty(errors, r.getField(), r.getKey(), r
-					.getValidParam().values().toArray(), r.getMessage());
+			String msg = r.getMessage();
+			if (StringUtils.isNotBlank(r.getKey())) {
+				msg = messageSource.getMessage(r.getKey(), r.getValues(),
+						r.getMessage(), request.getLocale());
+			}
+			if (StringUtils.isEmpty(msg)) {
+				log.warn(
+						"表单验证field:{}时根据key{}默认message{}获取的验证错误字符串为空",
+						new String[] { r.getField(), r.getKey(), r.getMessage() });
+				msg = "无对应的message";
+			}
+			map.put(r.getField(), msg);
 		}
+		return map;
+	}
 
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(messageSource, "表单验证setMessageSource为空!");
 	}
 
 }

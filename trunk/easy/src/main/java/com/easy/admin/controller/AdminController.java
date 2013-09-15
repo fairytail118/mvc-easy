@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +17,8 @@ import com.easy.admin.service.AdminService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
 import com.easy.core.mvc.result.Result;
+import com.easy.core.utils.RequestUtils;
+import com.easy.core.validator.annotations.RequiredStringValidator;
 import com.easy.core.validator.annotations.Validations;
 
 /**
@@ -34,22 +35,16 @@ public class AdminController extends BaseController {
 	private AdminService adminService;
 
 	/**
-	 * 进入编辑或者新增
+	 * 进入编辑页面
 	 * 
 	 * @param request
 	 * @param model
 	 * @param id
-	 * @param errors
 	 * @return
 	 */
-	@Validations(requiredStringValidators = {
-
-	}, stringLengthValidators = {
-
-	})
 	@RequestMapping(value = "/admin_input")
 	public String input(HttpServletRequest request, ModelMap model,
-			@RequestParam(value = "id", required = false) Long id, Errors errors) {
+			@RequestParam(value = "id", required = false) Long id) {
 
 		if (id != null) {
 			Admin admin = adminService.getByPrimaryKey(id);
@@ -67,10 +62,15 @@ public class AdminController extends BaseController {
 	 * @param admin
 	 * @return
 	 */
+	@Validations(requiredStringValidators = { @RequiredStringValidator(field = "name", key = "admin.name", trim = true) })
 	@RequestMapping(value = "/admin_save")
 	public String save(HttpServletRequest request, ModelMap model, Admin admin) {
 
-		adminService.save(admin);
+		if (RequestUtils.hasErrors(request)) {
+			return "admin/input";
+		}
+
+		// adminService.save(admin);
 
 		return "redirect:admin_list";
 	}

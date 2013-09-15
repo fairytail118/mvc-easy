@@ -42,5 +42,5 @@ public @interface NumberValidator {
 	 * 
 	 * @return
 	 */
-	String field() default "";
+	String field();
 }

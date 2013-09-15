@@ -35,6 +35,6 @@ public @interface RequiredValidator {
      * 
      * @return
      */
-    String field() default "";
+    String field();
 
 }

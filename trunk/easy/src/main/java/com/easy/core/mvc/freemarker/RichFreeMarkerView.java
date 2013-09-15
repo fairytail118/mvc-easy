@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 import com.easy.core.bean.SystemConfig;
+import com.easy.core.utils.RequestUtils;
 
 /**
  * 增加freemarker中常量信息
@@ -34,5 +35,6 @@ public class RichFreeMarkerView extends FreeMarkerView {
 		// TODO 增加系统的配置信息,需要替换动态读取
 		model.put("easySystem", new SystemConfig("Easy系统", "Version 1.0"));
 
+		model.put("formErrors", RequestUtils.getFormErrors(request));
 	}
 }

@@ -13,8 +13,9 @@
 	<mvc:default-servlet-handler />
 
 	<!-- 激活@Controller模式 -->
-	<mvc:annotation-driven /><!-- <mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的 -->
-	
+	<mvc:annotation-driven /><!-- <mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 
+		两个bean,是spring MVC为@Controllers分发请求所必须的 -->
+
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="com.easy.*.controller">
 	</context:component-scan>
@@ -81,8 +82,11 @@
 
 
 	<!-- 文件上传配置 -->
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >
-		<property name="defaultEncoding"><value>UTF-8</value></property>
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
 		<property name="maxUploadSize">
 			<value>104857600</value>
 		</property>
@@ -90,7 +94,7 @@
 			<value>4096</value>
 		</property>
 	</bean>
-	
+
 	<!-- 异常处理类 -->
 	<bean id="exceptionHandler" class="com.easy.core.mvc.CustomHandlerExceptionResolver" />
 
@@ -129,6 +133,17 @@
 			</props>
 		</property>
 	</bean>
+
+	<!-- 资源文件 -->
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>resources/messages</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -138,6 +153,19 @@
 					<list>
 						<value>login</value>
 					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+		<!-- 验证拦截 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.easy.core.mvc.interceptor.EasyValidatorInterceptor">
+				<property name="validator">
+					<bean class="com.easy.core.validator.DefaultValidator">
+						<property name="messageSource">
+							<ref bean="messageSource" />
+						</property>
+					</bean>
 				</property>
 			</bean>
 		</mvc:interceptor>

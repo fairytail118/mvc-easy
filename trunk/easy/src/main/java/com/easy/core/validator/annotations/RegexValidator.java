@@ -35,7 +35,7 @@ public @interface RegexValidator {
      * 
      * @return
      */
-    String field() default "";
+    String field();
     
     /**
      * 正则表达式

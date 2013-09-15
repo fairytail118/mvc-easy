@@ -52,6 +52,6 @@ public @interface StringLengthValidator {
 	 * 
 	 * @return
 	 */
-	String field() default "";
+	String field();
 
 }

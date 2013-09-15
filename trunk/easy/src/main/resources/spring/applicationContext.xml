@@ -28,16 +28,6 @@
 	<!-- 定时器启动 -->
 	<task:annotation-driven />
 
-	<!-- 资源文件 -->
-	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
-		<property name="basenames">
-			<list>
-				<value>resources/messages</value>
-			</list>
-		</property>
-	</bean>
-
 	<!-- 配置文件 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

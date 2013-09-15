@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.easy.core.test.EasyTest;
-import com.easy.core.utils.CacheUtil;
+import com.easy.core.utils.CacheUtils;
 
 /**
  * 
@@ -21,9 +21,9 @@ public class CacheTest extends EasyTest {
 
 		String value = "123";
 
-		CacheUtil.set("test", value);
+		CacheUtils.set("test", value);
 
-		Assert.assertEquals(value, CacheUtil.get("test"));
+		Assert.assertEquals(value, CacheUtils.get("test"));
 
 	}
 
@@ -32,7 +32,7 @@ public class CacheTest extends EasyTest {
 
 		String value = "123";
 
-		Assert.assertEquals(value, CacheUtil.get("test"));
+		Assert.assertEquals(value, CacheUtils.get("test"));
 
 	}
 

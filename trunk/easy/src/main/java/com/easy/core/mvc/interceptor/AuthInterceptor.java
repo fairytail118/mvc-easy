@@ -14,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.easy.core.utils.CookieUtils;
-
 /**
  * 登录拦截
  * 
