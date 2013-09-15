@@ -22,7 +22,6 @@
 	<update id="update" parameterType="Admin">
 		UPDATE
 			ADMIN
-		SET
 		<set>
 			<if test="createTime!=null">
 			createTime = #{createTime},
