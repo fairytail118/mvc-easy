@@ -21,8 +21,10 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 .text_l{text-align: left}
 .text_c{text-align: center}
 
-
-
+/**浮动*/
+.float_r{float: right}
+.float_l{float: left}
+.float_c{float:none;}
 
 /** color*/
 .c666{color: #666;}
@@ -44,3 +46,4 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 
 /**边距*/
 .ml5{margin-left: 5px}
+.ml20{margin-left: 20px}

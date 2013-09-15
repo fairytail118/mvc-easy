@@ -72,7 +72,7 @@ public class AdminController extends BaseController {
 	public String save(HttpServletRequest request, ModelMap model, Admin admin) {
 
 		if (RequestUtils.hasErrors(request)) {
-			return "admin/input";
+			return "admin/admin_input";
 		}
 
 		adminService.save(admin);

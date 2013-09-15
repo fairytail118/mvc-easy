@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>管理员管理-${easySystem.name}${easySystem.version}</title>
+<title>管理员列表-${easySystem.name} ${easySystem.version}</title>
 <#include "/templates/common/admin_head.ftl">
 </head>
 <body>
