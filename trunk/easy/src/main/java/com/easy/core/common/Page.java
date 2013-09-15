@@ -18,7 +18,7 @@ public class Page<T> implements Serializable {
     private static final long serialVersionUID  = 1896622323272784569L;
 
     /** 默认显示条数 */
-    private static final int  DEFAULT_PAGE_SIZE = 20;
+    private static final int  DEFAULT_PAGE_SIZE = 15;
 
     /** 数据对象 */
     private List<T>           list;

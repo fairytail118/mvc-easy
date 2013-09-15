@@ -136,7 +136,8 @@ $.easy = {
 			// 搜索之前
 			before : function() {
 				return true;
-			}
+			},
+			currentPage : 'input[name="page"]'
 
 		};
 
@@ -155,7 +156,12 @@ $.easy = {
 				// 替换原有的
 				$(options.box).replaceWith(box.hide());
 				if (options.before(options)) {
+					form.find(options.currentPage).val("1");
 					form.submit();
+					return true;
+				}
+				else{
+					return false;
 				}
 			},
 			cancel : true
@@ -186,43 +192,6 @@ $.easy = {
 };
 
 $.extend($.fn, {
-	/**
-	 * 搜索
-	 */
-	easy_search : function(options) {
-		var defaults = {
-			//
-			box : 'table.search_box',
-			// 提交的表单
-			form : 'form[name="listForm"]',
-			// 搜索之前
-			before : function() {
-				return true;
-			}
-
-		};
-
-		// 参数
-		var options = $.extend(true, defaults, options);
-
-		// 搜索框
-		var box = $(options.box).clone(true).show();
-		var form = $(options.form);
-
-		$.dialog({
-			title : '搜索',
-			content : box,
-			okVal : '搜索',
-			ok : function() {
-				// 替换原有的
-				$(options.box).replaceWith(box.hide());
-				if (options.before(options)) {
-					form.submit();
-				}
-			},
-			cancel : true
-		});
-	},
 
 	/**
 	 * 删除
@@ -237,13 +206,13 @@ $.extend($.fn, {
 			// 表格元素
 			table : 'table.table_list tbody',
 			// 多选框元素
-			key : 'input[name="key"]:checked',
+			key : 'input[name="key"]',
 		};
 
 		// 参数
 		var options = $.extend(true, defaults, options);
 
-		var checkboxes = $(options.table + " " + options.key);
+		var checkboxes = $(options.table + " " + options.key+":checked");
 
 		var url = $(this).attr("url");
 		if (checkboxes.size() == 0) {
