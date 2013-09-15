@@ -166,12 +166,12 @@ public class JdbcTableMetedataReader {
 		Map<String, String> colum=getTableCloums("admin");
 		String table="admin";
 		String pkname="id";
-		System.out.println("insert sql:"+getMybatisInsertSql(colum, table, pkname));
-		System.out.println("update sql:"+getMybatisUpdateSql(colum, table, pkname));
-		System.out.println("delete sql:"+getMybatisDeleteSql(table, pkname));
-		System.out.println("select sql:"+getMybatisSelectSql(table, pkname));
-		System.out.println("cloums:"+getCloumnStr(colum));
-		System.out.println("result map:"+getResultMap(colum, pkname));
+//		System.out.println("insert sql:"+getMybatisInsertSql(colum, table, pkname));
+//		System.out.println("update sql:"+getMybatisUpdateSql(colum, table, pkname));
+//		System.out.println("delete sql:"+getMybatisDeleteSql(table, pkname));
+//		System.out.println("select sql:"+getMybatisSelectSql(table, pkname));
+//		System.out.println("cloums:"+getCloumnStr(colum));
+//		System.out.println("result map:"+getResultMap(colum, pkname));
 		
 	}
 
