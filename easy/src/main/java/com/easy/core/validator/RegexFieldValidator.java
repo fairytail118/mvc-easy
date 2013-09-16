@@ -6,7 +6,7 @@ package com.easy.core.validator;
 import javax.servlet.http.HttpServletRequest;
 
 import com.easy.core.validator.annotations.RegexValidator;
-import com.easy.core.validator.util.RegexUtil;
+import com.easy.core.validator.utils.RegexUtil;
 
 /**
  * 

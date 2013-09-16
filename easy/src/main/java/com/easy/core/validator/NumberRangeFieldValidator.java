@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 import com.easy.core.validator.annotations.NumberRangeValidator;
-import com.easy.core.validator.util.RegexUtil;
+import com.easy.core.validator.utils.RegexUtil;
 
 /**
  * 

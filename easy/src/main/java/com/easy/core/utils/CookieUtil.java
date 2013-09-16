@@ -20,23 +20,21 @@ import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.easy.core.common.Constants;
+
 /**
  * cookie操作
  * 
  * @author wy
  * @version v 0.1 2013-9-14 下午12:15:25 wy Exp $
  */
-public class CookieUtils {
+public class CookieUtil {
 
 	/** 日志 */
-	private final static Logger log = LoggerFactory
-			.getLogger(CookieUtils.class);
+	private final static Logger log = LoggerFactory.getLogger(CookieUtil.class);
 
 	/** 查询条件的前缀 */
 	public final static String CRITERIA = "_criteria_";
-
-	/** 是否重定向过来 */
-	public final static String RELOAD = "realod";
 
 	/**
 	 * 增加查询条件到cookie
@@ -76,7 +74,7 @@ public class CookieUtils {
 		try {
 			String paramJson = new ObjectMapper().writeValueAsString(paramsMap);
 			addCookie(request, response, CRITERIA + url,
-					URLEncoder.encode(paramJson, "UTF-8"), -1, "");
+					URLEncoder.encode(paramJson, Constants.UTF8), -1, "");
 		} catch (IOException ex) {
 			log.error("设置查询条件时转换request的表单参数出错", ex);
 		} catch (Exception ex) {
@@ -115,7 +113,7 @@ public class CookieUtils {
 				return paramsMap;
 			}
 
-			String json = URLDecoder.decode(value, "UTf-8");
+			String json = URLDecoder.decode(value, Constants.UTF8);
 			return new ObjectMapper().readValue(json,
 					new TypeReference<HashMap<String, String>>() {
 					});
