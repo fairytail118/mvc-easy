@@ -164,6 +164,15 @@ public class Criteria implements Serializable {
 	}
 
 	/**
+	 * 复制
+	 * 
+	 * @param criteria
+	 */
+	public void copy(Map<String, Object> criteria) {
+		this.criteria.putAll(criteria);
+	}
+
+	/**
 	 * 移除某个key
 	 * 
 	 * @param key
