@@ -136,10 +136,12 @@
 
 	<!-- 资源文件 -->
 	<bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="0" />
 		<property name="basenames">
 			<list>
-				<value>resources/messages</value>
+				<!-- 默认从contextPath下加载 -->
+				<value>classpath:resources/messages</value>
 			</list>
 		</property>
 	</bean>
@@ -161,11 +163,7 @@
 			<mvc:mapping path="/**" />
 			<bean class="com.easy.core.mvc.interceptor.EasyValidatorInterceptor">
 				<property name="validator">
-					<bean class="com.easy.core.validator.DefaultValidator">
-						<property name="messageSource">
-							<ref bean="messageSource" />
-						</property>
-					</bean>
+					<bean class="com.easy.core.validator.DefaultValidator" />
 				</property>
 			</bean>
 		</mvc:interceptor>

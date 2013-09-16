@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.util.Assert;
+
+import com.easy.core.mvc.MessageResolver;
 
 /**
  * 
@@ -21,19 +21,6 @@ import org.springframework.util.Assert;
  */
 public class DefaultValidator extends AbstractValidator implements
 		InitializingBean {
-
-	/** 资源文件支持 */
-	private ResourceBundleMessageSource messageSource;
-
-	/**
-	 * Setter method for property <tt>MessageSource</tt>.
-	 * 
-	 * @param MessageSource
-	 *            value to be assigned to property MessageSource
-	 */
-	public void setMessageSource(ResourceBundleMessageSource messageSource) {
-		this.messageSource = messageSource;
-	}
 
 	/**
 	 * @see com.easy.core.validator.AbstractValidator#handleResult(java.util.List,
@@ -52,8 +39,8 @@ public class DefaultValidator extends AbstractValidator implements
 			}
 			String msg = null;
 			if (StringUtils.isNotBlank(r.getKey())) {
-				msg = messageSource.getMessage(r.getKey(), r.getValidParam()
-						.values().toArray(), request.getLocale());
+				msg = MessageResolver.getMessage(request, r.getKey(), r
+						.getValidParam().values().toArray());
 			}
 			if (StringUtils.isBlank(msg) && StringUtils.isBlank(r.getMessage())) {
 				log.warn(
@@ -73,7 +60,7 @@ public class DefaultValidator extends AbstractValidator implements
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(messageSource, "表单验证setMessageSource为空!");
+		log.info("DefaultValidator is Init");
 	}
 
 }
