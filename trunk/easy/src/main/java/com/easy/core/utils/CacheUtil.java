@@ -21,11 +21,11 @@ import org.springframework.stereotype.Component;
  * @version v 0.1 2013-9-14 下午2:59:58 wy Exp $
  */
 @Component
-public class CacheUtils {
+public class CacheUtil {
 
 	/** 日志 */
 	protected final static Logger log = LoggerFactory
-			.getLogger(CacheUtils.class);
+			.getLogger(CacheUtil.class);
 
 	/** 对应的ehcache.xml中的缓存名称 */
 	public final static String DEFAULT_EASY_CACHE = "easyCache";
@@ -40,7 +40,7 @@ public class CacheUtils {
 	 */
 	@Autowired
 	public void setCacheManager(CacheManager cacheManager) {
-		CacheUtils.cacheManager = cacheManager;
+		CacheUtil.cacheManager = cacheManager;
 	}
 
 	/**
@@ -98,6 +98,17 @@ public class CacheUtils {
 	}
 
 	/**
+	 * 判断缓存是否存在
+	 * 
+	 * @param name
+	 * @param key
+	 * @return
+	 */
+	public boolean exist(String name, String key) {
+		return getCache(name).isKeyInCache(key);
+	}
+
+	/**
 	 * 获取缓存值
 	 * 
 	 * @param key
@@ -125,6 +136,16 @@ public class CacheUtils {
 	public static void set(String key, Serializable value) {
 
 		set(DEFAULT_EASY_CACHE, key, value);
+	}
+
+	/**
+	 * 判断缓存是否存在
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public boolean exist(String key) {
+		return getCache(DEFAULT_EASY_CACHE).isKeyInCache(key);
 	}
 
 }

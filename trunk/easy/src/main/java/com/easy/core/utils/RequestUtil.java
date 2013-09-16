@@ -6,9 +6,12 @@ package com.easy.core.utils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+
+import com.easy.core.common.Constants;
 
 /**
  * request的操作
@@ -16,7 +19,7 @@ import org.apache.commons.lang.StringUtils;
  * @author wy
  * @version v 0.1 2013-9-10 下午9:26:44 wy Exp $
  */
-public class RequestUtils {
+public class RequestUtil {
 
 	/** 表单的错误 */
 	public final static String FORM_ERROR = "formErros";
@@ -97,4 +100,31 @@ public class RequestUtils {
 		return !getFormErrors(request).isEmpty();
 	}
 
+	/**
+	 * 获得请求的session id，但是HttpServletRequest#getRequestedSessionId()方法有一些问题。
+	 * 当存在部署路径的时候，会获取到根路径下的jsessionid。
+	 * 
+	 * @see HttpServletRequest#getRequestedSessionId()
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public static String getRequestedSessionId(HttpServletRequest request) {
+		String sid = request.getRequestedSessionId();
+		String ctx = request.getContextPath();
+		// 如果session id是从url中获取，或者部署路径为空，那么是在正确的。
+		if (request.isRequestedSessionIdFromURL() || StringUtils.isBlank(ctx)) {
+			return sid;
+		} else {
+			// 手动从cookie获取
+			Cookie cookie = CookieUtil.getCookie(request,
+					Constants.JSESSION_COOKIE);
+			if (cookie != null) {
+				return cookie.getValue();
+			} else {
+				return null;
+			}
+		}
+
+	}
 }

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.core.validator.util;
+package com.easy.core.validator.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -18,7 +18,7 @@ import com.easy.admin.service.AdminService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
 import com.easy.core.mvc.result.Result;
-import com.easy.core.utils.RequestUtils;
+import com.easy.core.utils.RequestUtil;
 import com.easy.core.validator.annotations.RequiredStringValidator;
 import com.easy.core.validator.annotations.StringLengthValidator;
 import com.easy.core.validator.annotations.Validations;
@@ -70,7 +70,7 @@ public class AdminController extends BaseController {
 	@RequestMapping(value = "/admin_save")
 	public String save(HttpServletRequest request, ModelMap model, Admin admin) {
 
-		if (RequestUtils.hasErrors(request)) {
+		if (RequestUtil.hasErrors(request)) {
 			return "admin/admin_input";
 		}
 

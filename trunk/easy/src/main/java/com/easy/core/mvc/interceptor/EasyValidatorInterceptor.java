@@ -14,7 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.easy.core.utils.RequestUtils;
+import com.easy.core.utils.RequestUtil;
 import com.easy.core.validator.Validator;
 import com.easy.core.validator.annotations.Validations;
 
@@ -62,7 +62,7 @@ public class EasyValidatorInterceptor extends HandlerInterceptorAdapter
 		Validations validations = method.getAnnotation(Validations.class);
 
 		Map<String, String> map = validator.valid(validations, request);
-		RequestUtils.setFormErrors(request, map);
+		RequestUtil.setFormErrors(request, map);
 
 		return true;
 
