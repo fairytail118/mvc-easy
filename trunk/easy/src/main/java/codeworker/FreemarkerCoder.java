@@ -10,8 +10,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Properties;
-
 import codeworker.config.ConfigPropertiesUtil;
 import codeworker.db.TableUtil;
 import freemarker.template.Configuration;
@@ -28,12 +26,12 @@ public class FreemarkerCoder {
 			
 			configuration.setDirectoryForTemplateLoading(new File(ConfigPropertiesUtil.get("freemarker.templateDirectory")));
 			configuration.setEncoding(Locale.getDefault(),ConfigPropertiesUtil.get("freemarker.encoding"));
+			configuration.setOutputEncoding(ConfigPropertiesUtil.get("freemarker.encoding"));
 		}catch (Exception e) {
 			System.err.println("freemarker 初始化异常:"+e);
+			System.exit(0);
 		}
 	}
-	
-	private static final String basepath=ConfigPropertiesUtil.get("project.src.realpath");//.java文件的基准目录
 
 	//生成文件的基础方法
 	private static void generateCode(String templateFile,String outFilePath,String filename,Map<String, Object> data){
@@ -173,6 +171,7 @@ public class FreemarkerCoder {
 	 * @param controller_package 该实体类对应的controller所在的包名,如com.easy.role.controller
 	 * */
 	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,PutDataToTemplate callback){
+		String basepath=ConfigPropertiesUtil.get("project.src.realpath");//.java文件的基准目录
 		final Map<String, Object> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
 		if(callback!=null){
 			callback.putData(datas);
@@ -248,6 +247,7 @@ public class FreemarkerCoder {
 	 * @param tableName 实体类对应的数据表名
 	 * */
 	public static void execute_generateEntityClass(String entityName,String entity_package,String tableName,PutDataToTemplate callback){
+		String basepath=ConfigPropertiesUtil.get("project.src.realpath");//.java文件的基准目录
 		final Map<String, Object> datas=createEntityDataMap(entityName, entity_package, tableName);
 		if(callback!=null){
 			callback.putData(datas);
@@ -338,7 +338,7 @@ public class FreemarkerCoder {
 	public static void main(String[] args) {
 		//使用方法：只需配置好代码生成框架中的code.properties和jdbc.properties即可
 		//可以通过generateAll()生成所以文件，也可以通过分别调用生成相应部分
-
+		//ConfigPropertiesUtil.setCodeProperties("codeworker/code.properties");
 		String entityName="Role";
 		String entityPackage="com.easy.admin.entity";
 		String dao_package="com.easy.admin.dao";

@@ -57,4 +57,24 @@ public class MysqlProvider extends JdbcProvider {
         return comment;
     }
 
+	@Override
+	public String dbTypeStringToJavaTypeString(String dbtype) {
+		String javatypeString = null;
+		if (dbtype.equalsIgnoreCase("BIGINT")) {
+			javatypeString = "Long";
+		} else if (dbtype.equalsIgnoreCase("DATETIME")) {
+			javatypeString = "java.util.Date";
+		} else if (dbtype.equalsIgnoreCase("VARCHAR")) {
+			javatypeString = "String";
+		} else if (dbtype.equalsIgnoreCase("TINYINT")) {
+			javatypeString = "Boolean";
+		} else if (dbtype.equalsIgnoreCase("DATETIME")) {
+			javatypeString = "java.util.Date";
+		} else {
+			javatypeString = "其他";// 根据实际情况在此处调整
+		}
+
+		return javatypeString;
+	}
+
 }
