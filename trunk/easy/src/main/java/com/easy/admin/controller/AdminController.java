@@ -69,7 +69,6 @@ public class AdminController extends BaseController {
 	)
 	@RequestMapping(value = "/admin_save")
 	public String save(HttpServletRequest request, ModelMap model, Admin admin) {
-
 		if (RequestUtil.hasErrors(request)) {
 			return "admin/admin_input";
 		}

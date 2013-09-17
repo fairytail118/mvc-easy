@@ -1,16 +1,11 @@
-package codeworker;
+package codeworker.db;
+
+import codeworker.db.model.DbEnum;
 
 /**
  * 数据库类型与Java类型转换的简单工厂
  * */
 public class DbTypeToJavaTypeSimpleFactory {
-
-	/**
-	 * 表示数据库的种类
-	 * */
-	public enum DbEnum {
-		MYSQL, ORACLE, SQLSERVER
-	}
 
 	private static DbEnum currentDb = DbEnum.MYSQL;// 当前使用的数据库
 

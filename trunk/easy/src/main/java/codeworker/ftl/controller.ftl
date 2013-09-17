@@ -14,7 +14,8 @@ import ${entity_package}.${entity};
 import ${service_package}.${entity}Service;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
-import com.easy.core.mvc.result.Result;
+import org.springframework.beans.BeanUtils;
+import com.easy.core.utils.RequestUtil;
 
 /**
  * 
@@ -45,7 +46,7 @@ public class ${entity}Controller extends BaseController {
 			model.put("${lower_entity}", ${lower_entity});
 		}
 
-		return "${lower_entity}/input";
+		return "${lower_entity}/${lower_entity}_input";
 	}
 
 	/**
@@ -56,9 +57,20 @@ public class ${entity}Controller extends BaseController {
 	 * @param ${lower_entity}
 	 * @return
 	 */
+	// @Validations(requiredStringValidators = { 
+		//	@RequiredStringValidator(field = "name", key = "admin.name", trim = true) }, 
+			//stringLengthValidators = { @StringLengthValidator(field = "name", key = "admin.name.length", trim = true, maxLength = "12", minLength = "6") }
+
+	)
 	@RequestMapping(value = "/${lower_entity}_save")
 	public String save(HttpServletRequest request, ModelMap model, ${entity} ${lower_entity}) {
-
+		if (RequestUtils.hasErrors(request)) {
+			return "${lower_entity}/${lower_entity}_input";
+		}
+		${entity} entity=new ${entity}();
+		//拷贝，去掉重复的
+		BeanUtils.copyProperties(${lower_entity}, entity, new String[] { "createUser",
+				"createTime", "modifyUser", "modifyTime" });
 		${lower_entity}Service.save(${lower_entity});
 
 		return "redirect:${lower_entity}_list";
@@ -74,12 +86,16 @@ public class ${entity}Controller extends BaseController {
 	 */
 	@RequestMapping(value = "/${lower_entity}_list")
 	public String list(HttpServletRequest request, ModelMap model,
-			Page<${entity}> page, ${entity} ${lower_entity}) {
+			@RequestParam(value = "page", defaultValue = "1") int currentPage,
+			${entity} ${lower_entity}) {
+
+		Page<${entity}> page = new Page<${entity}>();
+		page.setCurrentPage(currentPage);
 		// 设置查询条件
 		page.setCriteria(${lower_entity});
 		${lower_entity}Service.page(page);
 		model.put("page", page);
-		return "${lower_entity}/list";
+		return "${lower_entity}/${lower_entity}_list";
 	}
 
 	/**
