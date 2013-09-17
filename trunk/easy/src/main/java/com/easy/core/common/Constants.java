@@ -27,4 +27,9 @@ public final class Constants {
 	 */
 	public static final String JSESSION_URL = "jsessionid";
 
+	/**
+	 * 验证码
+	 */
+	public static final String CAPTCHA_CODE = "captcha_code";
+
 }
