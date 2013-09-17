@@ -37,6 +37,11 @@ public interface DatabaseProvider {
      * @return
      */
     public List<String> getPrimaryColumns(String tableName);
+    
+    /**
+	 * 所转换成的Java类型必须是完整的类限定名，如：java.util.Date, java.lang包中的类只需要类名即可
+	 * */
+	String dbTypeStringToJavaTypeString(String dbtype);
 
    
 

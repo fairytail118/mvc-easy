@@ -19,7 +19,7 @@ import codeworker.db.model.Column;
  * @author wy
  * @version v 0.1 2013-6-2 上午9:46:15 wy Exp $
  */
-public class JdbcProvider implements DatabaseProvider {
+public abstract class JdbcProvider implements DatabaseProvider {
 
     /** 日志对象 */
     protected final Logger LOG = Logger.getLogger(getClass());
@@ -69,7 +69,7 @@ public class JdbcProvider implements DatabaseProvider {
                 String comment = rs.getString("REMARKS");
                 boolean autoincrement = BooleanUtils.toBoolean(rs.getString("IS_AUTOINCREMENT"));
                 String type = rs.getString("TYPE_NAME");
-                String clazz = DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(type);
+                String clazz = dbTypeStringToJavaTypeString(type);
                 Column column = new Column();
                 column.setComment(comment);
                 column.setColumn(name);
@@ -122,5 +122,6 @@ public class JdbcProvider implements DatabaseProvider {
         }
         return list;
     }
+
 
 }
