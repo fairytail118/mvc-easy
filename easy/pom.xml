@@ -12,6 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.1.1.RELEASE</spring.version>
+		<spring.security.version>3.0.7.RELEASE</spring.security.version>
 		<mybatis.spring.version>1.1.1</mybatis.spring.version>
 		<mybatis.ehcache.version>1.0.1</mybatis.ehcache.version>
 		<mybatis.version>3.1.1</mybatis.version>
@@ -24,11 +25,6 @@
 		<bonecp.version>0.7.1.RELEASE</bonecp.version>
 	</properties>
 	<dependencies>
-		<!-- <dependency>
-			<groupId>c3p0</groupId>
-			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
-		</dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -112,11 +108,11 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.jolbox</groupId>
-		    <artifactId>bonecp</artifactId>
-		    <version>${bonecp.version}</version>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+			<version>${bonecp.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
@@ -154,23 +150,53 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.3</version>
 		</dependency>
+		<!-- spring security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-acl</artifactId>
+			<version>${spring.security.version}</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
 		<repository>
 			<id>nexus</id>
-			<!-- <url>http://183.129.158.178:8081/nexus/content/groups/public/</url> -->
-			<url>http://repo1.maven.org</url>
+			<url>http://183.129.158.178:8081/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
 
-	<pluginRepositories>    
-    <pluginRepository>    
-     <id>nexus</id>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexus</id>
 			<url>http://183.129.158.178:8081/nexus/content/groups/public/</url>
-    </pluginRepository>    
-  </pluginRepositories>    
-	
+		</pluginRepository>
+	</pluginRepositories>
+
 	<build>
 		<finalName>easy-war-${project.version}</finalName>
 		<pluginManagement>
