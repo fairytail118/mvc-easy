@@ -43,6 +43,7 @@ public class CaptchaServlet extends HttpServlet {
 		ServletOutputStream out = null;
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
+			request.getSession(true).removeAttribute(Constants.CAPTCHA_CODE);
 			Captcha captcha = new SpecCaptcha(100, 28, 4);// png格式验证码
 			captcha.out(os);
 			String code = captcha.text();
