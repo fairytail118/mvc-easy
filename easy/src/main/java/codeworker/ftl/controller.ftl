@@ -15,6 +15,7 @@ import ${service_package}.${entity}Service;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
 import org.springframework.beans.BeanUtils;
+import com.easy.core.mvc.result.Result;
 import com.easy.core.utils.RequestUtil;
 
 /**
@@ -57,14 +58,10 @@ public class ${entity}Controller extends BaseController {
 	 * @param ${lower_entity}
 	 * @return
 	 */
-	// @Validations(requiredStringValidators = { 
-		//	@RequiredStringValidator(field = "name", key = "admin.name", trim = true) }, 
-			//stringLengthValidators = { @StringLengthValidator(field = "name", key = "admin.name.length", trim = true, maxLength = "12", minLength = "6") }
-
-	)
+	
 	@RequestMapping(value = "/${lower_entity}_save")
 	public String save(HttpServletRequest request, ModelMap model, ${entity} ${lower_entity}) {
-		if (RequestUtils.hasErrors(request)) {
+		if (RequestUtil.hasErrors(request)) {
 			return "${lower_entity}/${lower_entity}_input";
 		}
 		${entity} entity=new ${entity}();
