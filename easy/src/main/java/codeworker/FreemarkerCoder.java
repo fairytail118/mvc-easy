@@ -11,6 +11,9 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
+
+import codeworker.config.ConfigPropertiesUtil;
+import codeworker.db.TableUtil;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -18,25 +21,24 @@ public class FreemarkerCoder {
 	
 	private FreemarkerCoder(){}
 	private static Configuration configuration=new Configuration();
-	private static Properties properties=new Properties();//代码生成相关配置
 	
 	//加载code.properties,初始化freemarker相关配置
 	static{
 		try{					
-			properties.load(FreemarkerCoder.class.getResourceAsStream("code.properties"));
-			configuration.setDirectoryForTemplateLoading(new File(properties.getProperty("freemarker.templateDirectory")));
-			configuration.setEncoding(Locale.getDefault(),properties.getProperty("freemarker.encoding"));
+			
+			configuration.setDirectoryForTemplateLoading(new File(ConfigPropertiesUtil.get("freemarker.templateDirectory")));
+			configuration.setEncoding(Locale.getDefault(),ConfigPropertiesUtil.get("freemarker.encoding"));
 		}catch (Exception e) {
 			System.err.println("freemarker 初始化异常:"+e);
 		}
 	}
 	
-	private static final String basepath=properties.getProperty("project.src.realpath");//.java文件的基准目录
+	private static final String basepath=ConfigPropertiesUtil.get("project.src.realpath");//.java文件的基准目录
 
 	//生成文件的基础方法
-	private static void generateCode(String templateFile,String outFilePath,String filename,Map<String, String> data){
+	private static void generateCode(String templateFile,String outFilePath,String filename,Map<String, Object> data){
 		try {			
-			Template template=configuration.getTemplate(templateFile, properties.getProperty("freemarker.encoding"));
+			Template template=configuration.getTemplate(templateFile, ConfigPropertiesUtil.get("freemarker.encoding"));
 			File file=new File(outFilePath);
 			if(!file.exists()){
 				file.mkdirs();
@@ -51,8 +53,8 @@ public class FreemarkerCoder {
 	}
 	
 	//生成Java文件(不含entity类)的相关数据变量
-	private static Map<String, String> createJavaDataMap(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
-		Map<String, String> datas=new HashMap<String, String>();
+	private static Map<String, Object> createJavaDataMap(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
+		Map<String, Object> datas=new HashMap<String, Object>();
 		datas.put("date",new Date().toLocaleString());
 		datas.put("controller_package", controller_package);		
 		datas.put("entity_package", entity_package);
@@ -68,32 +70,32 @@ public class FreemarkerCoder {
 	}
 	
 	//生成实体类文件的相关数据变量
-	private static Map<String, String> createEntityDataMap(String entityName,String entity_package,String tableName){
-		Map<String, String> datas=new HashMap<String, String>();
+	private static Map<String, Object> createEntityDataMap(String entityName,String entity_package,String tableName){
+		Map<String, Object> datas=new HashMap<String, Object>();
 		datas.put("entity_package", entity_package);
 		datas.put("entity", entityName);
 		datas.put("date",new Date().toLocaleString());
-		String javatype_declareString=generateJavaTypeDeclareString(JdbcTableMetedataReader.getTableCloums(tableName));//实体类中的字段声明字符串部分
+		String javatype_declareString=generateJavaTypeDeclareString(MybatisMapperFileUtil.getTableCloums(tableName));//实体类中的字段声明字符串部分
 		datas.put("entity_content", javatype_declareString);
 		return datas;
 	}
 	
 	
 	//生成mapper.xml文件的相关数据变量
-	private static Map<String, String> createMapperXmlDataMap(String entityName,String entityTableName,String pkname,String dao_package){
-		Map<String, String> datas=new HashMap<String, String>();
+	private static Map<String, Object> createMapperXmlDataMap(String entityName,String entityTableName,String pkname,String dao_package){
+		Map<String, Object> datas=new HashMap<String, Object>();
 		datas.put("dao_package", dao_package);
 		datas.put("entity", entityName);
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
 		datas.put("pkname", pkname);
-		Map<String, String> colum=JdbcTableMetedataReader.getTableCloums(entityTableName);
-		datas.put("insert_sql", JdbcTableMetedataReader.getMybatisInsertSql(colum, entityTableName, pkname));
-		datas.put("update_sql", JdbcTableMetedataReader.getMybatisUpdateSql(colum, entityTableName, pkname));
-		datas.put("delete_sql", JdbcTableMetedataReader.getMybatisDeleteSql(entityTableName, pkname));
-		datas.put("select_sql", JdbcTableMetedataReader.getMybatisSelectSql(entityTableName, pkname));
-		datas.put("cloumns", JdbcTableMetedataReader.getCloumnStr(colum));
-		datas.put("resultMap", JdbcTableMetedataReader.getResultMap(colum, pkname));
+		Map<String, String> colum=MybatisMapperFileUtil.getTableCloums(entityTableName);
+		datas.put("insert_sql", MybatisMapperFileUtil.getMybatisInsertSql(colum, entityTableName, pkname));
+		datas.put("update_sql", MybatisMapperFileUtil.getMybatisUpdateSql(colum, entityTableName, pkname));
+		datas.put("delete_sql", MybatisMapperFileUtil.getMybatisDeleteSql(entityTableName, pkname));
+		datas.put("select_sql", MybatisMapperFileUtil.getMybatisSelectSql(entityTableName, pkname));
+		datas.put("cloumns", MybatisMapperFileUtil.getCloumnStr(colum));
+		datas.put("resultMap", MybatisMapperFileUtil.getResultMap(colum, pkname));
 		return datas;
 	}
 	
@@ -103,15 +105,15 @@ public class FreemarkerCoder {
 		Iterator<String> cloumSet=cloums.keySet().iterator();
 		String cloum=null;
 		String cloum_type=null;
-		String javatype=null;
+		//String javatype=null;
 		while(cloumSet.hasNext()){
 			cloum=cloumSet.next();
 			if(cloum.equalsIgnoreCase("id") || cloum.equalsIgnoreCase("createUser") || cloum.equalsIgnoreCase("createTime") || cloum.equalsIgnoreCase("modifyUser") || cloum.equalsIgnoreCase("modifyTime")){
 				continue;//BaseEntity中的字段不需要再写
 			}
 			cloum_type=cloums.get(cloum);
-			javatype=DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(cloum_type);
-			str.append("\tprivate ").append(javatype).append(" ").append(cloum).append(";\n");
+			//javatype=DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(cloum_type);
+			str.append("\tprivate ").append(cloum_type).append(" ").append(cloum).append(";\n");
 		}
 		str.append("\n");
 		//getter/setter
@@ -123,10 +125,10 @@ public class FreemarkerCoder {
 				continue;//BaseEntity中的字段不需要再写
 			}
 			cloum_type=cloums.get(cloum);
-			javatype=DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(cloum_type);
+			//javatype=DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(cloum_type);
 			upperCloumName=cloum.substring(0, 1).toUpperCase()+cloum.substring(1);
-			str.append("\tpublic ").append(javatype).append(" get").append(upperCloumName).append("(){\n\t\treturn ").append(cloum).append(";\n\t}\n");
-			str.append("\tpublic void set").append(upperCloumName).append("(").append(javatype).append(" ").append(cloum).append(") {\n\t\t").append("this.").append(cloum).append("=").append(cloum).append(";\n\t}\n");
+			str.append("\tpublic ").append(cloum_type).append(" get").append(upperCloumName).append("(){\n\t\treturn ").append(cloum).append(";\n\t}\n");
+			str.append("\tpublic void set").append(upperCloumName).append("(").append(cloum_type).append(" ").append(cloum).append(") {\n\t\t").append("this.").append(cloum).append("=").append(cloum).append(";\n\t}\n");
 		}
 		return str.toString();
 	}
@@ -158,7 +160,7 @@ public class FreemarkerCoder {
 	 * @param controller_package 该实体类对应的controller所在的包名,如com.easy.role.controller
 	 * */
 	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
-		Map<String, String> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
+		Map<String, Object> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
 		String fileseparator_regex;//文件分隔符的正则表达式表示形式,用于将包名中的.替换成文件分隔符用
 		String osname=System.getProperties().getProperty("os.name");
 		if(osname.toLowerCase().indexOf("win")!=-1){
@@ -175,7 +177,7 @@ public class FreemarkerCoder {
 		}else {
 			dao_outpath=basepath+File.separator+daopackge_topath;
 		}
-		generateCode(properties.getProperty("freemarker.dao.filename"), dao_outpath, entityName+"Dao.java", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.dao.filename"), dao_outpath, entityName+"Dao.java", datas);
 		
 		//生成daoimp
 		String daoimpl_outpath;
@@ -185,7 +187,7 @@ public class FreemarkerCoder {
 		}else {
 			daoimpl_outpath=basepath+File.separator+daoimppackage_topath;
 		}
-		generateCode(properties.getProperty("freemarker.daoimpl.filename"), daoimpl_outpath, entityName+"DaoImpl.java", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.daoimpl.filename"), daoimpl_outpath, entityName+"DaoImpl.java", datas);
 		
 		//生成service接口
 		String service_outpath;
@@ -195,7 +197,7 @@ public class FreemarkerCoder {
 		}else {
 			service_outpath=basepath+File.separator+servicepackage_topath;
 		}
-		generateCode(properties.getProperty("freemarker.service.filename"), service_outpath, entityName+"Service.java", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.service.filename"), service_outpath, entityName+"Service.java", datas);
 		
 		//生成serviceimpl
 		String serviceimpl_outpath;
@@ -205,7 +207,7 @@ public class FreemarkerCoder {
 		}else {
 			serviceimpl_outpath=basepath+File.separator+serviceimplpackage_topath;
 		}
-		generateCode(properties.getProperty("freemarker.serviceimpl.filename"), serviceimpl_outpath, entityName+"ServiceImpl.java", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.serviceimpl.filename"), serviceimpl_outpath, entityName+"ServiceImpl.java", datas);
 		
 		//生成controller
 		String controller_outpath;
@@ -215,7 +217,7 @@ public class FreemarkerCoder {
 		}else {
 			controller_outpath=basepath+File.separator+controllerpackage_topath;
 		}
-		generateCode(properties.getProperty("freemarker.controller.filename"), controller_outpath, entityName+"Controller.java", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.controller.filename"), controller_outpath, entityName+"Controller.java", datas);
 		
 	}
 	
@@ -228,7 +230,7 @@ public class FreemarkerCoder {
 	 * @param tableName 实体类对应的数据表名
 	 * */
 	public static void execute_generateEntityClass(String entityName,String entity_package,String tableName){
-		Map<String, String> datas=createEntityDataMap(entityName, entity_package, tableName);
+		Map<String, Object> datas=createEntityDataMap(entityName, entity_package, tableName);
 		String entity_outpath=null;
 		String fileseparator_regex=getFileseparatorRegex();
 		String entitypackage_topath=entity_package.replaceAll("\\.", fileseparator_regex);
@@ -237,7 +239,7 @@ public class FreemarkerCoder {
 		}else {
 			entity_outpath=basepath+File.separator+entitypackage_topath;
 		}
-		generateCode(properties.getProperty("freemarker.entity.filename"), entity_outpath, entityName+".java", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.entity.filename"), entity_outpath, entityName+".java", datas);
 		
 	}
 	
@@ -249,8 +251,8 @@ public class FreemarkerCoder {
 	 * @param dao_package 该实体类对应的dao接口所在的包名,如com.easy.role.dao
 	 * */
 	public static void execute_generateMapperXml(String entityName,String entityTableName,String pkname,String dao_package){
-		Map<String, String> datas=createMapperXmlDataMap(entityName, entityTableName, pkname, dao_package);
-		generateCode(properties.getProperty("freemarker.mapper.filename"), properties.getProperty("mapper.xml.realpath"), entityName+"Mapper.xml", datas);
+		Map<String, Object> datas=createMapperXmlDataMap(entityName, entityTableName, pkname, dao_package);
+		generateCode(ConfigPropertiesUtil.get("freemarker.mapper.filename"), ConfigPropertiesUtil.get("mapper.xml.realpath"), entityName+"Mapper.xml", datas);		
 	}
 	
 	
@@ -271,23 +273,46 @@ public class FreemarkerCoder {
 		execute_generateEntityClass(entityName, entity_package, tableName);
 		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
 		execute_generateMapperXml(entityName, tableName, pkname, dao_package);
+		StringBuilder stringBuilder=new StringBuilder(100);
+		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"\" />");
+		stringBuilder.append("<mapper resource=\"mapper/"+entityName+"Mapper.xml\" />");
+		System.out.println("mybatis.xml中要加上的配置:");
 	}
 	
 	
 	
+	//创建页面需要的模板数据
+	private static Map<String, Object> createPageDataMap(String entityName,String tableName){
+		Map<String, Object> datas=new HashMap<String, Object>();
+		datas.put("entity", entityName);
+		datas.put("tableName", tableName);
+		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
+		datas.put("lower_entity", lower_entity);
+		datas.put("colums", TableUtil.getTable(tableName).getColumnList());
+		return datas;
+	}
 	
+	/**
+	 * 生成页面
+	 * */
+	public static void execute_generatePages(String entityName,String tableName){
+		Map<String, Object> datas=createPageDataMap(entityName, tableName);
+		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);
+		generateCode(ConfigPropertiesUtil.get("freemarker.adminmanage.page.inputpage.filename"), ConfigPropertiesUtil.get("pages.adminmanage.realpath"), lower_entity+"_input.ftl", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.adminmanage.page.listpage.filename"), ConfigPropertiesUtil.get("pages.adminmanage.realpath"), lower_entity+"_list.ftl", datas);
+	}
 	
 	public static void main(String[] args) {
 		//使用方法：只需配置好代码生成框架中的code.properties和jdbc.properties即可
 		//可以通过generateAll()生成所以文件，也可以通过分别调用生成相应部分
 
 		String entityName="Role";
-		String entityPackage="com.easy.role.entity";
-		String dao_package="com.easy.role.dao";
-		String daoimpl_package="com.easy.role.dao.impl";
-		String service_package="com.easy.role.service";
-		String serviceimpl_package="com.easy.role.service.impl";
-		String controller_package="com.easy.role.controller";
+		String entityPackage="com.easy.admin.entity";
+		String dao_package="com.easy.admin.dao";
+		String daoimpl_package="com.easy.admin.dao.impl";
+		String service_package="com.easy.admin.service";
+		String serviceimpl_package="com.easy.admin.service.impl";
+		String controller_package="com.easy.admin.controller";
 		String tableName="role";
 		String pkname="id";
 		
@@ -295,9 +320,9 @@ public class FreemarkerCoder {
 //		execute_generateMapperXml(entityName,tableName,pkname,dao_package);
 //		execute_generateEntityClass(entityName,entityPackage,tableName);
 //		
-		generateAll(entityName, entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, tableName, pkname);
+		//generateAll(entityName, entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, tableName, pkname);
 		
-		
+		execute_generatePages("Role", "role");
 	
 	}
 
