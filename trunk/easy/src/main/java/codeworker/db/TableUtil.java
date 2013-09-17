@@ -4,8 +4,6 @@
 package codeworker.db;
 
 import java.util.List;
-import org.apache.log4j.Logger;
-
 import codeworker.config.ConfigPropertiesUtil;
 import codeworker.db.model.Column;
 import codeworker.db.model.PrimaryType;
@@ -19,8 +17,6 @@ import codeworker.db.model.Table;
  */
 public class TableUtil {
 
-    /** 日志对象 */
-    private static final Logger LOG = Logger.getLogger(TableUtil.class);
 
     /**
      * 获取表的信息
@@ -45,25 +41,12 @@ public class TableUtil {
             throw new RuntimeException("" + driverClass + "类型不正确");
         }
 
-        LOG.info("DatabaseProvider class " + driverClass);
-
         DatabaseProvider databaseProvider = (DatabaseProvider) provider;
-
         String tableComment = databaseProvider.getTableComment(tableName);
-
-        LOG.info("数据库表" + tableName + "的注释为:" + tableComment);
-
         List<Column> columnList = databaseProvider.getTableFields(tableName);
-
-        LOG.info("数据库表" + tableName + "的字段共有:" + columnList.size() + "个");
-        List<String> primaryList = databaseProvider.getPrimaryColumns(tableName);
-
-        LOG.info("数据库表" + tableName + "的主键共有:" + primaryList.size() + "个");
-    
+        List<String> primaryList = databaseProvider.getPrimaryColumns(tableName);  
         Table table = new Table();
-
         table.setName(tableName);
-
         table.setDesc(tableComment);
         if (primaryList == null || primaryList.isEmpty()) {
             table.setPrimaryType(PrimaryType.NONE);
@@ -72,9 +55,7 @@ public class TableUtil {
         } else {
             table.setPrimaryType(PrimaryType.MANY);
         }
-
         table.setPrimaryList(primaryList);   
-
         for (Column column : columnList) {
             column.setPrimary(primaryList.contains(column.getColumn()));
         }

@@ -133,6 +133,19 @@ public class FreemarkerCoder {
 		return str.toString();
 	}
 	
+	
+	
+	//创建页面需要的模板数据
+	private static Map<String, Object> createPageDataMap(String entityName,String tableName){
+		Map<String, Object> datas=new HashMap<String, Object>();
+		datas.put("entity", entityName);
+		datas.put("tableName", tableName);
+		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
+		datas.put("lower_entity", lower_entity);
+		datas.put("colums", TableUtil.getTable(tableName).getColumnList());
+		return datas;
+	}
+	
 	//获取各种操作系统下的文件分隔符的正则表达式字符串，主要是处理window系统下文件分隔符与正则表达式冲突的问题
 	private static String getFileseparatorRegex(){
 		String fileseparator_regex;//文件分隔符的正则表达式表示形式,用于将包名中的.替换成文件分隔符用
@@ -159,8 +172,11 @@ public class FreemarkerCoder {
 	 * @param serviceimpl_package  该实体类对应的service实现类所在的包名,如com.easy.role.service.impl
 	 * @param controller_package 该实体类对应的controller所在的包名,如com.easy.role.controller
 	 * */
-	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
-		Map<String, Object> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
+	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,PutDataToTemplate callback){
+		final Map<String, Object> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
+		if(callback!=null){
+			callback.putData(datas);
+		}
 		String fileseparator_regex;//文件分隔符的正则表达式表示形式,用于将包名中的.替换成文件分隔符用
 		String osname=System.getProperties().getProperty("os.name");
 		if(osname.toLowerCase().indexOf("win")!=-1){
@@ -221,7 +237,9 @@ public class FreemarkerCoder {
 		
 	}
 	
-	
+	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
+		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,null);
+	}
 	
 	/**
 	 * 生成实体类的源文件(.java)
@@ -229,8 +247,11 @@ public class FreemarkerCoder {
 	 * @param entity_package 该实体类所在的包名,如com.easy.role.entity
 	 * @param tableName 实体类对应的数据表名
 	 * */
-	public static void execute_generateEntityClass(String entityName,String entity_package,String tableName){
-		Map<String, Object> datas=createEntityDataMap(entityName, entity_package, tableName);
+	public static void execute_generateEntityClass(String entityName,String entity_package,String tableName,PutDataToTemplate callback){
+		final Map<String, Object> datas=createEntityDataMap(entityName, entity_package, tableName);
+		if(callback!=null){
+			callback.putData(datas);
+		}
 		String entity_outpath=null;
 		String fileseparator_regex=getFileseparatorRegex();
 		String entitypackage_topath=entity_package.replaceAll("\\.", fileseparator_regex);
@@ -243,6 +264,10 @@ public class FreemarkerCoder {
 		
 	}
 	
+	public static void execute_generateEntityClass(String entityName,String entity_package,String tableName){
+		execute_generateEntityClass(entityName, entity_package, tableName,null);
+	}
+	
 	/**
 	 * 生成mapper.xml
 	 * * @param entityName 实体类名称，如Role
@@ -250,9 +275,36 @@ public class FreemarkerCoder {
 	 * @param pkname 该表的主键字段名
 	 * @param dao_package 该实体类对应的dao接口所在的包名,如com.easy.role.dao
 	 * */
-	public static void execute_generateMapperXml(String entityName,String entityTableName,String pkname,String dao_package){
-		Map<String, Object> datas=createMapperXmlDataMap(entityName, entityTableName, pkname, dao_package);
+	public static void execute_generateMapperXml(String entityName,String entityTableName,String pkname,String dao_package,PutDataToTemplate callback){
+		final Map<String, Object> datas=createMapperXmlDataMap(entityName, entityTableName, pkname, dao_package);
+		if(callback!=null){
+			callback.putData(datas);
+		}
 		generateCode(ConfigPropertiesUtil.get("freemarker.mapper.filename"), ConfigPropertiesUtil.get("mapper.xml.realpath"), entityName+"Mapper.xml", datas);		
+	}
+	
+	public static void execute_generateMapperXml(String entityName,String entityTableName,String pkname,String dao_package){
+		execute_generateMapperXml(entityName, entityTableName, pkname, dao_package, null);
+	}
+	
+	
+	/**
+	 * 生成页面
+	 * @param entityName 实体类名称，如Role
+	 *  @param tableName 实体类对应的表名
+	 * */
+	public static void execute_generatePages(String entityName,String tableName,PutDataToTemplate callback){
+		final Map<String, Object> datas=createPageDataMap(entityName, tableName);
+		if(callback!=null){
+			callback.putData(datas);
+		}
+		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);
+		generateCode(ConfigPropertiesUtil.get("freemarker.adminmanage.page.inputpage.filename"), ConfigPropertiesUtil.get("pages.adminmanage.realpath"), lower_entity+"_input.ftl", datas);
+		generateCode(ConfigPropertiesUtil.get("freemarker.adminmanage.page.listpage.filename"), ConfigPropertiesUtil.get("pages.adminmanage.realpath"), lower_entity+"_list.ftl", datas);
+	}
+	
+	public static void execute_generatePages(String entityName,String tableName){
+		execute_generatePages(entityName, tableName, null);
 	}
 	
 	
@@ -270,37 +322,18 @@ public class FreemarkerCoder {
 	 */
 	
 	public static void generateAll(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName,String pkname){
-		execute_generateEntityClass(entityName, entity_package, tableName);
-		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
-		execute_generateMapperXml(entityName, tableName, pkname, dao_package);
+		execute_generateEntityClass(entityName, entity_package, tableName,null);
+		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,null);
+		execute_generateMapperXml(entityName, tableName, pkname, dao_package,null);
 		StringBuilder stringBuilder=new StringBuilder(100);
 		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"\" />");
 		stringBuilder.append("<mapper resource=\"mapper/"+entityName+"Mapper.xml\" />");
-		System.out.println("mybatis.xml中要加上的配置:");
+		System.err.println("mybatis.xml中要加上的配置:"+stringBuilder);
+		
+		execute_generatePages(entityName,tableName,null);
 	}
 	
 	
-	
-	//创建页面需要的模板数据
-	private static Map<String, Object> createPageDataMap(String entityName,String tableName){
-		Map<String, Object> datas=new HashMap<String, Object>();
-		datas.put("entity", entityName);
-		datas.put("tableName", tableName);
-		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
-		datas.put("lower_entity", lower_entity);
-		datas.put("colums", TableUtil.getTable(tableName).getColumnList());
-		return datas;
-	}
-	
-	/**
-	 * 生成页面
-	 * */
-	public static void execute_generatePages(String entityName,String tableName){
-		Map<String, Object> datas=createPageDataMap(entityName, tableName);
-		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);
-		generateCode(ConfigPropertiesUtil.get("freemarker.adminmanage.page.inputpage.filename"), ConfigPropertiesUtil.get("pages.adminmanage.realpath"), lower_entity+"_input.ftl", datas);
-		generateCode(ConfigPropertiesUtil.get("freemarker.adminmanage.page.listpage.filename"), ConfigPropertiesUtil.get("pages.adminmanage.realpath"), lower_entity+"_list.ftl", datas);
-	}
 	
 	public static void main(String[] args) {
 		//使用方法：只需配置好代码生成框架中的code.properties和jdbc.properties即可
@@ -319,10 +352,11 @@ public class FreemarkerCoder {
 //		execute_generateCode(entityName,entityPackage,dao_package,daoimpl_package,service_package,serviceimpl_package,controller_package);		
 //		execute_generateMapperXml(entityName,tableName,pkname,dao_package);
 //		execute_generateEntityClass(entityName,entityPackage,tableName);
-//		
-		//generateAll(entityName, entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, tableName, pkname);
+//		execute_generatePages("Role", "role");//生成页面
 		
-		execute_generatePages("Role", "role");
+		generateAll(entityName, entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, tableName, pkname);
+		
+		
 	
 	}
 

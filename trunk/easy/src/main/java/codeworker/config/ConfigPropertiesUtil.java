@@ -18,7 +18,7 @@ public class ConfigPropertiesUtil {
 	//加载code.properties,初始化freemarker相关配置
 	static{
 		try{					
-			properties.load(FreemarkerCoder.class.getResourceAsStream("code.properties"));
+			properties.load(ClassLoader.getSystemResourceAsStream("codeworker/code.properties"));
 		}catch (Exception e) {
 			System.err.println(e);
 		}
