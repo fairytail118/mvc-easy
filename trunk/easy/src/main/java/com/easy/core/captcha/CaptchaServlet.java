@@ -43,15 +43,18 @@ public class CaptchaServlet extends HttpServlet {
 		ServletOutputStream out = null;
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
-			Captcha captcha = new SpecCaptcha(150, 40, 5);// png格式验证码
+			Captcha captcha = new SpecCaptcha(100, 28, 4);// png格式验证码
 			captcha.out(os);
-			String code = new String(captcha.alphas());
-			
+			String code = captcha.text();
+
 			request.getSession(true).setAttribute(Constants.CAPTCHA_CODE, code);
-			
+
 			byte[] bytes = os.toByteArray();
-			response.setContentType("image/png");
+			response.setContentType("image/png;charset=UTF-8");
 			response.setContentLength(bytes.length);
+			response.setHeader("Pragma", "No-cache");
+			response.setHeader("Cache-Control", "no-cache");
+			response.setDateHeader("Expires", 0);
 			out = response.getOutputStream();
 			out.write(bytes);
 			out.flush();
