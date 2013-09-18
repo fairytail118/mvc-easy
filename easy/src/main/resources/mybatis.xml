@@ -23,7 +23,7 @@
 	</plugins>
 
 	<mappers>
-		<mapper resource="mapper/AdminMapper.xml" />
+		<mapper resource="mapper/admin/AdminMapper.xml" />
 	</mappers>
 
 
