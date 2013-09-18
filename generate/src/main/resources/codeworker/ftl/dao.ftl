@@ -9,13 +9,14 @@ import ${entity_package}.${entity};
 import com.easy.core.common.Page;
 
 /**
- * @author 
+ ${entity}的数据访问接口
+ * @author ${author}
  * @version v 0.1 ${date}
  */
 public interface ${entity}Dao {
 
     /**
-     * 保存管理员
+     * 保存${entity}
      * 
      * @param ${lower_entity}
      * @return 返回主键
@@ -23,7 +24,7 @@ public interface ${entity}Dao {
     public long create(${entity} ${lower_entity});
 
     /**
-     * 更新管理员
+     * 更新${entity}
      * 
      * @param ${lower_entity}
      * @param 返回更新数量
