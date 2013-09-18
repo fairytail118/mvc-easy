@@ -1,19 +1,17 @@
-/**
- * Copyright (c) 2012-2013 All Rights Reserved.
- */
 package ${service_package};
 
 import ${entity_package}.${entity};
 import com.easy.core.common.Page;
 
 /**
- * @author 
+ * ${entity}的业务接口
+ * @author ${author} 
  * @version v 0.1 ${date!''}
  */
 public interface ${entity}Service {
     
     /**
-     * 保存管理员,根据ID判断是保存还是更新
+     * 保存${entity},根据ID判断是保存还是更新
      * 
      * @param ${lower_entity}
      * @return 

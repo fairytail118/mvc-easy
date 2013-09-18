@@ -59,6 +59,7 @@ public class MysqlProvider extends JdbcProvider {
 
 	@Override
 	public String dbTypeStringToJavaTypeString(String dbtype) {
+		//System.out.println("cloumtype:"+dbtype);
 		String javatypeString = null;
 		if (dbtype.equalsIgnoreCase("BIGINT")) {
 			javatypeString = "Long";
@@ -68,7 +69,9 @@ public class MysqlProvider extends JdbcProvider {
 			javatypeString = "String";
 		} else if (dbtype.equalsIgnoreCase("TINYINT")) {
 			javatypeString = "Boolean";
-		} else if (dbtype.equalsIgnoreCase("DATETIME")) {
+		}else if (dbtype.equalsIgnoreCase("BIT")) {
+			javatypeString = "Boolean";
+		}  else if (dbtype.equalsIgnoreCase("DATETIME")) {
 			javatypeString = "java.util.Date";
 		} else {
 			javatypeString = "其他";// 根据实际情况在此处调整

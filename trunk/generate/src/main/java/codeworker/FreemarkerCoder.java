@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 import codeworker.config.ConfigPropertiesUtil;
 import codeworker.db.TableUtil;
@@ -27,7 +29,7 @@ public class FreemarkerCoder {
 	//加载code.properties,初始化freemarker相关配置
 	static{
 		try{					
-			
+			configuration.setNumberFormat("#");
 			configuration.setDirectoryForTemplateLoading(new File(ConfigPropertiesUtil.get("freemarker.templateDirectory")));
 			configuration.setEncoding(Locale.getDefault(),ConfigPropertiesUtil.get("freemarker.encoding"));
 			configuration.setOutputEncoding(ConfigPropertiesUtil.get("freemarker.encoding"));
@@ -65,6 +67,7 @@ public class FreemarkerCoder {
 		datas.put("service_package", service_package);
 		datas.put("serviceimpl_package", serviceimpl_package);
 		datas.put("entity", entityName);
+		datas.put("author", "xieqiang");
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
 		
@@ -79,6 +82,8 @@ public class FreemarkerCoder {
 		datas.put("entity", entityName);
 		datas.put("entity_comment", table.getDesc());
 		datas.put("date",new Date().toLocaleString());
+		datas.put("serialVersionUID", new Random().nextLong());
+		datas.put("author", "xieqiang");
 		String javatype_declareString=generateJavaTypeDeclareString(table);//实体类中的字段声明字符串部分
 		datas.put("entity_content", javatype_declareString);
 		return datas;
@@ -116,7 +121,7 @@ public class FreemarkerCoder {
 				continue;//BaseEntity中的字段不需要再写
 			}
 			cloum_type=item.getTypeClass();
-			str.append("\t private ").append(cloum_type).append(" ").append(cloum).append(";//").append(item.getComment()).append("\n");
+			str.append("\t/**\n\t*").append(item.getComment()).append("\n\t*/\n").append("\t private ").append(cloum_type).append(" ").append(cloum).append(";\n");
 		}
 		str.append("\n");
 		//getter/setter
@@ -330,8 +335,8 @@ public class FreemarkerCoder {
 		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,null);
 		execute_generateMapperXml(entityName, tableName, pkname, dao_package,null);
 		StringBuilder stringBuilder=new StringBuilder(100);
-		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"\" />");
-		stringBuilder.append("<mapper resource=\"mapper/"+entityName+"Mapper.xml\" />");
+		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"."+entityName+"\" />");
+		stringBuilder.append("<mapper resource=\"mapper/admin/"+entityName+"Mapper.xml\" />");
 		System.err.println("mybatis.xml中要加上的配置:"+stringBuilder);
 		
 		execute_generatePages(entityName,tableName,null);

@@ -13,13 +13,12 @@ import com.easy.core.dao.impl.MyBatisGenericDao;
 
 /**
  * 
- * @author 
+ * @author ${author}
  * @version v 0.1 ${date}
  */
 @Repository
 public class ${entity}DaoImpl extends MyBatisGenericDao implements ${entity}Dao {
-
-   
+ 
     @Override
     public long create(${entity} ${lower_entity}) {
         save("${dao_package}.${entity}Dao.create", ${lower_entity});

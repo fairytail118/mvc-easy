@@ -11,47 +11,22 @@ $(document).ready(function(){
 				<#if colums??>
 					<#list colums as item>
 						<#if item.column=="createTime" || item.column=="createUser" || item.column=="modifyTime" || item.column=="modifyUser" || item.column=="id" || item.typeClass="Boolean">						
-						<#elseif item.isNullable && item.typeClass=="String">
+						<#elseif item.typeClass=="String">
 				${item.column}:{
 				maxlength:${item.length}
 				}
-				,
-						<#elseif !item.isNullable && item.typeClass=="String">
-				${item.column}:{
-					required:true,
-					maxlength:${item.length}
-				}
-				,
-						<#elseif item.isNullable && item.typeClass=="Integer">
+				,		
+						<#elseif item.typeClass=="Integer">
 				${item.column}:{							
 					digst:true
 				}
 				,
-						<#elseif item.isNullable && item.typeClass=="Double">
+						<#elseif item.typeClass=="Double">
 				${item.column}:{							
 					number:true
 				}
-				,
-						<#elseif !item.isNullable && item.typeClass=="Integer">
-				${item.column}:{
-					required:true,
-					digst:true
-				}
-				,	
-						<#elseif !item.isNullable && item.typeClass=="Double">
-				${item.column}:{
-					required:true,							
-					number:true
-				}
-				,		
-						<#elseif !item.isNullable && item.typeClass=="java.util.Date">
-				${item.column}:{
-					required:true,							
-				}	
-				,		
-						</#if>
-						
-						
+				,					
+						</#if>								
 					</#list>	
 				</#if>			
 			}
