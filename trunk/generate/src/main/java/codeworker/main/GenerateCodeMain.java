@@ -11,8 +11,9 @@ public class GenerateCodeMain {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//使用方法：只需配置好代码生成框架中的code.properties和jdbc.properties即可
+		//使用方法：只需配置好代码生成框架中的code.properties
 		//可以通过generateAll()生成所以文件，也可以通过分别调用生成相应部分
+		//默认从classpath中的codeworker/code.properties加载，如需调整目录调用如下方法
 		//ConfigPropertiesUtil.setCodeProperties("codeworker/code.properties");
 		String entityName="Role";
 		String entityPackage="com.easy.admin.entity";

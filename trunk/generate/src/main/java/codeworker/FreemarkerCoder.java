@@ -8,11 +8,14 @@ import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import codeworker.config.ConfigPropertiesUtil;
 import codeworker.db.TableUtil;
+import codeworker.db.model.Column;
+import codeworker.db.model.Table;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
@@ -71,10 +74,12 @@ public class FreemarkerCoder {
 	//生成实体类文件的相关数据变量
 	private static Map<String, Object> createEntityDataMap(String entityName,String entity_package,String tableName){
 		Map<String, Object> datas=new HashMap<String, Object>();
+		Table table=TableUtil.getTable(tableName);
 		datas.put("entity_package", entity_package);
 		datas.put("entity", entityName);
+		datas.put("entity_comment", table.getDesc());
 		datas.put("date",new Date().toLocaleString());
-		String javatype_declareString=generateJavaTypeDeclareString(MybatisMapperFileUtil.getTableCloums(tableName));//实体类中的字段声明字符串部分
+		String javatype_declareString=generateJavaTypeDeclareString(table);//实体类中的字段声明字符串部分
 		datas.put("entity_content", javatype_declareString);
 		return datas;
 	}
@@ -99,35 +104,33 @@ public class FreemarkerCoder {
 	}
 	
 	//生成实体类中的类型声明和getter/setter字符串
-	private static String generateJavaTypeDeclareString(Map<String, String> cloums){
+	private static String generateJavaTypeDeclareString(Table table){
 		StringBuilder str=new StringBuilder(150);
-		Iterator<String> cloumSet=cloums.keySet().iterator();
+		List<Column> columns=table.getColumnList();
+		
 		String cloum=null;
 		String cloum_type=null;
-		//String javatype=null;
-		while(cloumSet.hasNext()){
-			cloum=cloumSet.next();
+		for(Column item : columns){
+			cloum=item.getColumn();
 			if(cloum.equalsIgnoreCase("id") || cloum.equalsIgnoreCase("createUser") || cloum.equalsIgnoreCase("createTime") || cloum.equalsIgnoreCase("modifyUser") || cloum.equalsIgnoreCase("modifyTime")){
 				continue;//BaseEntity中的字段不需要再写
 			}
-			cloum_type=cloums.get(cloum);
-			//javatype=DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(cloum_type);
-			str.append("\tprivate ").append(cloum_type).append(" ").append(cloum).append(";\n");
+			cloum_type=item.getTypeClass();
+			str.append("\t private ").append(cloum_type).append(" ").append(cloum).append(";//").append(item.getComment()).append("\n");
 		}
 		str.append("\n");
 		//getter/setter
-		cloumSet=cloums.keySet().iterator();
+		
 		String upperCloumName=null;//字段的第一个字母改成大写
-		while(cloumSet.hasNext()){
-			cloum=cloumSet.next();
+		for(Column item : columns){
+			cloum=item.getColumn();
 			if(cloum.equalsIgnoreCase("id") || cloum.equalsIgnoreCase("createUser") || cloum.equalsIgnoreCase("createTime") || cloum.equalsIgnoreCase("modifyUser") || cloum.equalsIgnoreCase("modifyTime")){
 				continue;//BaseEntity中的字段不需要再写
 			}
-			cloum_type=cloums.get(cloum);
-			//javatype=DbTypeToJavaTypeSimpleFactory.dbTypeStringToJavaTypeString(cloum_type);
+			cloum_type=item.getTypeClass();
 			upperCloumName=cloum.substring(0, 1).toUpperCase()+cloum.substring(1);
-			str.append("\tpublic ").append(cloum_type).append(" get").append(upperCloumName).append("(){\n\t\treturn ").append(cloum).append(";\n\t}\n");
-			str.append("\tpublic void set").append(upperCloumName).append("(").append(cloum_type).append(" ").append(cloum).append(") {\n\t\t").append("this.").append(cloum).append("=").append(cloum).append(";\n\t}\n");
+			str.append("\t/**\n\t*").append(item.getComment()).append("\n\t*/\n").append("\tpublic ").append(cloum_type).append(" get").append(upperCloumName).append("(){\n\t\treturn ").append(cloum).append(";\n\t}\n");
+			str.append("\t/**\n\t*").append(item.getComment()).append("\n\t*/\n").append("\tpublic void set").append(upperCloumName).append("(").append(cloum_type).append(" ").append(cloum).append(") {\n\t\t").append("this.").append(cloum).append("=").append(cloum).append(";\n\t}\n");
 		}
 		return str.toString();
 	}
@@ -334,31 +337,4 @@ public class FreemarkerCoder {
 		execute_generatePages(entityName,tableName,null);
 	}
 	
-	
-	
-	public static void main(String[] args) {
-		//使用方法：只需配置好代码生成框架中的code.properties和jdbc.properties即可
-		//可以通过generateAll()生成所以文件，也可以通过分别调用生成相应部分
-		//ConfigPropertiesUtil.setCodeProperties("codeworker/code.properties");
-		String entityName="Role";
-		String entityPackage="com.easy.admin.entity";
-		String dao_package="com.easy.admin.dao";
-		String daoimpl_package="com.easy.admin.dao.impl";
-		String service_package="com.easy.admin.service";
-		String serviceimpl_package="com.easy.admin.service.impl";
-		String controller_package="com.easy.admin.controller";
-		String tableName="role";
-		String pkname="id";
-		
-//		execute_generateCode(entityName,entityPackage,dao_package,daoimpl_package,service_package,serviceimpl_package,controller_package);		
-//		execute_generateMapperXml(entityName,tableName,pkname,dao_package);
-//		execute_generateEntityClass(entityName,entityPackage,tableName);
-//		execute_generatePages("Role", "role");//生成页面
-		
-		generateAll(entityName, entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, tableName, pkname);
-		
-		
-	
-	}
-
 }

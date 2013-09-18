@@ -18,9 +18,9 @@ public class ConfigPropertiesUtil {
 	//加载code.properties,初始化freemarker相关配置
 	static{
 		try{					
-			properties.load(ClassLoader.getSystemResourceAsStream("code.properties"));
+			properties.load(ClassLoader.getSystemResourceAsStream("codeworker/code.properties"));
 		}catch (Exception e) {
-			System.err.println("从classpath根路径加载默认配置文件[code.properties]失败,需要指定code.properties的位置");
+			System.err.println("从classpath加载默认配置文件[code/worker/code.properties]失败,需要指定code.properties的位置");
 		}
 	}
 	
