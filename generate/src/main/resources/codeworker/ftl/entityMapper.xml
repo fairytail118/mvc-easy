@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${dao_package}.${entity}Dao">
+
+	<!-- 增加操作 -->
+	<insert id="create" parameterType="${entity}" useGeneratedKeys="true"
+		keyProperty="${pkname}">
+		${insert_sql}
+	</insert>
+
+	<!-- 更新操作 -->
+	<update id="update" parameterType="${entity}">
+		${update_sql}
+	</update>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKeys">
+		${delete_sql}
+	</delete>
+	
+	<!-- 根据主键查询 -->
+	<select id="getByPrimaryKey" resultMap="resultMap" parameterType="long">
+		${select_sql}
+	</select>
+	
+	<!-- 根据参数查询列表 -->
+	<select id="selectByCriteria" resultMap="resultMap" parameterType="${entity}">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			${lower_entity}
+		<include refid="defaultCriteria"/>
+		<include refid="orderByClause"/>
+	</select>
+	
+	<!-- 根据参数查询数量-->
+	<select id="countByCriteria" resultType="int" parameterType="long">
+		SELECT
+			count(*)
+		FROM
+			${lower_entity}
+		<include refid="defaultCriteria"/>
+	</select>
+	
+	<!-- 默认的查询条件 -->
+	<sql id="defaultCriteria">
+		<where>
+			<if test="criteria.keyword!=null and criteria.keyword!=''">
+				AND name like "%"${r" #{criteria.keyword}"}"%"
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 排序字段 -->
+	<sql id="orderByClause">
+		${orderByClause!""}
+	</sql>
+	
+	<!-- 默认的数据库字段 -->
+	<sql id="columns">
+		${cloumns!"*"}
+	</sql>
+
+
+	<!-- 默认的数据库映射 -->
+	<resultMap type="${entity}" id="resultMap">
+		${resultMap}
+	</resultMap>
+</mapper>
