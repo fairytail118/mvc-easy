@@ -27,7 +27,7 @@ public class MysqlProvider extends JdbcProvider {
     public String getTableComment(String tableName) {
 
         String comment = super.getTableComment(tableName);
-        if (comment != null) {
+        if (comment != null && !comment.trim().equals("")) {
             return comment;
         }
 
