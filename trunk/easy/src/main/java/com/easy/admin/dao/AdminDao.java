@@ -17,15 +17,15 @@ import com.easy.core.common.Page;
 public interface AdminDao {
 
     /**
-     * 保存管理员
+     * 保存
      * 
      * @param admin
-     * @return 返回主键
+     * @return
      */
-    public long create(Admin admin);
+    public Admin create(Admin admin);
 
     /**
-     * 更新管理员
+     * 更新
      * 
      * @param admin
      * @param 返回更新数量
