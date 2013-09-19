@@ -13,7 +13,7 @@ import ${service_package}.${entity}Service;
 import com.easy.core.common.Page;
 
 /**
- * @author 
+ * @author ${author}
  * @version v 0.1 ${date}
  */
 @Service
