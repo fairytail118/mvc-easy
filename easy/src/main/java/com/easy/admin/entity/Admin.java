@@ -3,7 +3,7 @@
  */
 package com.easy.admin.entity;
 
-import com.easy.core.entity.BaseEntity;
+import com.easy.core.entity.IdEntity;
 
 /**
  * 管理员
@@ -11,7 +11,7 @@ import com.easy.core.entity.BaseEntity;
  * @author wy
  * @version v 0.1 2013-6-16 下午3:28:56 wy Exp $
  */
-public class Admin extends BaseEntity {
+public class Admin extends IdEntity {
 
     /** serialVersionUID */
     private static final long serialVersionUID = -7241410078601395875L;
