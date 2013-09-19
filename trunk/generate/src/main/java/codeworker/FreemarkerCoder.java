@@ -134,8 +134,8 @@ public class FreemarkerCoder {
 			}
 			cloum_type=item.getTypeClass();
 			upperCloumName=cloum.substring(0, 1).toUpperCase()+cloum.substring(1);
-			str.append("\t/**\n\t*").append(item.getComment()).append("\n\t*/\n").append("\tpublic ").append(cloum_type).append(" get").append(upperCloumName).append("(){\n\t\treturn ").append(cloum).append(";\n\t}\n");
-			str.append("\t/**\n\t*").append(item.getComment()).append("\n\t*/\n").append("\tpublic void set").append(upperCloumName).append("(").append(cloum_type).append(" ").append(cloum).append(") {\n\t\t").append("this.").append(cloum).append("=").append(cloum).append(";\n\t}\n");
+			str.append("\tpublic ").append(cloum_type).append(" get").append(upperCloumName).append("(){\n\t\treturn ").append(cloum).append(";\n\t}\n");
+			str.append("\tpublic void set").append(upperCloumName).append("(").append(cloum_type).append(" ").append(cloum).append(") {\n\t\t").append("this.").append(cloum).append("=").append(cloum).append(";\n\t}\n");
 		}
 		return str.toString();
 	}
