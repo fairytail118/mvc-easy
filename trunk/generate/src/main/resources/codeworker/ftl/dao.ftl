@@ -9,14 +9,14 @@ import ${entity_package}.${entity};
 import com.easy.core.common.Page;
 
 /**
- ${entity}的数据访问接口
+ ${entity}[${entity_comment}]的数据访问接口
  * @author ${author}
  * @version v 0.1 ${date}
  */
 public interface ${entity}Dao {
 
     /**
-     * 保存${entity}
+     * 保存${entity_comment}
      * 
      * @param ${lower_entity}
      * @return 返回主键
@@ -24,7 +24,7 @@ public interface ${entity}Dao {
     public long create(${entity} ${lower_entity});
 
     /**
-     * 更新${entity}
+     * 更新${entity_comment}
      * 
      * @param ${lower_entity}
      * @param 返回更新数量
@@ -32,7 +32,7 @@ public interface ${entity}Dao {
     public int update(${entity} ${lower_entity});
 
     /**
-     * 根据主键删除
+     * 根据主键删除${entity_comment}
      * 
      * @param ids
      * @return
@@ -40,7 +40,7 @@ public interface ${entity}Dao {
     public int deleteByPrimaryKeys(Long... ids);
 
     /**
-     * 根据主键查询
+     * 根据主键查询${entity_comment}
      * 
      * @param id
      * @return
@@ -48,7 +48,7 @@ public interface ${entity}Dao {
     public ${entity} getByPrimaryKey(Long id);
 
     /**
-     * 条件查询列表
+     * 条件查询${entity_comment}列表
      * 
      * @param ${lower_entity}
      * @return
@@ -64,7 +64,7 @@ public interface ${entity}Dao {
     public int countByCriteria(${entity} ${lower_entity});
 
     /**
-     * 分页查询
+     * 分页查询${entity_comment}
      * 
      * @param page
      */
