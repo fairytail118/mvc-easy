@@ -57,7 +57,7 @@ public class FreemarkerCoder {
 	}
 	
 	//生成Java文件(不含entity类)的相关数据变量
-	private static Map<String, Object> createJavaDataMap(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
+	private static Map<String, Object> createJavaDataMap(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName){
 		Map<String, Object> datas=new HashMap<String, Object>();
 		datas.put("date",new Date().toLocaleString());
 		datas.put("controller_package", controller_package);		
@@ -68,6 +68,7 @@ public class FreemarkerCoder {
 		datas.put("serviceimpl_package", serviceimpl_package);
 		datas.put("entity", entityName);
 		datas.put("author", "xieqiang");
+		datas.put("entity_comment", TableUtil.getTable(tableName).getDesc());
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
 		
@@ -179,9 +180,9 @@ public class FreemarkerCoder {
 	 * @param serviceimpl_package  该实体类对应的service实现类所在的包名,如com.easy.role.service.impl
 	 * @param controller_package 该实体类对应的controller所在的包名,如com.easy.role.controller
 	 * */
-	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,PutDataToTemplate callback){
+	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName,PutDataToTemplate callback){
 		String basepath=ConfigPropertiesUtil.get("project.src.realpath");//.java文件的基准目录
-		final Map<String, Object> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package);
+		final Map<String, Object> datas=createJavaDataMap(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,tableName);
 		if(callback!=null){
 			callback.putData(datas);
 		}
@@ -245,8 +246,8 @@ public class FreemarkerCoder {
 		
 	}
 	
-	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package){
-		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,null);
+	public static void execute_generateCode(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName){
+		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,tableName,null);
 	}
 	
 	/**
@@ -332,7 +333,7 @@ public class FreemarkerCoder {
 	
 	public static void generateAll(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName,String pkname){
 		execute_generateEntityClass(entityName, entity_package, tableName,null);
-		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,null);
+		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,tableName,null);
 		execute_generateMapperXml(entityName, tableName, pkname, dao_package,null);
 		StringBuilder stringBuilder=new StringBuilder(100);
 		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"."+entityName+"\" />");

@@ -67,8 +67,9 @@ public class TableUtil {
     
     public static void main(String[] args) {
     	Table table=getTable("role");
+    	String comment=new MysqlProvider().getTableComment("role");
     	List<Column> columns=table.getColumnList();
-    	System.out.println("主键:"+table.getPrimaryList());
+    	System.out.println("主键:"+table.getPrimaryList()+",表注释:"+comment);
     	for(Column column : columns){
     		System.out.println("字段名:"+column.getColumn()+",注释："+column.getComment()+",长度:"+column.getLength()+",Java类型："+column.getTypeClass()+",是否主键:"+column.isPrimary()+",是否非空:"+column.getIsNullable());
     	}
