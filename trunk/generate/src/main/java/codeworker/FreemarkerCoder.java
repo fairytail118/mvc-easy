@@ -17,6 +17,7 @@ import java.util.UUID;
 import codeworker.config.ConfigPropertiesUtil;
 import codeworker.db.TableUtil;
 import codeworker.db.model.Column;
+import codeworker.db.model.PrimaryType;
 import codeworker.db.model.Table;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -68,7 +69,11 @@ public class FreemarkerCoder {
 		datas.put("serviceimpl_package", serviceimpl_package);
 		datas.put("entity", entityName);
 		datas.put("author", "xieqiang");
-		datas.put("entity_comment", TableUtil.getTable(tableName).getDesc());
+		Table table=TableUtil.getTable(tableName);
+		if(table.getPrimaryList()!=null && table.getPrimaryType()==PrimaryType.ONE){
+			datas.put("pkname", table.getPrimaryList().get(0));
+		}
+		datas.put("entity_comment", table.getDesc());
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
 		
@@ -79,6 +84,9 @@ public class FreemarkerCoder {
 	private static Map<String, Object> createEntityDataMap(String entityName,String entity_package,String tableName){
 		Map<String, Object> datas=new HashMap<String, Object>();
 		Table table=TableUtil.getTable(tableName);
+		if(table.getPrimaryList()!=null && table.getPrimaryType()==PrimaryType.ONE){
+			datas.put("pkname", table.getPrimaryList().get(0));
+		}
 		datas.put("entity_package", entity_package);
 		datas.put("entity", entityName);
 		datas.put("entity_comment", table.getDesc());
@@ -92,20 +100,25 @@ public class FreemarkerCoder {
 	
 	
 	//生成mapper.xml文件的相关数据变量
-	private static Map<String, Object> createMapperXmlDataMap(String entityName,String entityTableName,String pkname,String dao_package){
+	private static Map<String, Object> createMapperXmlDataMap(String entityName,String entityTableName,String dao_package){
 		Map<String, Object> datas=new HashMap<String, Object>();
+		Table table=TableUtil.getTable(entityTableName);
+		Map<String, String> colum=TableUtil.getTableCloums(table);
+		if(table.getPrimaryList()!=null && table.getPrimaryType()==PrimaryType.ONE){//存在唯一的主键
+			String pkname=table.getPrimaryList().get(0);
+			datas.put("pkname", pkname);		
+			datas.put("insert_sql", MybatisMapperFileUtil.getMybatisInsertSql(colum, entityTableName, pkname));
+			datas.put("update_sql", MybatisMapperFileUtil.getMybatisUpdateSql(colum, entityTableName, pkname));
+			datas.put("delete_sql", MybatisMapperFileUtil.getMybatisDeleteSql(entityTableName, pkname));
+			datas.put("select_sql", MybatisMapperFileUtil.getMybatisSelectSql(entityTableName, pkname));			
+			datas.put("resultMap", MybatisMapperFileUtil.getResultMap(colum, pkname));
+		}
+		datas.put("cloumns", MybatisMapperFileUtil.getCloumnStr(colum));
 		datas.put("dao_package", dao_package);
 		datas.put("entity", entityName);
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
-		datas.put("pkname", pkname);
-		Map<String, String> colum=MybatisMapperFileUtil.getTableCloums(entityTableName);
-		datas.put("insert_sql", MybatisMapperFileUtil.getMybatisInsertSql(colum, entityTableName, pkname));
-		datas.put("update_sql", MybatisMapperFileUtil.getMybatisUpdateSql(colum, entityTableName, pkname));
-		datas.put("delete_sql", MybatisMapperFileUtil.getMybatisDeleteSql(entityTableName, pkname));
-		datas.put("select_sql", MybatisMapperFileUtil.getMybatisSelectSql(entityTableName, pkname));
-		datas.put("cloumns", MybatisMapperFileUtil.getCloumnStr(colum));
-		datas.put("resultMap", MybatisMapperFileUtil.getResultMap(colum, pkname));
+		
 		return datas;
 	}
 	
@@ -193,6 +206,8 @@ public class FreemarkerCoder {
 		}else {
 			fileseparator_regex=File.separator;
 		}
+		
+		boolean hasUniquPrimaryKey=datas.get("pkname")==null?false:true;//当前实体类对应的表是否存在唯一的主键(非联合主键)
 		
 		//生成dao接口
 		String dao_outpath;
@@ -285,16 +300,16 @@ public class FreemarkerCoder {
 	 * @param pkname 该表的主键字段名
 	 * @param dao_package 该实体类对应的dao接口所在的包名,如com.easy.role.dao
 	 * */
-	public static void execute_generateMapperXml(String entityName,String entityTableName,String pkname,String dao_package,PutDataToTemplate callback){
-		final Map<String, Object> datas=createMapperXmlDataMap(entityName, entityTableName, pkname, dao_package);
+	public static void execute_generateMapperXml(String entityName,String entityTableName,String dao_package,PutDataToTemplate callback){
+		final Map<String, Object> datas=createMapperXmlDataMap(entityName, entityTableName, dao_package);
 		if(callback!=null){
 			callback.putData(datas);
 		}
 		generateCode(ConfigPropertiesUtil.get("freemarker.mapper.filename"), ConfigPropertiesUtil.get("mapper.xml.realpath"), entityName+"Mapper.xml", datas);		
 	}
 	
-	public static void execute_generateMapperXml(String entityName,String entityTableName,String pkname,String dao_package){
-		execute_generateMapperXml(entityName, entityTableName, pkname, dao_package, null);
+	public static void execute_generateMapperXml(String entityName,String entityTableName,String dao_package){
+		execute_generateMapperXml(entityName, entityTableName, dao_package, null);
 	}
 	
 	
@@ -331,10 +346,10 @@ public class FreemarkerCoder {
 	 * @param pkname 表中的主键字段名称
 	 */
 	
-	public static void generateAll(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName,String pkname){
+	public static void generateAll(String entityName,String entity_package,String dao_package,String daoimpl_package,String service_package,String serviceimpl_package,String controller_package,String tableName){
 		execute_generateEntityClass(entityName, entity_package, tableName,null);
-		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,tableName,null);
-		execute_generateMapperXml(entityName, tableName, pkname, dao_package,null);
+		execute_generateCode(entityName, entity_package, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package,tableName);
+		execute_generateMapperXml(entityName, tableName, dao_package,null);
 		StringBuilder stringBuilder=new StringBuilder(100);
 		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"."+entityName+"\" />");
 		stringBuilder.append("<mapper resource=\"mapper/admin/"+entityName+"Mapper.xml\" />");

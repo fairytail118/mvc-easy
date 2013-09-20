@@ -5,7 +5,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="${dao_package}.${entity}Dao">
-
+	<#if pkname??>
 	<!-- 增加操作 -->
 	<insert id="create" parameterType="${entity}" useGeneratedKeys="true"
 		keyProperty="${pkname}">
@@ -70,4 +70,5 @@
 	<resultMap type="${entity}" id="resultMap">
 		${resultMap}
 	</resultMap>
+	</#if>
 </mapper>
