@@ -3,7 +3,10 @@
  */
 package codeworker.db;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import codeworker.config.ConfigPropertiesUtil;
 import codeworker.db.model.Column;
 import codeworker.db.model.PrimaryType;
@@ -64,6 +67,20 @@ public class TableUtil {
 
         return table;
     }
+    
+    /**
+	 * @param table
+	 * @return 指定表的列名和对应的java类型
+	 */
+	public static Map<String, String> getTableCloums(Table table){		
+		List<Column> columns=table.getColumnList();
+		Map<String, String> map=new HashMap<String, String>(columns.size());
+		for(Column column : columns){
+			map.put(column.getColumn(), column.getTypeClass());
+		}
+		return map;
+		
+	}
     
     public static void main(String[] args) {
     	Table table=getTable("role");

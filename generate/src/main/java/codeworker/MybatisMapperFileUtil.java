@@ -1,13 +1,9 @@
 package codeworker;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import codeworker.db.TableUtil;
 import codeworker.db.model.Column;
 import codeworker.db.model.Table;
@@ -22,33 +18,7 @@ public class MybatisMapperFileUtil {
 	 * @param tableName
 	 * @return 指定表的列名和对应的java类型
 	 */
-	public static Map<String, String> getTableCloums(String tableName){
-//		Properties jdbcProperties=new Properties();
-//		Connection connection=null;
-//		Statement statement=null;
-//		ResultSet resultSet=null;
-//		try {
-//			jdbcProperties.load(JdbcTableMetedataReader.class.getResourceAsStream("jdbc.properties"));		
-//			connection=DriverManager.getConnection(	jdbcProperties.getProperty("jdbc.url"), jdbcProperties.getProperty("jdbc.username"), jdbcProperties.getProperty("jdbc.password"));
-//			statement=connection.createStatement();
-//			resultSet=statement.executeQuery("select * from "+tableName+" limit 1");
-//			ResultSetMetaData metaData=resultSet.getMetaData();
-//			int cloum_count=metaData.getColumnCount();
-//			Map<String, String> cloums=new HashMap<String, String>(cloum_count);
-//			for(int i=0;i<cloum_count;i++){
-//				cloums.put(metaData.getColumnName(i+1),metaData.getColumnTypeName(i+1));
-//				//System.out.println("列名:"+metaData.getColumnName(i+1)+",列类型:"+metaData.getColumnTypeName(i+1));
-//			}
-//			close(connection, statement, resultSet);
-//			return cloums;
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return null;
-//		}finally{
-//			close(connection, statement, resultSet);
-//		}
-		
+	public static Map<String, String> getTableCloums(String tableName){		
 		Table table=TableUtil.getTable(tableName);
 		List<Column> columns=table.getColumnList();
 		Map<String, String> map=new HashMap<String, String>(columns.size());
@@ -57,22 +27,6 @@ public class MybatisMapperFileUtil {
 		}
 		return map;
 		
-	}
-	
-	private static void close(Connection connection,Statement statement,ResultSet resultSet){
-		try{
-			if(resultSet!=null && !resultSet.isClosed()){
-				resultSet.close();
-			}
-			if(statement!=null && !statement.isClosed()){
-				statement.close();
-			}
-			if(connection!=null && !connection.isClosed()){
-				connection.close();
-			}
-		}catch (Exception e) {
-			// TODO: handle exception
-		}
 	}
 	
 	public static String getMybatisInsertSql(Map<String, String> cloums,String tableName,String pkname){
@@ -162,7 +116,7 @@ public class MybatisMapperFileUtil {
 		while(cloumSet.hasNext()){
 			cloum=cloumSet.next();
 			if(cloum.equalsIgnoreCase(pkname)){
-				sql.append("<id property=\"").append(pkname).append("\" column=\"").append(pkname).append("\" />\n");
+				sql.append("<id property=\"").append("id").append("\" column=\"").append(pkname).append("\" />\n");
 			}else{
 				sql.append("<result property=\"").append(cloum).append("\" column=\"").append(cloum).append("\" />\n");
 			

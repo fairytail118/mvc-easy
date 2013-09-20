@@ -23,19 +23,18 @@ public class GenerateCodeMain {
 		String serviceimpl_package="com.easy.admin.service.impl";
 		String controller_package="com.easy.admin.controller";
 		//String tableName="allotrole";
-		String pkname="id";
 		
 //		FreemarkerCoder.execute_generateCode(entityName,entityPackage,dao_package,daoimpl_package,service_package,serviceimpl_package,controller_package);		
 //		FreemarkerCoder.execute_generateMapperXml(entityName,tableName,pkname,dao_package);
 //		FreemarkerCoder.execute_generateEntityClass(entityName,entityPackage,tableName);
 //		FreemarkerCoder.execute_generatePages("Role", "role");//生成页面
 		
-		FreemarkerCoder.generateAll("Admin", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "admin", pkname);
-		FreemarkerCoder.generateAll("Role", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "role", pkname);
-		FreemarkerCoder.generateAll("Permission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "permission", pkname);
-		FreemarkerCoder.generateAll("AllotRole", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allotrole", pkname);
-		FreemarkerCoder.generateAll("LoginLog", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "loginlog", pkname);
-		FreemarkerCoder.generateAll("AllotPermission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allotpermission", pkname);
+		FreemarkerCoder.generateAll("Admin", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "admin");
+//		FreemarkerCoder.generateAll("Role", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "role", pkname);
+//		FreemarkerCoder.generateAll("Permission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "permission");
+//		FreemarkerCoder.generateAll("AllotRole", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allotrole");
+//		FreemarkerCoder.generateAll("LoginLog", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "loginlog");
+//		FreemarkerCoder.generateAll("AllotPermission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allotpermission");
 	}
 
 }
