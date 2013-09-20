@@ -29,14 +29,25 @@
 	<task:annotation-driven />
 
 	<!-- 配置文件 -->
-	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<!-- class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" -->
+	<bean id="propertyConfigurer"		
+		class="com.easy.core.bean.SupportConvertPropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
 			<list>
 				<value>classpath*:jdbc.properties</value>
 			</list>
+		</property>
+		<!-- 调试模式不进行属性转换  -->
+		<property name="debug" value="true"/>
+		<!-- 需要转换的key列表 -->
+		<property name="convertKeyList">
+		    <list>
+		        <value>jdbc.url</value>
+		   	 	<value>jdbc.username</value>
+		    	<value>jdbc.password</value>		    
+		    </list> 
 		</property>
 	</bean>
 

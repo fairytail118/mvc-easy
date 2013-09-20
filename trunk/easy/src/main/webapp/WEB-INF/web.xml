@@ -63,6 +63,11 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:mvc/*.xml</param-value>
 		</init-param>
+		<!-- 每次处理完一个http请求后是否需要项容器发布事件，没有事件监听器时不需要发布 -->
+		<init-param>
+		    <param-name>publishEvents</param-name>
+		    <param-value>false</param-value>
+		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
