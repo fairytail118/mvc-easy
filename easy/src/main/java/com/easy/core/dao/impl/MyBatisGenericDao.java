@@ -16,6 +16,12 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
  */
 public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
 
+	/**映射文件中的namespace*/
+	protected String namespace;
+	
+	protected final String createStatement(String opretion){
+		return namespace+"."+opretion;
+	}
     /**
      * 查询出一个对象
      * 
@@ -26,9 +32,9 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
     @SuppressWarnings("unchecked")
 	protected <T> T get(String statement, Object object) {
         if (object == null) {
-            return (T)getSqlSession().selectOne(statement);
+            return (T)getSqlSession().selectOne(createStatement(statement));
         }
-        return (T)getSqlSession().selectOne(statement, object);
+        return (T)getSqlSession().selectOne(createStatement(statement), object);
     }
 
     /**
@@ -41,9 +47,9 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
     @SuppressWarnings("unchecked")
 	protected <T> List<T> list(String statement, Object object) {
         if (object == null) {
-            return (List<T>)getSqlSession().selectList(statement);
+            return (List<T>)getSqlSession().selectList(createStatement(statement));
         }
-        return (List<T>)getSqlSession().selectList(statement, object);
+        return (List<T>)getSqlSession().selectList(createStatement(statement), object);
     }
 
     /**
@@ -54,7 +60,7 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @return
      */
     protected <T> List<T> list(String statement, RowBounds rowBounds) {
-        return list(statement, null, rowBounds);
+        return list(createStatement(statement), null, rowBounds);
     }
 
     /**
@@ -67,7 +73,7 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      */
     @SuppressWarnings("unchecked")
 	public <T> List<T> list(String statement, Object object, RowBounds rowBounds) {
-        return (List<T>)getSqlSession().selectList(statement, object, rowBounds);
+        return (List<T>)getSqlSession().selectList(createStatement(statement), object, rowBounds);
     }
 
     /**
@@ -79,9 +85,9 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      */
     public int save(String statement, Object object) {
         if (object == null) {
-            return getSqlSession().insert(statement);
+            return getSqlSession().insert(createStatement(statement));
         }
-        return getSqlSession().insert(statement, object);
+        return getSqlSession().insert(createStatement(statement), object);
 
     }
 
@@ -94,9 +100,9 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      */
     protected int update(String statement, Object object) {
         if (object == null) {
-            return getSqlSession().update(statement);
+            return getSqlSession().update(createStatement(statement));
         }
-        return getSqlSession().update(statement, object);
+        return getSqlSession().update(createStatement(statement), object);
     }
 
     /**
@@ -108,9 +114,9 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      */
     protected int delete(String statement, Object object) {
         if (object == null) {
-            return getSqlSession().delete(statement);
+            return getSqlSession().delete(createStatement(statement));
         }
-        return getSqlSession().delete(statement, object);
+        return getSqlSession().delete(createStatement(statement), object);
     }
 
 }
