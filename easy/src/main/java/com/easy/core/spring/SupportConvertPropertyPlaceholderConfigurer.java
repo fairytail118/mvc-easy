@@ -1,4 +1,4 @@
-package com.easy.core.bean;
+package com.easy.core.spring;
 
 import java.util.List;
 
