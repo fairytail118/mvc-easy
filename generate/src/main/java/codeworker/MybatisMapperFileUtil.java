@@ -61,6 +61,7 @@ public class MybatisMapperFileUtil {
 		return sql.toString();
 	}
 	
+	
 	public static String getMybatisUpdateSql(Map<String, String> cloums,String tableName,String pkname){
 		StringBuilder sql=new StringBuilder(100);
 		sql.append("UPDATE ").append(tableName).append(" SET ");
@@ -81,6 +82,41 @@ public class MybatisMapperFileUtil {
 		
 	}
 	
+	public static String getMybatisUpdateSql(Map<String, String> cloums,Table table){
+		StringBuilder sql=new StringBuilder(100);
+		sql.append("UPDATE ").append(table.getName()).append(" SET ");
+		Iterator<String> cloumSet=cloums.keySet().iterator();
+		String cloum=null;
+		boolean skip=false;
+		while(cloumSet.hasNext()){
+			cloum=cloumSet.next();
+			for(String pk : table.getPrimaryList()){
+				if(cloum.equalsIgnoreCase(pk)){
+					skip=true;
+					break;
+				}
+			}
+			if(skip){
+				continue;
+			}
+			sql.append(cloum).append(" = #{").append(cloum).append("}");
+			if(cloumSet.hasNext()){
+				sql.append(",");
+			}
+		}
+		sql.append(" WHERE ");
+		int index=0;
+		for(String pk : table.getPrimaryList()){
+			sql.append(pk).append(" = #{").append(pk).append("} ");
+			index++;
+			if(index!=table.getPrimaryList().size()){
+				sql.append(" AND ");
+			}
+		}
+		return sql.toString();
+		
+	}
+	
 	public static String getMybatisDeleteSql(String tableName,String pkname){
 		StringBuilder sql=new StringBuilder(100);
 		sql.append("DELETE FROM ").append(tableName).append(" WHERE ").append(pkname).append(" in \n");
@@ -88,9 +124,37 @@ public class MybatisMapperFileUtil {
 		return sql.toString();
 	}
 	
+	public static String getMybatisDeleteSql(Table table){
+		StringBuilder sql=new StringBuilder(100);
+		sql.append("DELETE FROM ").append(table.getName()).append(" WHERE ");
+		int index=0;
+		for(String pk : table.getPrimaryList()){
+			sql.append(pk).append(" = #{").append(pk).append("} ");
+			index++;
+			if(index!=table.getPrimaryList().size()){
+				sql.append(" AND ");
+			}
+		}
+		return sql.toString();
+	}
+	
 	public static String getMybatisSelectSql(String tableName,String pkname){
 		StringBuilder sql=new StringBuilder(100);
 		sql.append("SELECT <include refid=\"columns\"/> FROM ").append(tableName).append(" WHERE ").append(pkname).append(" = #{").append(pkname).append("}");
+		return sql.toString();
+	}
+	
+	public static String getMybatisSelectSql(Table table){
+		StringBuilder sql=new StringBuilder(100);
+		sql.append("SELECT <include refid=\"columns\"/> FROM ").append(table.getName()).append(" WHERE ");
+		int index=0;
+		for(String pk : table.getPrimaryList()){
+			sql.append(pk).append(" = #{").append(pk).append("} ");
+			index++;
+			if(index!=table.getPrimaryList().size()){
+				sql.append(" AND ");
+			}
+		}
 		return sql.toString();
 	}
 	
@@ -121,6 +185,21 @@ public class MybatisMapperFileUtil {
 				sql.append("<result property=\"").append(cloum).append("\" column=\"").append(cloum).append("\" />\n");
 			
 			}
+		}
+		return sql.toString();
+		
+	}
+	
+	public static String getResultMap(Map<String, String> cloums,Table table){		
+		StringBuilder sql=new StringBuilder(150);	
+		for(String pk : table.getPrimaryList()){
+			sql.append("\t<id property=\"").append(pk).append("\" column=\"").append(pk).append("\" />\n");
+		}
+		Iterator<String> cloumSet=cloums.keySet().iterator();
+		String cloum=null;
+		while(cloumSet.hasNext()){
+			cloum=cloumSet.next();			
+			sql.append("\t<result property=\"").append(cloum).append("\" column=\"").append(cloum).append("\" />\n");			
 		}
 		return sql.toString();
 		
