@@ -72,6 +72,18 @@ public class FreemarkerCoder {
 		Table table=TableUtil.getTable(tableName);
 		if(table.getPrimaryList()!=null && table.getPrimaryType()==PrimaryType.ONE){
 			datas.put("pkname", table.getPrimaryList().get(0));
+		}else{
+			datas.put("pklist", table.getPrimaryList());
+			StringBuilder pkparams=new StringBuilder(20);
+			int index=0;
+			for(String pk : table.getPrimaryList()){
+				pkparams.append("Long ").append(pk);
+				index++;
+				if(index!=table.getPrimaryList().size()){
+					pkparams.append(",");
+				}
+			}
+			datas.put("pkparams", pkparams.toString());
 		}
 		datas.put("entity_comment", table.getDesc());
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
@@ -106,13 +118,22 @@ public class FreemarkerCoder {
 		Map<String, String> colum=TableUtil.getTableCloums(table);
 		if(table.getPrimaryList()!=null && table.getPrimaryType()==PrimaryType.ONE){//存在唯一的主键
 			String pkname=table.getPrimaryList().get(0);
-			datas.put("pkname", pkname);		
+			datas.put("pkname", pkname);					
 			datas.put("insert_sql", MybatisMapperFileUtil.getMybatisInsertSql(colum, entityTableName, pkname));
 			datas.put("update_sql", MybatisMapperFileUtil.getMybatisUpdateSql(colum, entityTableName, pkname));
 			datas.put("delete_sql", MybatisMapperFileUtil.getMybatisDeleteSql(entityTableName, pkname));
-			datas.put("select_sql", MybatisMapperFileUtil.getMybatisSelectSql(entityTableName, pkname));			
+			datas.put("select_sql", MybatisMapperFileUtil.getMybatisSelectSql(entityTableName, pkname));
+			
 			datas.put("resultMap", MybatisMapperFileUtil.getResultMap(colum, pkname));
-		}
+		}else {
+			datas.put("pklist", table.getPrimaryList());
+			datas.put("insert_sql", MybatisMapperFileUtil.getMybatisInsertSql(colum, entityTableName, null));
+			datas.put("update_sql", MybatisMapperFileUtil.getMybatisUpdateSql(colum, table));
+			datas.put("delete_sql", MybatisMapperFileUtil.getMybatisDeleteSql(table));
+			datas.put("select_sql", MybatisMapperFileUtil.getMybatisSelectSql(table));			
+			datas.put("resultMap", MybatisMapperFileUtil.getResultMap(colum, table));
+		}		
+
 		datas.put("cloumns", MybatisMapperFileUtil.getCloumnStr(colum));
 		datas.put("dao_package", dao_package);
 		datas.put("entity", entityName);
@@ -208,7 +229,15 @@ public class FreemarkerCoder {
 		}
 		
 		boolean hasUniquPrimaryKey=datas.get("pkname")==null?false:true;//当前实体类对应的表是否存在唯一的主键(非联合主键)
-		
+		String dao_ftl=null;
+		String daoimpl_ftl=null;
+		if(hasUniquPrimaryKey){
+			dao_ftl=ConfigPropertiesUtil.get("freemarker.dao.filename");
+			daoimpl_ftl=ConfigPropertiesUtil.get("freemarker.daoimpl.filename");
+		}else {
+			dao_ftl=ConfigPropertiesUtil.get("freemarker.dao.manypkfilename");
+			daoimpl_ftl=ConfigPropertiesUtil.get("freemarker.daoimpl.manypkfilename");
+		}
 		//生成dao接口
 		String dao_outpath;
 		String daopackge_topath=dao_package.replaceAll("\\.", fileseparator_regex);//将包名中的"."变成文件目录分隔符
@@ -217,7 +246,7 @@ public class FreemarkerCoder {
 		}else {
 			dao_outpath=basepath+File.separator+daopackge_topath;
 		}
-		generateCode(ConfigPropertiesUtil.get("freemarker.dao.filename"), dao_outpath, entityName+"Dao.java", datas);
+		generateCode(dao_ftl, dao_outpath, entityName+"Dao.java", datas);
 		
 		//生成daoimp
 		String daoimpl_outpath;
@@ -227,8 +256,12 @@ public class FreemarkerCoder {
 		}else {
 			daoimpl_outpath=basepath+File.separator+daoimppackage_topath;
 		}
-		generateCode(ConfigPropertiesUtil.get("freemarker.daoimpl.filename"), daoimpl_outpath, entityName+"DaoImpl.java", datas);
+		generateCode(daoimpl_ftl, daoimpl_outpath, entityName+"DaoImpl.java", datas);
 		
+		
+		if(!hasUniquPrimaryKey){//联合主键的表只需生成dao
+			return;
+		}
 		//生成service接口
 		String service_outpath;
 		String servicepackage_topath=service_package.replaceAll("\\.", fileseparator_regex);
@@ -354,8 +387,10 @@ public class FreemarkerCoder {
 		stringBuilder.append("<typeAlias alias=\""+entityName+"\" type=\""+entity_package+"."+entityName+"\" />");
 		stringBuilder.append("<mapper resource=\"mapper/admin/"+entityName+"Mapper.xml\" />");
 		System.err.println("mybatis.xml中要加上的配置:"+stringBuilder);
-		
-		execute_generatePages(entityName,tableName,null);
+		Table table=TableUtil.getTable(tableName);
+		if(table.getPrimaryList()!=null && table.getPrimaryType()==PrimaryType.ONE){
+			execute_generatePages(entityName,tableName,null);
+		}
 	}
 	
 }

@@ -5,25 +5,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="${dao_package}.${entity}Dao">
-	<#if pkname??>
 	<!-- 增加操作 -->
-	<insert id="create" parameterType="${entity}" useGeneratedKeys="true"
-		keyProperty="${pkname}">
+	<insert id="create" parameterType="${entity}"<#if pkname??> useGeneratedKeys="true"
+		keyProperty="id"</#if>>
 		${insert_sql}
 	</insert>
-
+		
 	<!-- 更新操作 -->
 	<update id="update" parameterType="${entity}">
 		${update_sql}
 	</update>
 
 	<!-- 根据主键删除 -->
+	<#if pkname??>
 	<delete id="deleteByPrimaryKeys">
+	 <#else>
+	<delete id="deleteByPrimaryKeys" parameterType="hashmap">  
+	 </#if>          
 		${delete_sql}
 	</delete>
 	
 	<!-- 根据主键查询 -->
+	<#if pkname??>
 	<select id="getByPrimaryKey" resultMap="resultMap" parameterType="long">
+	 <#else>
+	 <select id="getByPrimaryKey" resultMap="resultMap" parameterType="hashmap">   
+	 </#if>     
 		${select_sql}
 	</select>
 	
@@ -37,6 +44,7 @@
 		<include refid="orderByClause"/>
 	</select>
 	
+	<#if pkname??>
 	<!-- 根据参数查询数量-->
 	<select id="countByCriteria" resultType="int" parameterType="long">
 		SELECT
@@ -45,6 +53,20 @@
 			${lower_entity}
 		<include refid="defaultCriteria"/>
 	</select>
+	
+	<#else>
+		<#if pklist??>
+		<#list pklist as pk>
+	<delete id="deleteBy${pk}">
+		DELETE FROM
+			${lower_entity}
+		WHERE
+		${pk}=${r"#{ "} ${pk}${r" } "}
+	</delete>
+	</#list>
+	</#if>
+	</#if>
+	
 	
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
@@ -68,7 +90,7 @@
 
 	<!-- 默认的数据库映射 -->
 	<resultMap type="${entity}" id="resultMap">
-		${resultMap}
+	${resultMap}
 	</resultMap>
-	</#if>
+	
 </mapper>
