@@ -31,7 +31,7 @@
 	<!-- 配置文件 -->
 	<!-- class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" -->
 	<bean id="propertyConfigurer"		
-		class="com.easy.core.bean.SupportConvertPropertyPlaceholderConfigurer">
+		class="com.easy.core.spring.SupportConvertPropertyPlaceholderConfigurer">
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 		<property name="ignoreResourceNotFound" value="true" />
 		<property name="locations">
@@ -54,18 +54,6 @@
 	<!-- <context:property-placeholder location="classpath:jdbc.properties" 
 		/> -->
 
-	<!-- 数据源 -->
-	<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"> 
-		<property name="driverClass" value="${jdbc.driverClassName}" /> <property 
-		name="jdbcUrl" value="${jdbc.url}" /> <property name="user" value="${jdbc.username}" 
-		/> <property name="password" value="${jdbc.password}" /> <property name="autoCommitOnClose" 
-		value="true" /> <property name="checkoutTimeout" value="${cpool.checkoutTimeout}" 
-		/> <property name="initialPoolSize" value="${cpool.minPoolSize}" /> <property 
-		name="minPoolSize" value="${cpool.minPoolSize}" /> <property name="maxPoolSize" 
-		value="${cpool.maxPoolSize}" /> <property name="maxIdleTime" value="${cpool.maxIdleTime}" 
-		/> <property name="acquireIncrement" value="${cpool.acquireIncrement}" /> 
-		<property name="maxIdleTimeExcessConnections" value="${cpool.maxIdleTimeExcessConnections}" 
-		/> </bean> -->
 
 	<!-- 采用bonecp数据源 -->
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
