@@ -60,10 +60,10 @@ public interface ${entity}Dao {
 	/**
      * 根据${pk}删除${entity_comment}
      * 
-     * @param ids
+     * @param ${pk}
      * @return
      */
-    public int deleteBy${pk}(Long ${pk});		
+    public int deleteBy${pk?cap_first}(Long ${pk});		
 		</#list>
 	</#if>
     

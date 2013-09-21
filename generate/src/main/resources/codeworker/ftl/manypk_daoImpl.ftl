@@ -69,14 +69,8 @@ public class ${entity}DaoImpl extends MyBatisGenericDao implements ${entity}Dao 
     
      <#if pklist??>
 		<#list pklist as pk>
-	/**
-     * 根据${pk}删除${entity_comment}
-     * 
-     * @param ids
-     * @return
-     */
-    public int deleteBy${pk}(Long ${pk}){
-    	return delete("deleteBy${pk}", ${pk});
+    public int deleteBy${pk?cap_first}(Long ${pk}){
+    	return delete("deleteBy${pk?cap_first}", ${pk});
     }		
 		</#list>
 	</#if>
