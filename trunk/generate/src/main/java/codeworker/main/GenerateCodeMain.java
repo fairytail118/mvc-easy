@@ -29,7 +29,7 @@ public class GenerateCodeMain {
 //		FreemarkerCoder.execute_generateEntityClass(entityName,entityPackage,tableName);
 //		FreemarkerCoder.execute_generatePages("Role", "role");//生成页面
 		
-//		FreemarkerCoder.generateAll("Admin", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "admin");
+		FreemarkerCoder.generateAll("User", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "user");
 //		FreemarkerCoder.generateAll("Role", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "role", pkname);
 //		FreemarkerCoder.generateAll("Permission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "permission");
 		FreemarkerCoder.generateAll("AllotRole", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allot_role");
