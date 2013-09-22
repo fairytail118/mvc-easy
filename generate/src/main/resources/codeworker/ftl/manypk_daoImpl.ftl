@@ -20,21 +20,17 @@ import com.easy.core.dao.impl.MyBatisGenericDao;
  */
 @Repository
 public class ${entity}DaoImpl extends MyBatisGenericDao implements ${entity}Dao {
- 
- 	public ${entity}DaoImpl(){
-		namespace="${dao_package}.${entity}Dao";
-	}
  	
     @Override
     public ${entity} create(${entity} ${lower_entity}) {
-        save("create", ${lower_entity});
+        save("${dao_package}.${entity}Dao.create", ${lower_entity});
         return ${lower_entity};
     }
 
    
     @Override
     public int update(${entity} ${lower_entity}) {
-        return update("update", ${lower_entity});
+        return update("${dao_package}.${entity}Dao.update", ${lower_entity});
     }
 
    
@@ -46,7 +42,7 @@ public class ${entity}DaoImpl extends MyBatisGenericDao implements ${entity}Dao 
 		params.put("${pk}", ${pk});
 		</#list>
 		</#if>
-        return delete("deleteByPrimaryKeys", params);
+        return delete("${dao_package}.${entity}Dao.deleteByPrimaryKeys", params);
     }
 
    
@@ -58,19 +54,19 @@ public class ${entity}DaoImpl extends MyBatisGenericDao implements ${entity}Dao 
 		params.put("${pk}", ${pk});
 		</#list>
 		</#if>
-        return get("getByPrimaryKey", params);
+        return get("${dao_package}.${entity}Dao.getByPrimaryKey", params);
     }
 
    
     @Override
     public List<${entity}> selectByCriteria(${entity} ${lower_entity}) {
-        return list("selectByCriteria", ${lower_entity});
+        return list("${dao_package}.${entity}Dao.selectByCriteria", ${lower_entity});
     }
     
      <#if pklist??>
 		<#list pklist as pk>
     public int deleteBy${pk?cap_first}(Long ${pk}){
-    	return delete("deleteBy${pk?cap_first}", ${pk});
+    	return delete("${dao_package}.${entity}Dao.deleteBy${pk?cap_first}", ${pk});
     }		
 		</#list>
 	</#if>
