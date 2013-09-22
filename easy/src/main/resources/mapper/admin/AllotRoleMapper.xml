@@ -54,8 +54,16 @@
 		<include refid="columns"/>
 		FROM
 			admin
-		WHERE
-			userId = #{userId} AND roleId = #{roleId}
+		<where>
+		    <if test="userId!=null">
+		       userId = #{userId}
+		    </if>
+		    <if test="roleId!=null">
+	        AND roleId = #{roleId}
+		    </if>
+		</where>
+		<!-- 防止参数都为空，变成全表删除 -->
+			AND 1=1
 	</select>
 	
 	<!-- 根据参数查询列表 -->

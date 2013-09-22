@@ -3,6 +3,8 @@
  */
 package com.easy.core.common;
 
+import org.apache.commons.lang.BooleanUtils;
+
 import com.easy.core.exceptions.ParamException;
 
 /**
@@ -34,6 +36,54 @@ public class Assert {
     public static void notEmpty(Object[] objs, String message) {
         notNull(objs, message);
         if (objs.length == 0) {
+            throw new ParamException(message);
+        }
+    }
+
+    /**
+     * 为true
+     * 
+     * @param arg
+     * @param message
+     */
+    public static void isTrue(Boolean bool, String message) {
+        if (!BooleanUtils.isTrue(bool)) {
+            throw new ParamException(message);
+        }
+    }
+
+    /**
+     * 为false
+     * 
+     * @param arg
+     * @param message
+     */
+    public static void isFalse(Boolean bool, String message) {
+        if (!BooleanUtils.isFalse(bool)) {
+            throw new ParamException(message);
+        }
+    }
+    
+    /**
+     * 不为true
+     * 
+     * @param arg
+     * @param message
+     */
+    public static void isNotTrue(Boolean bool, String message) {
+        if (!BooleanUtils.isNotTrue(bool)) {
+            throw new ParamException(message);
+        }
+    }
+    
+    /**
+     * 不为false
+     * 
+     * @param arg
+     * @param message
+     */
+    public static void isNotFalse(Boolean bool, String message) {
+        if (!BooleanUtils.isNotFalse(bool)) {
             throw new ParamException(message);
         }
     }
