@@ -18,30 +18,30 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequiredStringValidator {
 
-	/**
-	 * 是否去除左右空格
-	 * 
-	 * @return
-	 */
-	boolean trim() default true;
+    /**
+     * 是否去除左右空格
+     * 
+     * @return
+     */
+    boolean trim() default true;
 
-	/**
-	 * 文字消息
-	 * 
-	 * @return
-	 */
-	String message() default "";
+    /**
+     * 文字消息
+     * 
+     * @return
+     */
+    String message() default "";
 
-	/**
-	 * 资源文件key
-	 */
-	String key() default "";
+    /**
+     * 资源文件key
+     */
+    String key() default "";
 
-	/**
-	 * 字段
-	 * 
-	 * @return
-	 */
-	String field();
+    /**
+     * 字段
+     * 
+     * @return
+     */
+    String field();
 
 }

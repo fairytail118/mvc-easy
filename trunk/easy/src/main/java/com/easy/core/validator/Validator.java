@@ -17,14 +17,13 @@ import com.easy.core.validator.annotations.Validations;
  */
 public interface Validator {
 
-	/**
-	 * 验证数据
-	 * 
-	 * @param validations
-	 * @param request
-	 * @return 返回 字段-对应message
-	 */
-	public Map<String, String> valid(Validations validations,
-			HttpServletRequest request);
+    /**
+     * 验证数据
+     * 
+     * @param validations
+     * @param request
+     * @return 返回 字段-对应message
+     */
+    public Map<String, String> valid(Validations validations, HttpServletRequest request);
 
 }

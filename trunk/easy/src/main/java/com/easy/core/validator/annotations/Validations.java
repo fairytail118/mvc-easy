@@ -18,39 +18,39 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Validations {
 
-	/**
-	 * 邮箱验证
-	 */
-	public EmailValidator[] emailValidators() default {};
+    /**
+     * 邮箱验证
+     */
+    public EmailValidator[] emailValidators() default {};
 
-	/**
-	 * 数字范围验证
-	 */
-	public NumberRangeValidator[] numberRangeValidators() default {};
+    /**
+     * 数字范围验证
+     */
+    public NumberRangeValidator[] numberRangeValidators() default {};
 
-	/**
-	 * 数字验证
-	 */
-	public NumberValidator[] numberValidators() default {};
+    /**
+     * 数字验证
+     */
+    public NumberValidator[] numberValidators() default {};
 
-	/**
-	 * 正则验证
-	 */
-	public RegexValidator[] regexValidators() default {};
+    /**
+     * 正则验证
+     */
+    public RegexValidator[] regexValidators() default {};
 
-	/**
-	 * 必填字符串验证
-	 */
-	public RequiredStringValidator[] requiredStringValidators() default {};
+    /**
+     * 必填字符串验证
+     */
+    public RequiredStringValidator[] requiredStringValidators() default {};
 
-	/**
-	 * 必填验证
-	 */
-	public RequiredValidator[] requiredValidators() default {};
+    /**
+     * 必填验证
+     */
+    public RequiredValidator[] requiredValidators() default {};
 
-	/**
-	 * 字符串长度验证
-	 */
-	public StringLengthValidator[] stringLengthValidators() default {};
+    /**
+     * 字符串长度验证
+     */
+    public StringLengthValidator[] stringLengthValidators() default {};
 
 }

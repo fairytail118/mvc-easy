@@ -15,32 +15,32 @@ import org.apache.commons.lang.StringUtils;
  */
 public class RegexUtil {
 
-	/**
-	 * 验证邮箱是否正确
-	 * 
-	 * @param email
-	 * @return
-	 */
-	public static boolean validEmail(String email) {
-		String regex = "^(([a-zA-Z0-9]*[-_\\.]?)*[a-zA-Z0-9]+)*@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$";
-		if (StringUtils.isBlank(email)) {
-			return false;
-		}
+    /**
+     * 验证邮箱是否正确
+     * 
+     * @param email
+     * @return
+     */
+    public static boolean validEmail(String email) {
+        String regex = "^(([a-zA-Z0-9]*[-_\\.]?)*[a-zA-Z0-9]+)*@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$";
+        if (StringUtils.isBlank(email)) {
+            return false;
+        }
 
-		return valid(regex, email);
-	}
+        return valid(regex, email);
+    }
 
-	/**
-	 * 验证格式
-	 * 
-	 * @param regex
-	 * @param data
-	 * @return
-	 */
-	public static boolean valid(String regex, String data) {
-		Pattern pattern = Pattern.compile(regex);
-		Matcher matcher = pattern.matcher(data);
-		return matcher.matches();
-	}
+    /**
+     * 验证格式
+     * 
+     * @param regex
+     * @param data
+     * @return
+     */
+    public static boolean valid(String regex, String data) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(data);
+        return matcher.matches();
+    }
 
 }

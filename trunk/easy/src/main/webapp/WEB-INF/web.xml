@@ -65,21 +65,21 @@
 		</init-param>
 		<!-- 每次处理完一个http请求后是否需要项容器发布事件，没有事件监听器时不需要发布 -->
 		<init-param>
-		    <param-name>publishEvents</param-name>
-		    <param-value>false</param-value>
+			<param-name>publishEvents</param-name>
+			<param-value>false</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>captchaServlet</servlet-name>
+		<servlet-class>com.easy.core.captcha.CaptchaServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>spring-mvc</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<servlet>
-		<servlet-name>captchaServlet</servlet-name>
-		<servlet-class>com.easy.core.captcha.CaptchaServlet</servlet-class>
-	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>captchaServlet</servlet-name>

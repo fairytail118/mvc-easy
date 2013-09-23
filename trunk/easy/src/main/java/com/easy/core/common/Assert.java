@@ -63,7 +63,7 @@ public class Assert {
             throw new ParamException(message);
         }
     }
-    
+
     /**
      * 不为true
      * 
@@ -75,7 +75,7 @@ public class Assert {
             throw new ParamException(message);
         }
     }
-    
+
     /**
      * 不为false
      * 

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easy.admin.dao.UserDao">
+	<!-- 增加操作 -->
+	<insert id="create" parameterType="User" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO
+			user(
+				 id, createTime, createUser, modifyTime, modifyUser, name, email, mobile, username, password, isLocked, isEnabled, userType				
+			)
+		VALUES(
+			 #{id}, #{createTime}, #{createUser}, #{modifyTime}, #{modifyUser}, #{name}, #{email}, #{mobile}, #{username}, #{password}, #{isLocked}, #{isEnabled}, #{userType}			
+		)
+	</insert>
+
+	<!-- 更新操作 -->
+	<update id="update" parameterType="User">
+		UPDATE
+			user
+		<set>
+
+			<if test="id!=null">
+			id = #{id},
+			</if>
+								
+			<if test="modifyTime!=null">
+			modifyTime = #{modifyTime},
+			</if>
+				
+			<if test="modifyUser!=null and modifyUser.trim()!=''">
+			modifyUser = #{modifyUser},
+			</if>
+						
+			<if test="name!=null and name.trim()!=''">
+			name = #{name},
+			</if>
+						
+			<if test="email!=null and email.trim()!=''">
+			email = #{email},
+			</if>
+						
+			<if test="mobile!=null and mobile.trim()!=''">
+			mobile = #{mobile},
+			</if>
+						
+			<if test="username!=null and username.trim()!=''">
+			username = #{username},
+			</if>
+						
+			<if test="password!=null and password.trim()!=''">
+			password = #{password},
+			</if>
+						
+			<if test="isLocked!=null">
+			isLocked = #{isLocked},
+			</if>
+				
+			<if test="isEnabled!=null">
+			isEnabled = #{isEnabled},
+			</if>
+				
+			<if test="userType!=null and userType.trim()!=''">
+			userType = #{userType},
+			</if>
+						
+		</set>
+		WHERE
+		id = #{id}
+				
+	</update>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKeys">
+		DELETE FROM
+			user
+		WHERE
+			id IN
+		
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 根据主键查询 -->
+	<select id="getByPrimaryKey" resultMap="resultMap" parameterType="long">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			user
+		WHERE
+			id = #{id}
+				
+	</select>
+	
+	<!-- 根据参数查询列表 -->
+	<select id="selectByCriteria" resultMap="resultMap" parameterType="User">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			user
+		<include refid="defaultCriteria"/>
+		<include refid="orderByClause"/>
+	</select>
+	
+	<!-- 根据参数查询数量-->
+	<select id="countByCriteria" resultType="int" parameterType="long">
+		SELECT
+			count(*)
+		FROM
+			user
+		<include refid="defaultCriteria"/>
+	</select>
+	
+	<!-- 默认的查询条件 -->
+	<sql id="defaultCriteria">
+		<where>
+			<!-- 关键字查询字段 -->
+			<if test="keyword!=null and keyword!=''">
+				AND name like "%"#{keyword}"%"
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 排序字段 -->
+	<sql id="orderByClause">
+		<if test="orderByClause!=null">
+			${orderByClause}
+		</if>
+	</sql>
+	
+	<!-- 默认的数据库字段 -->
+	<sql id="columns">
+		id,createTime,createUser,modifyTime,modifyUser,name,email,mobile,username,password,isLocked,isEnabled,userType	
+	</sql>
+
+
+	<!-- 默认的数据库映射 -->
+	<resultMap type="User" id="resultMap">
+		<!-- 主键ID -->
+		<result property="id" column="id" />
+		<!-- 创建时间 -->
+		<result property="createTime" column="createTime" />
+		<!-- 创建人 -->
+		<result property="createUser" column="createUser" />
+		<!-- 修改时间 -->
+		<result property="modifyTime" column="modifyTime" />
+		<!-- 修改人 -->
+		<result property="modifyUser" column="modifyUser" />
+		<!-- 姓名 -->
+		<result property="name" column="name" />
+		<!-- 邮箱 -->
+		<result property="email" column="email" />
+		<!-- 手机 -->
+		<result property="mobile" column="mobile" />
+		<!-- 用户名 -->
+		<result property="username" column="username" />
+		<!-- 密码 -->
+		<result property="password" column="password" />
+		<!-- 是否锁定 -->
+		<result property="isLocked" column="isLocked" />
+		<!-- 是否启用 -->
+		<result property="isEnabled" column="isEnabled" />
+		<!-- 用户类型 -->
+		<result property="userType" column="userType" />
+	
+	</resultMap>
+</mapper>

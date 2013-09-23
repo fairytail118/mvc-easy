@@ -14,37 +14,37 @@ import java.sql.SQLException;
  */
 public class ExceptionUtil {
 
-	/**
-	 * 
-	 * 
-	 * @param e
-	 * @return
-	 */
-	public static String getMessage(Exception e) {
-		if (e instanceof EasyException) {
-			return e.getMessage();
-		}
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		e.printStackTrace(pw);
-		return sw.toString();
-	}
+    /**
+     * 获取完整的异常信息
+     * 
+     * @param e
+     * @return
+     */
+    public static String getMessage(Exception e) {
+        if (e instanceof EasyException) {
+            return e.getMessage();
+        }
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString();
+    }
 
-	/**
-	 * 返回结果信息
-	 * 
-	 * @param e
-	 * @return
-	 */
-	public static String getResultMessage(Exception e) {
-		if (e instanceof EasyException) {
-			return e.getMessage();
-		} else if (e instanceof SQLException) {
-			return "数据库异常";
-		}
-		//其他能转换的可视异常
-		
-		return "系统异常";
-	}
+    /**
+     * 返回结果信息
+     * 
+     * @param e
+     * @return
+     */
+    public static String getResultMessage(Exception e) {
+        if (e instanceof EasyException) {
+            return e.getMessage();
+        } else if (e instanceof SQLException) {
+            return "数据库异常";
+        }
+        //其他能转换的可使异常
+
+        return "系统异常";
+    }
 
 }

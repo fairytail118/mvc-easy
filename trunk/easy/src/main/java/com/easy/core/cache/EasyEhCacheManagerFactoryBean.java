@@ -20,16 +20,32 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
  * @version v 0.1 2013-9-14 下午3:46:59 wy Exp $
  */
 public class EasyEhCacheManagerFactoryBean extends EhCacheManagerFactoryBean
-		implements FactoryBean<CacheManager>, InitializingBean, DisposableBean {
+                                                                            implements
+                                                                            FactoryBean<CacheManager>,
+                                                                            InitializingBean,
+                                                                            DisposableBean {
 
-	/**
-	 * 
-	 * @see org.springframework.cache.ehcache.EhCacheManagerFactoryBean#afterPropertiesSet()
-	 */
-	public void afterPropertiesSet() throws IOException, CacheException {
-		// 重启时读取
-		System.setProperty("net.sf.ehcache.enableShutdownHook", "true");
-		super.afterPropertiesSet();
-	}
+    /** 是否从硬盘加载文件 */
+    private boolean initFromDisk = true;
+
+    /**
+     * Setter method for property <tt>initFromDisk</tt>.
+     * 
+     * @param initFromDisk
+     *            value to be assigned to property initFromDisk
+     */
+    public void setInitFromDisk(boolean initFromDisk) {
+        this.initFromDisk = initFromDisk;
+    }
+
+    /**
+     * 
+     * @see org.springframework.cache.ehcache.EhCacheManagerFactoryBean#afterPropertiesSet()
+     */
+    public void afterPropertiesSet() throws IOException, CacheException {
+        // 重启时读取
+        System.setProperty("net.sf.ehcache.enableShutdownHook", String.valueOf(initFromDisk));
+        super.afterPropertiesSet();
+    }
 
 }

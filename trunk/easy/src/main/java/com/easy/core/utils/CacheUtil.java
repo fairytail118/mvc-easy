@@ -23,129 +23,128 @@ import org.springframework.stereotype.Component;
 @Component
 public class CacheUtil {
 
-	/** 日志 */
-	protected final static Logger log = LoggerFactory
-			.getLogger(CacheUtil.class);
+    /** 日志 */
+    protected final static Logger log                = LoggerFactory.getLogger(CacheUtil.class);
 
-	/** 对应的ehcache.xml中的缓存名称 */
-	public final static String DEFAULT_EASY_CACHE = "easyCache";
+    /** 对应的ehcache.xml中的缓存名称 */
+    public final static String    DEFAULT_EASY_CACHE = "easyCache";
 
-	/** 缓存 通过静态注入 */
-	private static CacheManager cacheManager;
+    /** 缓存 通过静态注入 */
+    private static CacheManager   cacheManager;
 
-	/**
-	 * 自动注入
-	 * 
-	 * @param cacheManager
-	 */
-	@Autowired
-	public void setCacheManager(CacheManager cacheManager) {
-		CacheUtil.cacheManager = cacheManager;
-	}
+    /**
+     * 自动注入
+     * 
+     * @param cacheManager
+     */
+    @Autowired
+    public void setCacheManager(CacheManager cacheManager) {
+        CacheUtil.cacheManager = cacheManager;
+    }
 
-	/**
-	 * 获取配置的缓存
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static Cache getCache(String name) {
-		return cacheManager.getCache(name);
-	}
+    /**
+     * 获取配置的缓存
+     * 
+     * @param name
+     * @return
+     */
+    public static Cache getCache(String name) {
+        return cacheManager.getCache(name);
+    }
 
-	/**
-	 * 获取缓存值
-	 * 
-	 * @param name
-	 * @param key
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T get(String name, String key) {
-		Element element = getCache(name).get(key);
-		if (element != null) {
-			return (T) element.getValue();
-		}
-		return null;
-	}
+    /**
+     * 获取缓存值
+     * 
+     * @param name
+     * @param key
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T get(String name, String key) {
+        Element element = getCache(name).get(key);
+        if (element != null) {
+            return (T) element.getValue();
+        }
+        return null;
+    }
 
-	/**
-	 * 从缓存中移除
-	 * 
-	 * @param name
-	 * @param key
-	 */
-	public static void remove(String name, String key) {
-		getCache(name).remove(key);
-	}
+    /**
+     * 从缓存中移除
+     * 
+     * @param name
+     * @param key
+     */
+    public static void remove(String name, String key) {
+        getCache(name).remove(key);
+    }
 
-	/**
-	 * 设置缓存
-	 * 
-	 * @param name
-	 * @param key
-	 * @param value
-	 */
-	public static void set(String name, String key, Serializable value) {
+    /**
+     * 设置缓存
+     * 
+     * @param name
+     * @param key
+     * @param value
+     */
+    public static void set(String name, String key, Serializable value) {
 
-		if (value == null) {
-			log.warn("设置缓存key:{}的value为空", key);
-			return;
-		}
-		Cache cache = getCache(name);
-		Element element = new Element(key, value);
-		cache.put(element);
-	}
+        if (value == null) {
+            log.warn("设置缓存key:{}的value为空", key);
+            return;
+        }
+        Cache cache = getCache(name);
+        Element element = new Element(key, value);
+        cache.put(element);
+    }
 
-	/**
-	 * 判断缓存是否存在
-	 * 
-	 * @param name
-	 * @param key
-	 * @return
-	 */
-	public boolean exist(String name, String key) {
-		return getCache(name).isKeyInCache(key);
-	}
+    /**
+     * 判断缓存是否存在
+     * 
+     * @param name
+     * @param key
+     * @return
+     */
+    public boolean exist(String name, String key) {
+        return getCache(name).isKeyInCache(key);
+    }
 
-	/**
-	 * 获取缓存值
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public static <T> T get(String key) {
-		return get(DEFAULT_EASY_CACHE, key);
-	}
+    /**
+     * 获取缓存值
+     * 
+     * @param key
+     * @return
+     */
+    public static <T> T get(String key) {
+        return get(DEFAULT_EASY_CACHE, key);
+    }
 
-	/**
-	 * 从缓存中移除
-	 * 
-	 * @param key
-	 */
-	public static void remove(String key) {
-		remove(DEFAULT_EASY_CACHE, key);
-	}
+    /**
+     * 从缓存中移除
+     * 
+     * @param key
+     */
+    public static void remove(String key) {
+        remove(DEFAULT_EASY_CACHE, key);
+    }
 
-	/**
-	 * 设置缓存
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public static void set(String key, Serializable value) {
+    /**
+     * 设置缓存
+     * 
+     * @param key
+     * @param value
+     */
+    public static void set(String key, Serializable value) {
 
-		set(DEFAULT_EASY_CACHE, key, value);
-	}
+        set(DEFAULT_EASY_CACHE, key, value);
+    }
 
-	/**
-	 * 判断缓存是否存在
-	 * 
-	 * @param key
-	 * @return
-	 */
-	public boolean exist(String key) {
-		return getCache(DEFAULT_EASY_CACHE).isKeyInCache(key);
-	}
+    /**
+     * 判断缓存是否存在
+     * 
+     * @param key
+     * @return
+     */
+    public boolean exist(String key) {
+        return getCache(DEFAULT_EASY_CACHE).isKeyInCache(key);
+    }
 
 }

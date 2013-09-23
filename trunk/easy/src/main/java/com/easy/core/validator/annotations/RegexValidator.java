@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * @author wy
  * @version v 0.1 2013-9-10 下午10:34:47 wy Exp $
  */
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RegexValidator {
 
@@ -36,7 +36,7 @@ public @interface RegexValidator {
      * @return
      */
     String field();
-    
+
     /**
      * 正则表达式
      * 
