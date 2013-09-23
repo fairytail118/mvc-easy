@@ -1,6 +1,6 @@
 @CHARSET "utf-8";
 /* 基础元素 */
-body,div,span,ul,li,table,tr,td,input,a,h1,h2,h3,h4{margin: 0; padding: 0;}
+body,div,span,ul,li,table,tr,td,input,a,h1,h2,h3,h4{margin: 0 auto; padding: 0;}
 body,textarea{font-family: arial,simsun,宋体,sans-serif; font-size: 12px;}
 img{border: none;}
 ul{list-style: none;}
@@ -47,3 +47,4 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 /**边距*/
 .ml5{margin-left: 5px}
 .ml20{margin-left: 20px}
+.mt5{margin-top: 5px}
