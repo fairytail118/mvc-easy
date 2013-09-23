@@ -15,135 +15,135 @@ import com.easy.core.exceptions.ExceptionUtil;
  */
 public class Result implements Serializable {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = -4135003009539724018L;
+    /** serialVersionUID */
+    private static final long serialVersionUID = -4135003009539724018L;
 
-	/** 执行结果状态 */
-	private boolean success = true;
+    /** 执行结果状态 */
+    private boolean           success          = true;
 
-	/** 权限方面的问题 */
-	private boolean denied = false;
+    /** 权限方面的问题 */
+    private boolean           denied           = false;
 
-	/** 错误结果信息 */
-	private String message;
+    /** 错误结果信息 */
+    private String            message;
 
-	/** 返回结果 */
-	private Object data;
+    /** 返回结果 */
+    private Object            data;
 
-	/**
+    /**
      * 
      */
-	public Result() {
+    public Result() {
 
-	}
+    }
 
-	/**
-	 * 返回错误结果
-	 * 
-	 * @param message
-	 * @return
-	 */
-	public Result(String message) {
-		this.success = false;
-		this.message = message;
-	}
+    /**
+     * 返回错误结果
+     * 
+     * @param message
+     * @return
+     */
+    public Result(String message) {
+        this.success = false;
+        this.message = message;
+    }
 
-	/**
-	 * 返回错误结果
-	 * 
-	 * @param e
-	 */
-	public Result(Exception e) {
-		this.success = false;
-		this.message = ExceptionUtil.getResultMessage(e);
-	}
+    /**
+     * 返回错误结果
+     * 
+     * @param e
+     */
+    public Result(Exception e) {
+        this.success = false;
+        this.message = ExceptionUtil.getResultMessage(e);
+    }
 
-	/**
-	 * 返回结果
-	 * 
-	 * @param success
-	 * @param message
-	 * @return
-	 */
-	public Result(boolean success, Object data) {
-		this.success = success;
-		this.data = data;
-	}
+    /**
+     * 返回结果
+     * 
+     * @param success
+     * @param message
+     * @return
+     */
+    public Result(boolean success, Object data) {
+        this.success = success;
+        this.data = data;
+    }
 
-	/**
-	 * Getter method for property <tt>success</tt>.
-	 * 
-	 * @return property value of success
-	 */
-	public boolean isSuccess() {
-		return success;
-	}
+    /**
+     * Getter method for property <tt>success</tt>.
+     * 
+     * @return property value of success
+     */
+    public boolean isSuccess() {
+        return success;
+    }
 
-	/**
-	 * Setter method for property <tt>success</tt>.
-	 * 
-	 * @param success
-	 *            value to be assigned to property success
-	 */
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+    /**
+     * Setter method for property <tt>success</tt>.
+     * 
+     * @param success
+     *            value to be assigned to property success
+     */
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 
-	/**
-	 * Getter method for property <tt>message</tt>.
-	 * 
-	 * @return property value of message
-	 */
-	public String getMessage() {
-		return message;
-	}
+    /**
+     * Getter method for property <tt>message</tt>.
+     * 
+     * @return property value of message
+     */
+    public String getMessage() {
+        return message;
+    }
 
-	/**
-	 * Setter method for property <tt>message</tt>.
-	 * 
-	 * @param message
-	 *            value to be assigned to property message
-	 */
-	public void setMessage(String message) {
-		this.message = message;
-	}
+    /**
+     * Setter method for property <tt>message</tt>.
+     * 
+     * @param message
+     *            value to be assigned to property message
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-	/**
-	 * Getter method for property <tt>data</tt>.
-	 * 
-	 * @return property value of data
-	 */
-	public Object getData() {
-		return data;
-	}
+    /**
+     * Getter method for property <tt>data</tt>.
+     * 
+     * @return property value of data
+     */
+    public Object getData() {
+        return data;
+    }
 
-	/**
-	 * Setter method for property <tt>data</tt>.
-	 * 
-	 * @param data
-	 *            value to be assigned to property data
-	 */
-	public void setData(Object data) {
-		this.data = data;
-	}
+    /**
+     * Setter method for property <tt>data</tt>.
+     * 
+     * @param data
+     *            value to be assigned to property data
+     */
+    public void setData(Object data) {
+        this.data = data;
+    }
 
-	/**
-	 * Getter method for property <tt>denied</tt>.
-	 * 
-	 * @return property value of denied
-	 */
-	public boolean isDenied() {
-		return denied;
-	}
+    /**
+     * Getter method for property <tt>denied</tt>.
+     * 
+     * @return property value of denied
+     */
+    public boolean isDenied() {
+        return denied;
+    }
 
-	/**
-	 * Setter method for property <tt>denied</tt>.
-	 * 
-	 * @param denied
-	 *            value to be assigned to property denied
-	 */
-	public void setDenied(boolean denied) {
-		this.denied = denied;
-	}
+    /**
+     * Setter method for property <tt>denied</tt>.
+     * 
+     * @param denied
+     *            value to be assigned to property denied
+     */
+    public void setDenied(boolean denied) {
+        this.denied = denied;
+    }
 
 }

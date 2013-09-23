@@ -19,38 +19,35 @@ import org.springframework.web.servlet.support.RequestContextUtils;
  */
 public final class MessageResolver {
 
-	private MessageResolver() {
+    private MessageResolver() {
 
-	}
+    }
 
-	/**
-	 * 获得国际化信息
-	 * 
-	 * @param request
-	 *            HttpServletRequest
-	 * @param code
-	 *            国际化代码
-	 * @param args
-	 *            替换参数
-	 * @return
-	 * @see org.springframework.context.MessageSource#getMessage(String,
-	 *      Object[], Locale)
-	 */
-	public static String getMessage(HttpServletRequest request, String code,
-			Object... args) {
-		WebApplicationContext webContext = RequestContextUtils
-				.getWebApplicationContext(request);
-		if (webContext == null) {
-			throw new IllegalStateException("WebApplicationContext not found!");
-		}
-		LocaleResolver localeResolver = RequestContextUtils
-				.getLocaleResolver(request);
-		Locale locale;
-		if (localeResolver != null) {
-			locale = localeResolver.resolveLocale(request);
-		} else {
-			locale = request.getLocale();
-		}
-		return webContext.getMessage(code, args, locale);
-	}
+    /**
+     * 获得国际化信息
+     * 
+     * @param request
+     *            HttpServletRequest
+     * @param code
+     *            国际化代码
+     * @param args
+     *            替换参数
+     * @return
+     * @see org.springframework.context.MessageSource#getMessage(String,
+     *      Object[], Locale)
+     */
+    public static String getMessage(HttpServletRequest request, String code, Object... args) {
+        WebApplicationContext webContext = RequestContextUtils.getWebApplicationContext(request);
+        if (webContext == null) {
+            throw new IllegalStateException("WebApplicationContext not found!");
+        }
+        LocaleResolver localeResolver = RequestContextUtils.getLocaleResolver(request);
+        Locale locale;
+        if (localeResolver != null) {
+            locale = localeResolver.resolveLocale(request);
+        } else {
+            locale = request.getLocale();
+        }
+        return webContext.getMessage(code, args, locale);
+    }
 }

@@ -25,47 +25,49 @@ import com.easy.core.common.Constants;
  */
 public class CaptchaServlet extends HttpServlet {
 
-	/** serialVersionUID */
-	private static final long serialVersionUID = -5132544599206897068L;
+    /** serialVersionUID */
+    private static final long   serialVersionUID = -5132544599206897068L;
 
-	/** 日志 */
-	private static final Logger log = LoggerFactory
-			.getLogger(CaptchaServlet.class);
+    /** 日志 */
+    private static final Logger log              = LoggerFactory.getLogger(CaptchaServlet.class);
 
-	/**
-	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse)
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    /**
+     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse)
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+                                                                                  throws ServletException,
+                                                                                  IOException {
 
-		ServletOutputStream out = null;
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		try {
-			request.getSession(true).removeAttribute(Constants.CAPTCHA_CODE);
-			Captcha captcha = new SpecCaptcha(100, 28, 4);// png格式验证码
-			captcha.out(os);
-			String code = captcha.text();
+        ServletOutputStream out = null;
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        try {
+            request.getSession(true).removeAttribute(Constants.CAPTCHA_CODE);
+            Captcha captcha = new SpecCaptcha(100, 28, 4);// png格式验证码
+            captcha.out(os);
+            String code = captcha.text();
 
-			request.getSession(true).setAttribute(Constants.CAPTCHA_CODE, code);
+            request.getSession(true).setAttribute(Constants.CAPTCHA_CODE, code);
 
-			byte[] bytes = os.toByteArray();
-			response.setContentType("image/png;charset=UTF-8");
-			response.setContentLength(bytes.length);
-			response.setHeader("Pragma", "No-cache");
-			response.setHeader("Cache-Control", "no-cache");
-			response.setDateHeader("Expires", 0);
-			out = response.getOutputStream();
-			out.write(bytes);
-			out.flush();
-		} catch (Exception e) {
-			log.error("生成验证码失败", e);
-		} finally {
-			IOUtils.closeQuietly(out);
-			IOUtils.closeQuietly(os);
-		}
+            byte[] bytes = os.toByteArray();
+            response.setContentType("image/png;charset=UTF-8");
+            response.setContentLength(bytes.length);
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0);
+            out = response.getOutputStream();
+            out.write(bytes);
+            out.flush();
+        }
+        catch (Exception e) {
+            log.error("生成验证码失败", e);
+        }
+        finally {
+            IOUtils.closeQuietly(out);
+            IOUtils.closeQuietly(os);
+        }
 
-	}
+    }
 
 }

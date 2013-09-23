@@ -18,6 +18,7 @@
 
 	<bean id="ehCacheManager" class="com.easy.core.cache.EasyEhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:ehcache.xml" />
+		<property name="initFromDisk" value="false"></property>
 	</bean>
 
 </beans>

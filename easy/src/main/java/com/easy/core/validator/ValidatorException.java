@@ -11,14 +11,14 @@ package com.easy.core.validator;
  */
 public class ValidatorException extends RuntimeException {
 
-	/**  */
-	private static final long serialVersionUID = -2682742310409783894L;
+    /**  */
+    private static final long serialVersionUID = -2682742310409783894L;
 
-	/**
-	 * @param message
-	 */
-	public ValidatorException(String message) {
-		super(message);
-	}
+    /**
+     * @param message
+     */
+    public ValidatorException(String message) {
+        super(message);
+    }
 
 }

@@ -33,7 +33,7 @@ public abstract class AbstractPageInterceptor implements Interceptor {
      */
     @Override
     public final Object intercept(Invocation invocation) throws Throwable {
-        
+
         StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         MetaObject metaStatementHandler = MetaObject.forObject(statementHandler);
 
@@ -48,8 +48,9 @@ public abstract class AbstractPageInterceptor implements Interceptor {
 
         String pageSQL = getPageSql(sql, rowBounds.getOffset(), rowBounds.getLimit());
 
-        if(log.isInfoEnabled()){
-        	log.info("生成的分页SQL为:{}", pageSQL.replace("\n\t\t", " ").replace("\n\t", " ").replace("\n", " "));
+        if (log.isInfoEnabled()) {
+            log.info("生成的分页SQL为:{}",
+                pageSQL.replace("\n\t\t", " ").replace("\n\t", " ").replace("\n", " "));
         }
 
         //设置新的分页sql

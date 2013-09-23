@@ -8,10 +8,8 @@
 	<!-- multipleResultSetsEnabled允许和不允许单条语句返回多个数据集（取决于驱动需求） -->
 	<!-- useColumnLabel使用列标签代替列名称。 -->
 	<!-- useGeneratedKeys允许JDBC 生成主键。需要驱动器支持。如果设为了true，这个设置将强制使用被生成的主键，有一些驱动器不兼容不过仍然可以执行。 -->
-	<!-- autoMappingBehavior指定MyBatis 是否并且如何来自动映射数据表字段与对象的属性。PARTIAL将只自动映射简单的，没有嵌套的结果。FULL 
-		将自动映射所有复杂的结果。 -->
-	<!-- defaultExecutorType配置和设定执行器，SIMPLE 执行器执行其它语句。REUSE 执行器可能重复使用prepared 
-		statements 语句，BATCH执行器可以重复执行语句和批量更新。 -->
+	<!-- autoMappingBehavior指定MyBatis 是否并且如何来自动映射数据表字段与对象的属性。PARTIAL将只自动映射简单的，没有嵌套的结果。FULL 将自动映射所有复杂的结果。 -->
+	<!-- defaultExecutorType配置和设定执行器，SIMPLE 执行器执行其它语句。REUSE 执行器可能重复使用prepared statements 语句，BATCH执行器可以重复执行语句和批量更新。 -->
 	<!-- defaultStatementTimeout设置一个时限，以决定让驱动器等待数据库回应的多长时间为超时 -->
 	<settings>
 		<setting name="cacheEnabled" value="true" />
@@ -20,7 +18,11 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias alias="Admin" type="com.easy.admin.entity.Admin" />
+		<typeAlias alias="Role" type="com.easy.admin.entity.Role" />
+		<typeAlias alias="User" type="com.easy.admin.entity.User" />
+		<typeAlias alias="UserRole" type="com.easy.admin.entity.UserRole" />
+		<typeAlias alias="Permission" type="com.easy.admin.entity.Permission" />
+		<typeAlias alias="RolePermission" type="com.easy.admin.entity.RolePermission" />
 	</typeAliases>
 
 	<plugins>
@@ -31,7 +33,11 @@
 	</plugins>
 
 	<mappers>
-		<mapper resource="mapper/admin/AdminMapper.xml" />
+		<mapper resource="mapper/admin/RoleMapper.xml" />
+		<mapper resource="mapper/admin/UserMapper.xml" />
+		<mapper resource="mapper/admin/UserRoleMapper.xml" />
+		<mapper resource="mapper/admin/PermissionMapper.xml" />
+		<mapper resource="mapper/admin/RolePermissionMapper.xml" />
 	</mappers>
 
 

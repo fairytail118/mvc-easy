@@ -10,26 +10,26 @@ package com.easy.core.common;
  */
 public final class Constants {
 
-	/**
-	 * UTF-8编码
-	 */
-	public static final String UTF8 = "UTF-8";
-	/**
-	 * 提示信息
-	 */
-	public static final String MESSAGE = "message";
-	/**
-	 * cookie中的JSESSIONID名称
-	 */
-	public static final String JSESSION_COOKIE = "JSESSIONID";
-	/**
-	 * url中的jsessionid名称
-	 */
-	public static final String JSESSION_URL = "jsessionid";
+    /**
+     * UTF-8编码
+     */
+    public static final String UTF8            = "UTF-8";
+    /**
+     * 提示信息
+     */
+    public static final String MESSAGE         = "message";
+    /**
+     * cookie中的JSESSIONID名称
+     */
+    public static final String JSESSION_COOKIE = "JSESSIONID";
+    /**
+     * url中的jsessionid名称
+     */
+    public static final String JSESSION_URL    = "jsessionid";
 
-	/**
-	 * 验证码
-	 */
-	public static final String CAPTCHA_CODE = "captcha_code";
+    /**
+     * 验证码
+     */
+    public static final String CAPTCHA_CODE    = "captcha_code";
 
 }

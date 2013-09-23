@@ -13,23 +13,23 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
  * @version v 0.1 2013-6-18 上午8:37:16 wy Exp $
  */
 public class RichFreeMarkerViewResolver extends FreeMarkerViewResolver {
-	/**
-	 * 默认的viewclass
-	 */
-	public RichFreeMarkerViewResolver() {
-		setViewClass(RichFreeMarkerView.class);
-	}
+    /**
+     * 默认的viewclass
+     */
+    public RichFreeMarkerViewResolver() {
+        setViewClass(RichFreeMarkerView.class);
+    }
 
-	/**
-	 * @see org.springframework.web.servlet.view.AbstractTemplateViewResolver#buildView(java.lang.String)
-	 */
-	@Override
-	protected AbstractUrlBasedView buildView(String viewName) throws Exception {
-		AbstractUrlBasedView view = super.buildView(viewName);
-		// start with / ignore prefix
-		if (viewName.startsWith("/")) {
-			view.setUrl(viewName + getSuffix());
-		}
-		return view;
-	}
+    /**
+     * @see org.springframework.web.servlet.view.AbstractTemplateViewResolver#buildView(java.lang.String)
+     */
+    @Override
+    protected AbstractUrlBasedView buildView(String viewName) throws Exception {
+        AbstractUrlBasedView view = super.buildView(viewName);
+        // start with / ignore prefix
+        if (viewName.startsWith("/")) {
+            view.setUrl(viewName + getSuffix());
+        }
+        return view;
+    }
 }

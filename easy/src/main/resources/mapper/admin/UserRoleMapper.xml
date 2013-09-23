@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easy.admin.dao.UserRoleDao">
+<!-- 增加操作 -->
+	<insert id="create" parameterType="UserRole">
+		INSERT INTO
+			user_role(
+				 userId, roleId, createTime, createUser, modifyTime, modifyUser				
+			)
+		VALUES(
+			 #{userId}, #{roleId}, #{createTime}, #{createUser}, #{modifyTime}, #{modifyUser}			
+		)
+	</insert>
+
+	<!-- 更新操作 -->
+	<update id="update" parameterType="UserRole">
+		UPDATE
+			user_role
+		<set>
+
+			<if test="userId!=null">
+				userId = #{userId},
+			</if>
+			<if test="roleId!=null">
+				roleId = #{roleId},
+			</if>
+			<if test="modifyTime!=null">
+				modifyTime = #{modifyTime},
+			</if>
+			<if test="modifyUser!=null and modifyUser.trim()!=''">
+				modifyUser = #{modifyUser},
+			</if>
+
+		</set>
+		WHERE
+		userId = #{userId} AND 		roleId = #{roleId}				
+	</update>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKeys">
+		DELETE FROM
+			user_role
+		<where>
+		    <if test="userId!=null">
+		       userId = #{userId}
+		    </if>
+		    <if test="roleId!=null">
+		        AND roleId = #{roleId}
+		    </if>
+		</where>
+		<!-- 防止参数都为空，变成全表删除 -->
+		AND 1=1
+	</delete>
+	
+	<!-- 根据主键查询 -->
+	<select id="getByPrimaryKey" resultMap="resultMap" parameterType="long">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			user_role
+		WHERE
+		userId = #{userId} AND roleId = #{roleId}	
+	</select>
+	
+	<!-- 根据参数查询列表 -->
+	<select id="selectByCriteria" resultMap="resultMap" parameterType="UserRole">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			user_role
+		<include refid="defaultCriteria"/>
+		<include refid="orderByClause"/>
+	</select>
+	
+	<!-- 默认的查询条件 -->
+	<sql id="defaultCriteria">
+		<where>
+			<!-- 关键字查询字段 -->
+			<if test="keyword!=null and keyword!=''">
+				AND name like "%"#{keyword}"%"
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 排序字段 -->
+	<sql id="orderByClause">
+		<if test="orderByClause!=null">
+			${orderByClause}
+		</if>
+	</sql>
+	
+	<!-- 默认的数据库字段 -->
+	<sql id="columns">
+		userId,roleId,createTime,createUser,modifyTime,modifyUser	
+	</sql>
+
+
+	<!-- 默认的数据库映射 -->
+	<resultMap type="UserRole" id="resultMap">
+		<!-- 用户ID -->
+		<result property="userId" column="userId" />
+		<!-- 角色ID -->
+		<result property="roleId" column="roleId" />
+		<!-- 创建时间 -->
+		<result property="createTime" column="createTime" />
+		<!-- 创建人 -->
+		<result property="createUser" column="createUser" />
+		<!-- 修改时间 -->
+		<result property="modifyTime" column="modifyTime" />
+		<!-- 修改人 -->
+		<result property="modifyUser" column="modifyUser" />
+	
+	</resultMap>
+</mapper>

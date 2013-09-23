@@ -24,56 +24,55 @@ import com.easy.core.validator.annotations.Validations;
  * @author wy
  * @version v 0.1 2013-9-15 上午8:13:38 wy Exp $
  */
-public class EasyValidatorInterceptor extends HandlerInterceptorAdapter
-		implements InitializingBean {
+public class EasyValidatorInterceptor extends HandlerInterceptorAdapter implements InitializingBean {
 
-	private Validator validator;
+    private Validator validator;
 
-	/**
-	 * Setter method for property <tt>validator</tt>.
-	 * 
-	 * @param validator
-	 *            value to be assigned to property validator
-	 */
-	public void setValidator(Validator validator) {
-		this.validator = validator;
-	}
+    /**
+     * Setter method for property <tt>validator</tt>.
+     * 
+     * @param validator
+     *            value to be assigned to property validator
+     */
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
 
-	/**
-	 * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest,
-	 *      javax.servlet.http.HttpServletResponse, java.lang.Object)
-	 */
-	@Override
-	public boolean preHandle(HttpServletRequest request,
-			HttpServletResponse response, Object handler) throws Exception {
+    /**
+     * @see org.springframework.web.servlet.HandlerInterceptor#preHandle(javax.servlet.http.HttpServletRequest,
+     *      javax.servlet.http.HttpServletResponse, java.lang.Object)
+     */
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws Exception {
 
-		if (!(handler instanceof HandlerMethod)) {
-			return true;
-		}
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
 
-		Method method = ((HandlerMethod) handler).getMethod();
+        Method method = ((HandlerMethod) handler).getMethod();
 
-		// 如果不是验证的方法直接放行
-		if (method.getAnnotation(Validations.class) == null) {
+        // 如果不是验证的方法直接放行
+        if (method.getAnnotation(Validations.class) == null) {
 
-			return true;
-		}
+            return true;
+        }
 
-		Validations validations = method.getAnnotation(Validations.class);
+        Validations validations = method.getAnnotation(Validations.class);
 
-		Map<String, String> map = validator.valid(validations, request);
-		RequestUtil.setFormErrors(request, map);
+        Map<String, String> map = validator.valid(validations, request);
+        RequestUtil.setFormErrors(request, map);
 
-		return true;
+        return true;
 
-	}
+    }
 
-	/**
-	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-	 */
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(validator, "验证器validator不能为空");
-	}
+    /**
+     * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+     */
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Assert.notNull(validator, "验证器validator不能为空");
+    }
 
 }

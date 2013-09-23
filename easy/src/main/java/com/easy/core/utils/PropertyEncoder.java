@@ -7,21 +7,22 @@ import org.springframework.security.core.codec.Base64;
  * */
 public class PropertyEncoder {
 
-	public static String encode(String value){
-		
-		return new String(Base64.encode(value.getBytes()));
-	}
-	
-	public static String decode(String value){
-		return new String(Base64.decode(value.getBytes()));
-	}
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
-		System.out.println("password:"+decode("cm9vdA"));
+    public static String encode(String value) {
 
-	}
+        return new String(Base64.encode(value.getBytes()));
+    }
+
+    public static String decode(String value) {
+        return new String(Base64.decode(value.getBytes()));
+    }
+
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+
+        System.out.println("password:" + decode("cm9vdA"));
+
+    }
 
 }

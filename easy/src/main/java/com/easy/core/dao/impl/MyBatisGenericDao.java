@@ -23,11 +23,11 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @return
      */
     @SuppressWarnings("unchecked")
-	protected <T> T get(String statement, Object object) {
+    protected <T> T get(String statement, Object object) {
         if (object == null) {
-            return (T)getSqlSession().selectOne(statement);
+            return (T) getSqlSession().selectOne(statement);
         }
-        return (T)getSqlSession().selectOne(statement, object);
+        return (T) getSqlSession().selectOne(statement, object);
     }
 
     /**
@@ -38,11 +38,11 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @return
      */
     @SuppressWarnings("unchecked")
-	protected <T> List<T> list(String statement, Object object) {
+    protected <T> List<T> list(String statement, Object object) {
         if (object == null) {
-            return (List<T>)getSqlSession().selectList(statement);
+            return (List<T>) getSqlSession().selectList(statement);
         }
-        return (List<T>)getSqlSession().selectList(statement, object);
+        return (List<T>) getSqlSession().selectList(statement, object);
     }
 
     /**
@@ -65,8 +65,8 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @return
      */
     @SuppressWarnings("unchecked")
-	public <T> List<T> list(String statement, Object object, RowBounds rowBounds) {
-        return (List<T>)getSqlSession().selectList(statement, object, rowBounds);
+    public <T> List<T> list(String statement, Object object, RowBounds rowBounds) {
+        return (List<T>) getSqlSession().selectList(statement, object, rowBounds);
     }
 
     /**

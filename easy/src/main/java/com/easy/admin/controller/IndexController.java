@@ -8,7 +8,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import com.easy.admin.entity.Admin;
+import com.easy.admin.entity.User;
 import com.easy.core.controller.BaseController;
 
 /**
@@ -19,15 +19,15 @@ import com.easy.core.controller.BaseController;
  */
 public class IndexController extends BaseController {
 
-	@InitBinder("admin")
-	public void initBinder(WebDataBinder binder) {
-		// 别名前缀
-		binder.setFieldDefaultPrefix("admin.");
-	}
+    @InitBinder("user")
+    public void initBinder(WebDataBinder binder) {
+        // 别名前缀
+        binder.setFieldDefaultPrefix("user.");
+    }
 
-	public String index(ModelMap model, @ModelAttribute("admin") Admin admin) {
+    public String index(ModelMap model, @ModelAttribute("user") User user) {
 
-		return null;
-	}
+        return null;
+    }
 
 }
