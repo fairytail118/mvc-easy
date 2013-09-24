@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.core.mvc.interceptor;
+package com.easy.core.validator.interceptor;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -20,11 +20,23 @@ import com.easy.core.validator.annotations.Validations;
 
 /**
  * 验证Aop拦截
- * 
+ * <pre>
+ * &lt;mvc:interceptors&gt;
+ *        &lt;!-- 验证拦截 --&gt;
+ *        &lt;mvc:interceptor&gt;
+ *           &lt;mvc:mapping path="/**" /&gt;
+ *          &lt;bean class="com.easy.core.validator.interceptor.ValidatorInterceptor"&gt;
+ *              &lt;property name="validator"&gt;
+ *                  &lt;bean class="com.easy.core.validator.DefaultValidator" /&gt;
+ *              &lt;/property&gt;
+ *          &lt;/bean&gt;
+ *      &lt;/mvc:interceptor&gt;
+ *  &lt;/mvc:interceptors&gt;
+ *  </pre>
  * @author wy
  * @version v 0.1 2013-9-15 上午8:13:38 wy Exp $
  */
-public class EasyValidatorInterceptor extends HandlerInterceptorAdapter implements InitializingBean {
+public class ValidatorInterceptor extends HandlerInterceptorAdapter implements InitializingBean {
 
     private Validator validator;
 
