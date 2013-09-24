@@ -60,7 +60,11 @@ $(document).ready(function(){
 			<#else>
 			<tr>
 				<td class="w80 text_r">${item.comment}:</td>
+				<#if item.typeClass="Boolean" || item.typeClass="java.lang.Boolean">
+				<input type="text" name="${item.column}" value="${r"${("}${lower_entity}.${item.column}${r"?? && "} ${lower_entity}.${item.column}${r")?string('true','false')}"}" class="input w200"/>${r"<@easy.fieldError"} field="${item.column}"/></td>
+				<#else>
 				<td><input type="text" name="${item.column}" value="${r"${("}${lower_entity}.${item.column})!}" class="input w200"/>${r"<@easy.fieldError"} field="${item.column}"/></td>
+				</#if>
 			</tr>
 			</#if>
 		</#list>
