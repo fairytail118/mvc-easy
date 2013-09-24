@@ -64,7 +64,7 @@ public class MybatisMapperFileUtil {
 	
 	public static String getMybatisUpdateSql(Map<String, String> cloums,String tableName,String pkname){
 		StringBuilder sql=new StringBuilder(100);
-		sql.append("UPDATE ").append(tableName).append(" SET ");
+		sql.append("UPDATE ").append(tableName).append(" SET \n<set>\n");
 		Iterator<String> cloumSet=cloums.keySet().iterator();
 		String cloum=null;
 		while(cloumSet.hasNext()){
@@ -72,10 +72,8 @@ public class MybatisMapperFileUtil {
 			if(cloum.equalsIgnoreCase(pkname)){//不包含主键列
 				continue;
 			}
-			sql.append(cloum).append(" = #{").append(cloum).append("}");
-			if(cloumSet.hasNext()){
-				sql.append(",");
-			}
+			sql.append("<if test=\"").append(cloum).append("!=null\">").append(cloum).append(" = #{").append(cloum).append("},</if>");
+			
 		}
 		sql.append(" WHERE ").append(pkname).append(" = #{").append(pkname).append("}");
 		return sql.toString();
@@ -84,7 +82,7 @@ public class MybatisMapperFileUtil {
 	
 	public static String getMybatisUpdateSql(Map<String, String> cloums,Table table){
 		StringBuilder sql=new StringBuilder(100);
-		sql.append("UPDATE ").append(table.getName()).append(" SET ");
+		sql.append("UPDATE ").append(table.getName()).append(" SET \n<set>\n");
 		Iterator<String> cloumSet=cloums.keySet().iterator();
 		String cloum=null;
 		boolean skip=false;
@@ -99,10 +97,7 @@ public class MybatisMapperFileUtil {
 			if(skip){
 				continue;
 			}
-			sql.append(cloum).append(" = #{").append(cloum).append("}");
-			if(cloumSet.hasNext()){
-				sql.append(",");
-			}
+			sql.append("<if test=\"").append(cloum).append("!=null\">").append(cloum).append(" = #{").append(cloum).append("},</if>");
 		}
 		sql.append(" WHERE ");
 		int index=0;
@@ -209,11 +204,11 @@ public class MybatisMapperFileUtil {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Map<String, String> colum=getTableCloums("admin");
-		String table="admin";
+		Map<String, String> colum=getTableCloums("user");
+		String table="user";
 		String pkname="id";
 //		System.out.println("insert sql:"+getMybatisInsertSql(colum, table, pkname));
-//		System.out.println("update sql:"+getMybatisUpdateSql(colum, table, pkname));
+		System.out.println("update sql:"+getMybatisUpdateSql(colum, table, pkname));
 //		System.out.println("delete sql:"+getMybatisDeleteSql(table, pkname));
 //		System.out.println("select sql:"+getMybatisSelectSql(table, pkname));
 //		System.out.println("cloums:"+getCloumnStr(colum));
