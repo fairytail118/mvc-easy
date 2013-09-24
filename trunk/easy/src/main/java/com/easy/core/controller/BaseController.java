@@ -3,8 +3,15 @@
  */
 package com.easy.core.controller;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+
+import com.easy.core.mvc.DateEditor;
 
 /**
  * 
@@ -14,9 +21,19 @@ import org.slf4j.LoggerFactory;
 public class BaseController {
 
     /** 日志 */
-    protected final Logger     log    = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    /** 是否重定向过来 */
-    public final static String RELOAD = "realod";
+    /**
+     * 注册转换器
+     * 
+     * @param paramWebDataBinder
+     */
+    @InitBinder
+    protected final void initBinderCustomEditor(WebDataBinder paramWebDataBinder) {
+        //去掉空格
+        paramWebDataBinder.registerCustomEditor(String.class, new StringTrimmerEditor(false));
+        //日期转换
+        paramWebDataBinder.registerCustomEditor(Date.class, new DateEditor());
+    }
 
 }
