@@ -78,11 +78,11 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<td class=" text_r">是否锁定:</td>
-				<td><input type="text" name="isLocked" value="${(user.isLocked)!}" class="input w200"/><@easy.fieldError field="isLocked"/></td>
+				<td><input type="text" name="isLocked" value="${(user.isLocked??&&user.isLocked)?string('true','false')}" class="input w200"/><@easy.fieldError field="isLocked"/></td>
 			</tr>
 			<tr>
 				<td class=" text_r">是否启用:</td>
-				<td><input type="text" name="isEnabled" value="${(user.isEnabled)!}" class="input w200"/><@easy.fieldError field="isEnabled"/></td>
+				<td><input type="text" name="isEnabled" value="${(user.isEnabled??&&user.isEnabled)?string('true','false')}" class="input w200"/><@easy.fieldError field="isEnabled"/></td>
 			</tr>
 			<tr>
 				<td class=" text_r">用户类型:</td>
