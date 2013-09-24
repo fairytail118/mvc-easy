@@ -32,9 +32,9 @@ public class GenerateCodeMain {
 		FreemarkerCoder.generateAll("User", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "user");
 //		FreemarkerCoder.generateAll("Role", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "role", pkname);
 //		FreemarkerCoder.generateAll("Permission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "permission");
-		FreemarkerCoder.generateAll("AllotRole", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allot_role");
+		FreemarkerCoder.generateAll("UserRole", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "user_role");
 //		FreemarkerCoder.generateAll("LoginLog", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "loginlog");
-//		FreemarkerCoder.generateAll("AllotPermission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "allot_permission");
+//		FreemarkerCoder.generateAll("RolePermission", entityPackage, dao_package, daoimpl_package, service_package, serviceimpl_package, controller_package, "role_permission");
 	}
 
 }
