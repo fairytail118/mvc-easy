@@ -1,0 +1,3 @@
+在eclipse的设置 Java Code Style 中的code Templates和formatter中分别导入以上两个文件
+
+在新建类时 注意在新建的窗口勾选 generate comments
