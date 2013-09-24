@@ -12,7 +12,7 @@
 				<td class="title">管理员管理</td>
 				<td>
 					<ul class="action_ct">
-						<li><a href="${base}/admin/userlist"><em class="ico-list"></em>&nbsp;列表</a></li>
+						<li><a href="${base}/admin/user_list"><em class="ico-list"></em>&nbsp;列表</a></li>
 						<li><a href="javascript:;" onclick="$.easy.search();" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
 						<li><a href="${base}/admin/user_input" id="ico-add"><em class="ico-add"></em>&nbsp;添加</a></li>
 						<li><a href="javascript:;" url="${base}/admin/user_input?id=" onclick="$(this).easy_edit()" id="ico-edit"><em class="ico-edit"></em>&nbsp;编辑</a></li>

@@ -51,6 +51,7 @@ public class UserController extends BaseController {
 		if (id != null) {
 			User user = userService.getByPrimaryKey(id);
 			model.put("user", user);
+			System.out.println(user.getIsLocked());
 		}
 
 		return "admin/user_input";
