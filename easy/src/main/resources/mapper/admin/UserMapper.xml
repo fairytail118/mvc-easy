@@ -115,6 +115,14 @@
 		<include refid="defaultCriteria"/>
 	</select>
 	
+	<select id="loadUserByUsername" resultMap="resultMap" parameterType="java.lang.String">
+	    SELECT
+		<include refid="columns"/>
+		FROM
+			user
+		where username = #{username} limit 1
+	</select>
+	
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
 		<where>

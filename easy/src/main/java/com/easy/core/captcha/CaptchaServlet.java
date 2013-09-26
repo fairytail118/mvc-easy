@@ -16,8 +16,6 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.easy.core.common.Constants;
-
 /**
  * 
  * @author wy
@@ -32,6 +30,11 @@ public class CaptchaServlet extends HttpServlet {
     private static final Logger log              = LoggerFactory.getLogger(CaptchaServlet.class);
 
     /**
+     * 验证码
+     */
+    public static final String  CAPTCHA_CODE     = "captcha_code";
+
+    /**
      * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest,
      *      javax.servlet.http.HttpServletResponse)
      */
@@ -43,12 +46,12 @@ public class CaptchaServlet extends HttpServlet {
         ServletOutputStream out = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
-            request.getSession(true).removeAttribute(Constants.CAPTCHA_CODE);
+            request.getSession(true).removeAttribute(CAPTCHA_CODE);
             Captcha captcha = new SpecCaptcha(100, 28, 4);// png格式验证码
             captcha.out(os);
             String code = captcha.text();
 
-            request.getSession(true).setAttribute(Constants.CAPTCHA_CODE, code);
+            request.getSession(true).setAttribute(CAPTCHA_CODE, code);
 
             byte[] bytes = os.toByteArray();
             response.setContentType("image/png;charset=UTF-8");

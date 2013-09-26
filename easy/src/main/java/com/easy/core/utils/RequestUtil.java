@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -123,5 +124,26 @@ public class RequestUtil {
             }
         }
 
+    }
+
+    /**
+     * 获取session
+     * 
+     * @param request
+     * @param create
+     * @return
+     */
+    public static HttpSession getSession(HttpServletRequest request, boolean create) {
+        return request.getSession(create);
+    }
+
+    /**
+     * 获取session
+     * 
+     * @param request
+     * @return
+     */
+    public static HttpSession getSession(HttpServletRequest request) {
+        return request.getSession();
     }
 }

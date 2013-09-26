@@ -35,18 +35,18 @@ public interface UserDao {
     /**
      * 根据主键删除
      * 
-     * @param ids 
+     * @param ids
      * @return
      */
-    public int deleteByPrimaryKeys(Long...ids );
+    public int deleteByPrimaryKeys(Long... ids);
 
     /**
      * 根据主键查询
      * 
-     * @param  id 
+     * @param id
      * @return
      */
-    public User getByPrimaryKey(Long id );
+    public User getByPrimaryKey(Long id);
 
     /**
      * 条件查询列表
@@ -71,4 +71,11 @@ public interface UserDao {
      */
     public void page(Page<User> page);
 
+    /**
+     * 根据用户名查找用户
+     * 
+     * @param username
+     * @return
+     */
+    public User loadUserByUsername(String username);
 }
