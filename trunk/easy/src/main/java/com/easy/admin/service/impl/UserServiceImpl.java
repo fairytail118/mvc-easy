@@ -5,8 +5,12 @@ package com.easy.admin.service.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.easy.admin.dao.RoleDao;
 import com.easy.admin.dao.UserDao;
 import com.easy.admin.entity.User;
 import com.easy.admin.service.UserService;
@@ -23,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserDao userDao;
+
+    @Resource
+    private RoleDao roleDao;
 
     /**
      * @see com.easy.admin.service.UserService#save(com.easy.admin.entity.User)
@@ -60,6 +67,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public void page(Page<User> page) {
         userDao.page(page);
+    }
+
+    /**
+     * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException,
+                                                          DataAccessException {
+
+        User user = userDao.loadUserByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("用户[" + username + "]不存在!");
+        }
+        
+        //TODO  加载用户权限及角色
+        
+
+        return user;
     }
 
 }

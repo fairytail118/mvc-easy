@@ -5,6 +5,77 @@
 <title>Easy系统登录</title>
 <link rel="stylesheet" href="${base}/admin/css/base.css" type="text/css" />
 <link rel="stylesheet" href="${base}/admin/css/login.css" type="text/css" />
+<script type="text/javascript" src="${base}/admin/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+	
+	//登录验证
+	function check(){
+		var username = $("#username").val();
+		var password = $("#password").val();
+		var code = $("#code").val();
+		if($.trim(username)==''){
+			$("#message").html("用户名不能为空");
+			return false;
+		}
+		else if($.trim(password)==''){
+			$("#message").html("密码不能为空");
+			return false;
+		}
+		else if($.trim(code)==''){
+			$("#message").html("验证码不能为空");
+			return false;
+		}
+		return true;
+		
+	}
+	//刷新验证码
+	function refreshCode(img){
+		var src = '${base}/captcha?'+(new Date().getTime());
+		img.src=src;
+	}
+	
+	$(document).ready(function(){
+	
+	    $("input:button").click(function(){
+	    	if(check()){
+				$("#loginForm").submit();
+			}
+	    });
+		
+		$("#username").blur(function(){
+			var username = this.value;
+			if($.trim(username)==''){
+				$("#message").html("用户名不能为空");
+			}
+			else{
+				$("#message").html("");
+			}
+		});
+		$("#password").blur(function(){
+			var password = this.value;
+			if($.trim(password)==''){
+				$("#message").html("密码不能为空");
+			}
+			else{
+				$("#message").html("");
+			}
+		});
+		$("#code").blur(function(){
+			var code = this.value;
+			if($.trim(code)==''){
+				$("#message").html("验证码不能为空");
+			}
+			else{
+				$("#message").html("");
+			}
+		});
+		$("#username,#password,#code").focus(function(){
+			$("#message").html("");
+		});
+		
+		
+	});
+</script>
 </head>
 <body>
 	<div class="main">
@@ -19,27 +90,27 @@
 							</span> 
 						</div>
 						<div class="form">
-							<div class="message">
-								<div>请输入您的用户名</div>
+							<div class="message" id="message">
+								${message!""}
 							</div>
-							<form id="loginForm" method="post" action="#">
+							<form id="loginForm" method="post" action="${base}/loginvalidate">
 								<div class="user">
-									<span class="text">用户名：</span> <input name="str_username" type="text" id="str_username" value="" class="input" tabindex="1" />
+									<span class="text">用户名：</span> <input name="j_username" id="username" type="text"value="${username!''}" class="input"/>
 								</div>
 								<div class="user">
-									<span class="text">密 码：</span> <input name="str_userpwd" type="password" id="str_userpwd" class="input" tabindex="1" />
+									<span class="text">密 码：</span> <input name="j_password" id="password" type="password" class="input"/>
 								</div>
 								<div class="user">
-									<span class="text">验证码：</span> <input type="text" class="input1" id="str_checkcode" tabindex="1" name="str_checkcode" /> <input type="hidden" name="needvcode" value="1" /> 
+									<span class="text">验证码：</span> <input type="text" maxlength="4" class="code" id="code" name="j_code" />
 									<span class="img">
-										<img src="captcha">
+										<img src="${base}/captcha" onclick="refreshCode(this)">
 									</span>
 								</div>
 								<div class="checkbox">
-									<input type="checkbox" name="rememberme" checked="checked" id="rememberme" class="check" /> <span class="remember">记住我的用户名</span>
+									<input type="checkbox" name="j_remember" checked="checked" class="check" /> <span class="remember">记住我的用户名</span>
 								</div>
 								<div class="login_btn">
-									<input type="submit" name="login" value="登录" class="submit" />
+									<input type="button" name="login" value="登录" class="submit" />
 								</div>
 							</form>
 						</div>

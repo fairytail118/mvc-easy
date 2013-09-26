@@ -38,7 +38,7 @@ table {border-collapse: collapse;border-spacing: 0;empty-cells:show;}
 .login .login_btn{width:257px; float:left; padding-bottom:5px; height:36px; padding-left:56px;}
 
 .login .input{width:185px; height:25px; float:left; border:1px #999999 solid; padding:0 5px; line-height:25px; background-color:#ffffe1; font-size:14px; font-weight:bold; color:#666666;}
-.login .input1{width:72px; height:25px; float:left; border:1px #999999 solid; padding:0 5px; line-height:25px; background-color:#ffffe1; font-size:14px; font-weight:bold; color:#666666;}
+.login input.code{width:72px; height:25px; float:left; border:1px #999999 solid; padding:0 5px; line-height:25px; background-color:#ffffe1; font-size:14px; font-weight:bold; color:#666666;}
 .login .img{width:100px; float:left; padding-left:20px; }
 .login .remember{color:#999999; padding-left:5px; }
 

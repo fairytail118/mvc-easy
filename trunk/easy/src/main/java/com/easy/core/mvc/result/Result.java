@@ -22,8 +22,8 @@ public class Result implements Serializable {
     private boolean           success          = true;
 
     /** 权限方面的问题 */
-    private boolean           denied           = false;
 
+    private boolean           denied           = false;
     /** 错误结果信息 */
     private String            message;
 
