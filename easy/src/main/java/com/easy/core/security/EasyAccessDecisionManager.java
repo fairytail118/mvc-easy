@@ -61,7 +61,7 @@ public class EasyAccessDecisionManager extends AbstractAccessDecisionManager {
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 //1、是系统管理员并且是系统权限 直接放开
                 //2、 具有该链接的访问权限
-                if (needRole.equals(ga.getAuthority())) {
+                if (needRole.equalsIgnoreCase(ga.getAuthority())) {
                     return;
                 }
             }
