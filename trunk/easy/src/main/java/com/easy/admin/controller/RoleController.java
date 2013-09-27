@@ -32,101 +32,101 @@ import com.easy.core.validator.annotations.Validations;
 @RequestMapping("/admin")
 public class RoleController extends BaseController {
 
-	/** 角色service */
-	@Autowired
-	private RoleService roleService;
+    /** 角色service */
+    @Autowired
+    private RoleService roleService;
 
-	/**
-	 * 进入编辑页面
-	 * 
-	 * @param request
-	 * @param model
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/role_input")
-	public String input(HttpServletRequest request, ModelMap model,
-			@RequestParam(value = "id", required = false) Long id) {
+    /**
+     * 进入编辑页面
+     * 
+     * @param request
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/role_input")
+    public String input(HttpServletRequest request, ModelMap model,
+                        @RequestParam(value = "id", required = false) Long id) {
 
-		if (id != null) {
-			Role role = roleService.getByPrimaryKey(id);
-			model.put("role", role);
-		}
+        if (id != null) {
+            Role role = roleService.getByPrimaryKey(id);
+            model.put("role", role);
+        } else {
+            model.put("role", new Role());
+        }
 
-		return "admin/role_input";
-	}
+        return "admin/role_input";
+    }
 
-	/**
-	 * 进入保存
-	 * 
-	 * @param request
-	 * @param model
-	 * @param role
-	 * @return
-	 */
-	@Validations(
-	
-		requiredStringValidators = { 
-								@RequiredStringValidator(field = "name", message = "角色名称不能为空!", trim = true),
-						@RequiredStringValidator(field = "code", message = "角色编码不能为空!", trim = true)		
-			}
-	)
-	@RequestMapping(value = "/role_save")
-	public String save(HttpServletRequest request, ModelMap model, Role role) {
-		if (RequestUtil.hasErrors(request)) {
-			return "admin/role_input";
-		}
+    /**
+     * 进入保存
+     * 
+     * @param request
+     * @param model
+     * @param role
+     * @return
+     */
+    @Validations(
 
-		Role entity = new Role();
-		//拷贝，去掉重复的
-		BeanUtils.copyProperties(role, entity, new String[] { "createUser",
-				"createTime", "modifyUser", "modifyTime" });
+    requiredStringValidators = {
+            @RequiredStringValidator(field = "name", message = "角色名称不能为空!", trim = true),
+            @RequiredStringValidator(field = "code", message = "角色编码不能为空!", trim = true) })
+    @RequestMapping(value = "/role_save")
+    public String save(HttpServletRequest request, ModelMap model, Role role) {
+        if (RequestUtil.hasErrors(request)) {
+            return "admin/role_input";
+        }
 
-		roleService.save(role);
+        Role entity = new Role();
+        //拷贝，去掉重复的
+        BeanUtils.copyProperties(role, entity, new String[] { "createUser", "createTime",
+                "modifyUser", "modifyTime" });
 
-		return "redirect:role_list";
-	}
+        roleService.save(role);
 
-	/**
-	 * 进入列表
-	 * 
-	 * @param request
-	 * @param model
-	 * @param page
-	 * @param role
-	 * @return
-	 */
-	@RequestMapping(value = "/role_list")
-	public String list(HttpServletRequest request, ModelMap model,
-			@RequestParam(value = "page", defaultValue = "1") int currentPage,
-			Role role) {
+        return "redirect:role_list";
+    }
 
-		Page<Role> page = new Page<Role>();
-		page.setCurrentPage(currentPage);
-		// 设置查询条件
-		page.setCriteria(role);
-		roleService.page(page);
-		model.put("page", page);
-		return "admin/role_list";
-	}
+    /**
+     * 进入列表
+     * 
+     * @param request
+     * @param model
+     * @param page
+     * @param role
+     * @return
+     */
+    @RequestMapping(value = "/role_list")
+    public String list(HttpServletRequest request, ModelMap model,
+                       @RequestParam(value = "page", defaultValue = "1") int currentPage, Role role) {
 
-	/**
-	 * 批量删除
-	 * 
-	 * @param request
-	 * @param model
-	 * @param key
-	 * @return
-	 */
-	@RequestMapping(value = "/role_delete")
-	@ResponseBody
-	public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
-		try {
-			roleService.deleteByPrimaryKeys(key);
-			return new Result();
-		} catch (Exception e) {
-			log.error("role删除失败", e);
-			return new Result(e);
-		}
-	}
+        Page<Role> page = new Page<Role>();
+        page.setCurrentPage(currentPage);
+        // 设置查询条件
+        page.setCriteria(role);
+        roleService.page(page);
+        model.put("page", page);
+        return "admin/role_list";
+    }
+
+    /**
+     * 批量删除
+     * 
+     * @param request
+     * @param model
+     * @param key
+     * @return
+     */
+    @RequestMapping(value = "/role_delete")
+    @ResponseBody
+    public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
+        try {
+            roleService.deleteByPrimaryKeys(key);
+            return new Result();
+        }
+        catch (Exception e) {
+            log.error("role删除失败", e);
+            return new Result(e);
+        }
+    }
 }

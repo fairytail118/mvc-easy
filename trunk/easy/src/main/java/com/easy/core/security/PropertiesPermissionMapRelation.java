@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -16,6 +17,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.util.Assert;
+
+import com.easy.core.security.util.SecurityUtil;
 
 /**
  * 从资源文件中加载对应关系
@@ -34,8 +37,8 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     /** url对应的权限列表 */
     private final static Map<String, List<ConfigAttribute>> URL_PERMISSION_MAP = new HashMap<String, List<ConfigAttribute>>();
 
-    /** 开发前缀 */
-    private String                                          prefixPermission   = "EasyPri_";
+    /** 权限前缀 */
+    private String                                          prefixPermission;
 
     /**
      * Setter method for property <tt>resources</tt>.
@@ -58,42 +61,6 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     }
 
     /**
-     * 获取权限的url
-     * 
-     * @param resUrl
-     */
-    private String getUrl(String resUrl) {
-
-        //加上斜杠前缀
-        resUrl = resUrl.startsWith("/") ? resUrl : ("/" + resUrl);
-
-        if (resUrl.indexOf('*') != -1) {
-            return resUrl;
-        }
-
-        return resUrl + "*";
-    }
-
-    /**
-     * 权限码以','切分
-     * 
-     * @param permission
-     * @return
-     */
-    private String[] getPermissions(String permission) {
-        String[] permissions = permission.split(",");
-        for (int i = 0; i < permissions.length; i++) {
-            //去空格 加前缀
-            if (permissions[i].trim().toUpperCase().startsWith(prefixPermission.toUpperCase())) {
-                permissions[i] = permissions[i].trim().toUpperCase();
-            } else {
-                permissions[i] = (prefixPermission + permissions[i].trim()).toUpperCase();
-            }
-        }
-        return permissions;
-    }
-
-    /**
      * @see com.easy.core.security.MapRelation#getAllMapRelation()
      */
     @Override
@@ -106,6 +73,7 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
      */
     @Override
     public void afterPropertiesSet() throws Exception {
+        Assert.isTrue(StringUtils.isNotBlank(prefixPermission), "权限前缀不能为空");
         Assert.notEmpty(resources, "权限文件不能为空");
         Properties properties = new Properties();
         for (Resource resource : resources) {
@@ -119,13 +87,13 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
             String url = object.toString();
             String permission = properties.getProperty(url);
 
-            String resUrl = getUrl(url);
+            String resUrl = SecurityUtil.getUrl(url);
             List<ConfigAttribute> list = URL_PERMISSION_MAP.get(resUrl);
             if (list == null) {
                 list = new ArrayList<ConfigAttribute>();
                 URL_PERMISSION_MAP.put(resUrl, list);
             }
-            for (String p : getPermissions(permission)) {
+            for (String p : SecurityUtil.getPermissions(prefixPermission, permission)) {
                 SecurityConfig securityConfig = new SecurityConfig(p);
                 if (!list.contains(securityConfig)) {
                     list.add(securityConfig);

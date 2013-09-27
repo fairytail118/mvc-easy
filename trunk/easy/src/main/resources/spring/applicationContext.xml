@@ -29,6 +29,7 @@
 		<property name="locations">
 			<list>
 				<value>classpath*:jdbc.properties</value>
+				<value>classpath*:easy.properties</value>
 			</list>
 		</property>
 		<!-- 调试模式不进行属性转换 -->

@@ -81,12 +81,15 @@ $(document).ready(function(){
 				<td><input type="text" name="isLocked" value="${(user.isLocked??&&user.isLocked)?string('true','false')}" class="input w200"/><@easy.fieldError field="isLocked"/></td>
 			</tr>
 			<tr>
-				<td class=" text_r">是否启用:</td>
-				<td><input type="text" name="isEnabled" value="${(user.isEnabled??&&user.isEnabled)?string('true','false')}" class="input w200"/><@easy.fieldError field="isEnabled"/></td>
-			</tr>
-			<tr>
 				<td class=" text_r">用户类型:</td>
-				<td><input type="text" name="userType" value="${(user.userType)!}" class="input w200"/><@easy.fieldError field="userType"/></td>
+				<td>
+					<select name="userType">
+					<#list enums.values('com.easy.admin.enums.UserType') as item>
+						<option value="${item.code}">${item.desc}</option>
+					</#list>
+					</select>
+					<@easy.fieldError field="userType"/>
+				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

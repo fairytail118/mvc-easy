@@ -51,7 +51,10 @@ public class UserController extends BaseController {
 		if (id != null) {
 			User user = userService.getByPrimaryKey(id);
 			model.put("user", user);
-			System.out.println(user.getIsLocked());
+		}
+		else{
+		    //设置一个空的
+		    model.put("user", new User());
 		}
 
 		return "admin/user_input";
