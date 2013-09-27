@@ -32,102 +32,103 @@ import com.easy.core.validator.annotations.Validations;
 @RequestMapping("/admin")
 public class PermissionController extends BaseController {
 
-	/** 权限service */
-	@Autowired
-	private PermissionService permissionService;
+    /** 权限service */
+    @Autowired
+    private PermissionService permissionService;
 
-	/**
-	 * 进入编辑页面
-	 * 
-	 * @param request
-	 * @param model
-	 * @param id
-	 * @return
-	 */
-	@RequestMapping(value = "/permission_input")
-	public String input(HttpServletRequest request, ModelMap model,
-			@RequestParam(value = "id", required = false) Long id) {
+    /**
+     * 进入编辑页面
+     * 
+     * @param request
+     * @param model
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/permission_input")
+    public String input(HttpServletRequest request, ModelMap model,
+                        @RequestParam(value = "id", required = false) Long id) {
 
-		if (id != null) {
-			Permission permission = permissionService.getByPrimaryKey(id);
-			model.put("permission", permission);
-		}
+        if (id != null) {
+            Permission permission = permissionService.getByPrimaryKey(id);
+            model.put("permission", permission);
+        } else {
+            model.put("permission", new Permission());
+        }
 
-		return "admin/permission_input";
-	}
+        return "admin/permission_input";
+    }
 
-	/**
-	 * 进入保存
-	 * 
-	 * @param request
-	 * @param model
-	 * @param permission
-	 * @return
-	 */
-	@Validations(
-	
-		requiredStringValidators = { 
-				@RequiredStringValidator(field = "parentId", message = "父权限ID不能为空!", trim = true),
-										@RequiredStringValidator(field = "name", message = "权限名称不能为空!", trim = true),
-						@RequiredStringValidator(field = "code", message = "权限编码不能为空!", trim = true)		
-			}
-	)
-	@RequestMapping(value = "/permission_save")
-	public String save(HttpServletRequest request, ModelMap model, Permission permission) {
-		if (RequestUtil.hasErrors(request)) {
-			return "admin/permission_input";
-		}
+    /**
+     * 进入保存
+     * 
+     * @param request
+     * @param model
+     * @param permission
+     * @return
+     */
+    @Validations(
 
-		Permission entity = new Permission();
-		//拷贝，去掉重复的
-		BeanUtils.copyProperties(permission, entity, new String[] { "createUser",
-				"createTime", "modifyUser", "modifyTime" });
+    requiredStringValidators = {
+            @RequiredStringValidator(field = "parentId", message = "父权限ID不能为空!", trim = true),
+            @RequiredStringValidator(field = "name", message = "权限名称不能为空!", trim = true),
+            @RequiredStringValidator(field = "code", message = "权限编码不能为空!", trim = true) })
+    @RequestMapping(value = "/permission_save")
+    public String save(HttpServletRequest request, ModelMap model, Permission permission) {
+        if (RequestUtil.hasErrors(request)) {
+            return "admin/permission_input";
+        }
 
-		permissionService.save(permission);
+        Permission entity = new Permission();
+        //拷贝，去掉重复的
+        BeanUtils.copyProperties(permission, entity, new String[] { "createUser", "createTime",
+                "modifyUser", "modifyTime" });
 
-		return "redirect:permission_list";
-	}
+        permissionService.save(permission);
 
-	/**
-	 * 进入列表
-	 * 
-	 * @param request
-	 * @param model
-	 * @param page
-	 * @param permission
-	 * @return
-	 */
-	@RequestMapping(value = "/permission_list")
-	public String list(HttpServletRequest request, ModelMap model,
-			@RequestParam(value = "page", defaultValue = "1") int currentPage,
-			Permission permission) {
+        return "redirect:permission_list";
+    }
 
-		Page<Permission> page = new Page<Permission>();
-		page.setCurrentPage(currentPage);
-		// 设置查询条件
-		page.setCriteria(permission);
-		permissionService.page(page);
-		model.put("page", page);
-		return "admin/permission_list";
-	}
+    /**
+     * 进入列表
+     * 
+     * @param request
+     * @param model
+     * @param page
+     * @param permission
+     * @return
+     */
+    @RequestMapping(value = "/permission_list")
+    public String list(HttpServletRequest request, ModelMap model,
+                       @RequestParam(value = "page", defaultValue = "1") int currentPage,
+                       Permission permission) {
 
-	/**
-	 * 批量删除
-	 * 
-	 * @param request
-	 * @param model
-	 * @param key
-	 * @return
-	 */
-	@RequestMapping(value = "/permission_delete")
-	@ResponseBody
-	public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
-		try {
-			permissionService.deleteByPrimaryKeys(key);
-			return new Result();
-		} catch (Exception e) {
-			log.error("permission删除失败", e);
-			return new Result(e);
-		}
-	}
+        Page<Permission> page = new Page<Permission>();
+        page.setCurrentPage(currentPage);
+        // 设置查询条件
+        page.setCriteria(permission);
+        permissionService.page(page);
+        model.put("page", page);
+        return "admin/permission_list";
+    }
+
+    /**
+     * 批量删除
+     * 
+     * @param request
+     * @param model
+     * @param key
+     * @return
+     */
+    @RequestMapping(value = "/permission_delete")
+    @ResponseBody
+    public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
+        try {
+            permissionService.deleteByPrimaryKeys(key);
+            return new Result();
+        }
+        catch (Exception e) {
+            log.error("permission删除失败", e);
+            return new Result(e);
+        }
+    }
 }

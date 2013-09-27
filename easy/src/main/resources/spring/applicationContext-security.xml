@@ -25,7 +25,7 @@
 		<custom-filter before="FILTER_SECURITY_INTERCEPTOR" ref="easySecurityFilter" />
 		<custom-filter before="CONCURRENT_SESSION_FILTER" ref="concurrentSessionFilter" />
 		<!-- 权限异常拦截 -->
-		<custom-filter after="EXCEPTION_TRANSLATION_FILTER" ref="exceptionTranslationFilter"/>
+		<custom-filter after="EXCEPTION_TRANSLATION_FILTER" ref="exceptionTranslationFilter" />
 	</http>
 
 	<!-- 异常拦截 -->
@@ -58,7 +58,7 @@
 				<beans:value>classpath:config/permission.properties</beans:value>
 			</beans:list>
 		</beans:property>
-		<beans:property name="prefixPermission" value="EASY_PRI_" />
+		<beans:property name="prefixPermission" value="${easy.permisson.prefix}" />
 	</beans:bean>
 
 	<!-- 登录配置 -->
@@ -132,7 +132,7 @@
 			<beans:list>
 				<beans:bean class="org.springframework.security.access.vote.RoleVoter">
 					<!-- 可修改默认角色前缀 -->
-					<beans:property name="rolePrefix" value="EASY_PRI_" />
+					<beans:property name="rolePrefix" value="${easy.permisson.prefix}" />
 				</beans:bean>
 				<beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
 			</beans:list>

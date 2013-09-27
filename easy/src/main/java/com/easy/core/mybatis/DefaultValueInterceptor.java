@@ -18,7 +18,9 @@ import org.apache.ibatis.plugin.Signature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.easy.admin.entity.User;
 import com.easy.core.entity.BaseEntity;
+import com.easy.core.security.util.SecurityUtil;
 
 /**
  * 设置一些默认值
@@ -47,8 +49,11 @@ public class DefaultValueInterceptor implements Interceptor {
             Date date = new Date();
 
             // 获取当前用户
-            String user = "admin";
-
+            String name = null;
+            User user = SecurityUtil.getLoginUser();
+            if (user != null) {
+                name = user.getUsername();
+            }
             // 如果是更新或者插入
             if (mappedStatement.getSqlCommandType() == SqlCommandType.UPDATE
                 && (invocation.getArgs()[1] != null && invocation.getArgs()[1] instanceof BaseEntity)) {
@@ -59,7 +64,7 @@ public class DefaultValueInterceptor implements Interceptor {
                     entity.setModifyTime(date);
                 }
                 if (StringUtils.isBlank(entity.getModifyUser())) {
-                    entity.setModifyUser(user);
+                    entity.setModifyUser(name);
                 }
             } else if (mappedStatement.getSqlCommandType() == SqlCommandType.INSERT
                        && (invocation.getArgs()[1] != null && invocation.getArgs()[1] instanceof BaseEntity)) {
@@ -70,13 +75,13 @@ public class DefaultValueInterceptor implements Interceptor {
                     entity.setCreateTime(date);
                 }
                 if (StringUtils.isBlank(entity.getCreateUser())) {
-                    entity.setCreateUser(user);
+                    entity.setCreateUser(name);
                 }
                 if (entity.getModifyTime() == null) {
                     entity.setModifyTime(date);
                 }
                 if (StringUtils.isBlank(entity.getModifyUser())) {
-                    entity.setModifyUser(user);
+                    entity.setModifyUser(name);
                 }
             }
         }

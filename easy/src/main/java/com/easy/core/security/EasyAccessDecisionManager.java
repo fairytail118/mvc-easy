@@ -15,6 +15,9 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import com.easy.admin.entity.User;
+import com.easy.core.security.util.SecurityUtil;
+
 /**
  * 访问决策器，决定某个用户具有的角色，是否有足够的权限去访问某个资源
  * 
@@ -23,8 +26,12 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public class EasyAccessDecisionManager extends AbstractAccessDecisionManager {
 
-    private final static Logger LOG = LoggerFactory.getLogger(EasyAccessDecisionManager.class);
+    private final static Logger log = LoggerFactory.getLogger(EasyAccessDecisionManager.class);
 
+    /**
+     * @see org.springframework.security.access.AccessDecisionManager#decide(org.springframework.security.core.Authentication,
+     *      java.lang.Object, java.util.Collection)
+     */
     @Override
     public void decide(Authentication authentication, Object object,
                        Collection<ConfigAttribute> configAttributes) throws AccessDeniedException,
@@ -32,7 +39,16 @@ public class EasyAccessDecisionManager extends AbstractAccessDecisionManager {
         if (configAttributes == null || configAttributes.isEmpty()) {
             return;
         }
-        LOG.debug("被访问资源URL={}", object.toString());
+
+        Object obj = authentication.getPrincipal();
+        if (obj != null && obj instanceof User) {
+            //如果是超级管理员
+            if (SecurityUtil.isSuperAdmin((User) obj)) {
+                return;
+            }
+        }
+
+        log.debug("被访问资源URL={}", object.toString());
 
         // configAttributes是含有访问url的所有权限   
         // authentication.getAuthorities()用户的权限或者角色   
