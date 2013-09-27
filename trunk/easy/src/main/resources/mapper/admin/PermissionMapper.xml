@@ -95,6 +95,22 @@
 		<include refid="defaultCriteria"/>
 	</select>
 	
+	<!-- 查询用户所具有的权限 -->
+	<select id="selectByUserId" resultMap="resultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			permission t
+		where 
+			EXISTS(
+				SELECT 1 FROM user_role u where u.userId=#{userId} 
+				AND EXISTS(SELECT 1 FROM role_permission r WHERE 
+					(r.permissionId=t.id OR r.permissionId=t.parentId) 
+				AND r.roleId=u.roleId)
+			)
+		ORDER BY id DESC
+	</select> 
+	
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
 		<where>

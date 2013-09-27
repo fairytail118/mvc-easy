@@ -35,18 +35,18 @@ public interface RoleDao {
     /**
      * 根据主键删除
      * 
-     * @param ids 
+     * @param ids
      * @return
      */
-    public int deleteByPrimaryKeys(Long...ids );
+    public int deleteByPrimaryKeys(Long... ids);
 
     /**
      * 根据主键查询
      * 
-     * @param  id 
+     * @param id
      * @return
      */
-    public Role getByPrimaryKey(Long id );
+    public Role getByPrimaryKey(Long id);
 
     /**
      * 条件查询列表

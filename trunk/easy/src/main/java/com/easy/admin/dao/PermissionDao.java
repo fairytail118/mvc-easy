@@ -35,18 +35,18 @@ public interface PermissionDao {
     /**
      * 根据主键删除
      * 
-     * @param ids 
+     * @param ids
      * @return
      */
-    public int deleteByPrimaryKeys(Long...ids );
+    public int deleteByPrimaryKeys(Long... ids);
 
     /**
      * 根据主键查询
      * 
-     * @param  id 
+     * @param id
      * @return
      */
-    public Permission getByPrimaryKey(Long id );
+    public Permission getByPrimaryKey(Long id);
 
     /**
      * 条件查询列表
@@ -71,4 +71,11 @@ public interface PermissionDao {
      */
     public void page(Page<Permission> page);
 
+    /**
+     * 查询用户所具有的权限
+     * 
+     * @param userId
+     * @return
+     */
+    public List<Permission> selectByUserId(Long userId);
 }
