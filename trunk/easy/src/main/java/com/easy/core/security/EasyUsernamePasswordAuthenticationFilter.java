@@ -66,7 +66,8 @@ public class EasyUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
         String sesCode = (String) session.getAttribute(CaptchaServlet.CAPTCHA_CODE);
         //用过了就移除
         session.removeAttribute(CaptchaServlet.CAPTCHA_CODE);
-        if (StringUtils.isBlank(code) || !StringUtils.equalsIgnoreCase(sesCode, code)) {
+        if (StringUtils.isBlank(code) || StringUtils.isBlank(sesCode)
+            || !StringUtils.equalsIgnoreCase(sesCode, code)) {
             throw new CodeAuthenticationServiceException("验证码不正确!");
         }
 

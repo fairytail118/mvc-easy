@@ -141,13 +141,15 @@
 			</property>
 		</bean>
 		<mvc:interceptor>
-			<mvc:mapping path="/**" />
+			<mvc:mapping path="/admin/**" />
+			<mvc:mapping path="/system/**" />
 			<bean class="com.easy.core.mvc.interceptor.AuthInterceptor">
 				<property name="excludeUrls">
 					<list>
-						<value>login</value>
+						<value>/login</value>
 					</list>
 				</property>
+				<property name="loginFormUrl" value="/login?status=timeout" />
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>

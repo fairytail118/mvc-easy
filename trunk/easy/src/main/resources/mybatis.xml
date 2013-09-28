@@ -23,6 +23,7 @@
 		<typeAlias alias="UserRole" type="com.easy.admin.entity.UserRole" />
 		<typeAlias alias="Permission" type="com.easy.admin.entity.Permission" />
 		<typeAlias alias="RolePermission" type="com.easy.admin.entity.RolePermission" />
+		<typeAlias alias="LoginLog" type="com.easy.admin.entity.LoginLog" />
 	</typeAliases>
 
 	<plugins>
@@ -38,6 +39,7 @@
 		<mapper resource="mapper/admin/UserRoleMapper.xml" />
 		<mapper resource="mapper/admin/PermissionMapper.xml" />
 		<mapper resource="mapper/admin/RolePermissionMapper.xml" />
+		<mapper resource="mapper/admin/LoginLogMapper.xml" />
 	</mappers>
 
 

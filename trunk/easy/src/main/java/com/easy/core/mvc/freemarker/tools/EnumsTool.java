@@ -59,20 +59,38 @@ public class EnumsTool {
     @SuppressWarnings("unchecked")
     public IEnum valueOf(String enumClass, String code) {
 
+        IEnum iEnum = null;
+
         try {
             Class<?> clazz = Class.forName(enumClass);
             if (!IEnum.class.isAssignableFrom(clazz)) {
                 log.error("{} is not AssignableFrom IEnum", enumClass);
-                return null;
+            } else {
+                iEnum = EnumsUtil.valueOfIgnoreCase((Class<IEnum>) clazz, code);
             }
-            return EnumsUtil.valueOfIgnoreCase((Class<IEnum>) clazz, code);
 
         }
         catch (ClassNotFoundException e) {
             log.error("{} is not Exists", enumClass);
         }
 
-        return null;
+        //初始化一个空的，避免页面报错
+        if (iEnum == null) {
+            iEnum = new IEnum() {
+
+                @Override
+                public String getDesc() {
+                    return "";
+                }
+
+                @Override
+                public String getCode() {
+                    return "";
+                }
+            };
+        }
+
+        return iEnum;
 
     }
 
