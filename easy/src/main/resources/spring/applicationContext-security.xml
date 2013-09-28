@@ -41,6 +41,9 @@
 
 	<!-- 密码混淆 -->
 	<beans:bean id="easyPasswordEncoder" class="com.easy.core.security.EasyPasswordEncoder" />
+	
+	<!-- 密码混淆 -->
+	<beans:bean id="easySaltSource" class="com.easy.core.security.EasySaltSource" />
 
 	<!-- 用户认证器 -->
 	<authentication-manager alias="authenticationManager">

@@ -26,10 +26,8 @@ public class EasyPasswordEncoder implements PasswordEncoder {
     /**
      * 加密
      * 
-     * @param rawPass
-     *            传入密码
-     * @param salt
-     *            加密混淆器
+     * @param rawPass 传入密码
+     * @param salt 加密混淆器
      * @return
      * 
      * @see org.springframework.security.authentication.encoding.PasswordEncoder#encodePassword(java.lang.String,

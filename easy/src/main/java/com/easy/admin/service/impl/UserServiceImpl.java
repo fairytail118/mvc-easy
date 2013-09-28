@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +25,7 @@ import com.easy.admin.entity.Permission;
 import com.easy.admin.entity.User;
 import com.easy.admin.service.UserService;
 import com.easy.core.common.Page;
+import com.easy.core.exceptions.EasyException;
 import com.easy.core.security.util.SecurityUtil;
 
 /**
@@ -35,13 +38,19 @@ import com.easy.core.security.util.SecurityUtil;
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private UserDao       userDao;
+    private UserDao         userDao;
 
     @Resource
-    private PermissionDao permissionDao;
+    private PermissionDao   permissionDao;
 
     @Value("${easy.permisson.prefix}")
-    private String        prefixPermission;
+    private String          prefixPermission;
+
+    @Resource
+    private SaltSource      saltSource;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     /**
      * @see com.easy.admin.service.UserService#save(com.easy.admin.entity.User)
@@ -107,5 +116,28 @@ public class UserServiceImpl implements UserService {
         user.setAuthorities(authorities);
 
         return user;
+    }
+
+    /**
+     * @see com.easy.admin.service.UserService#updatePassowrd(java.lang.String,
+     *      java.lang.String, java.lang.String)
+     */
+    @Override
+    public void updatePassowrd(String username, String newPassword, String password) {
+        User user = userDao.loadUserByUsername(username);
+
+        if (user == null) {
+            throw new EasyException("用户[" + username + "]不存在!");
+        }
+
+        //加密
+        boolean isValid = passwordEncoder.isPasswordValid(user.getPassword(), password,
+            saltSource.getSalt(user));
+        if (!isValid) {
+            throw new EasyException("原密码不正确");
+        }
+        //密码
+        user.setPassword(passwordEncoder.encodePassword(newPassword, saltSource.getSalt(user)));
+        userDao.update(user);
     }
 }

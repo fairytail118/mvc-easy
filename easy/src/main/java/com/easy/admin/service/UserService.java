@@ -14,13 +14,13 @@ import com.easy.core.common.Page;
  * @author wy
  * @version v 0.1 13-09-23 下午 20:32:32 wy Exp $
  */
-public interface UserService  extends UserDetailsService{
-    
+public interface UserService extends UserDetailsService {
+
     /**
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param user
-     * @return 
+     * @return
      */
     public User save(User user);
 
@@ -35,8 +35,8 @@ public interface UserService  extends UserDetailsService{
     /**
      * 根据主键查询
      * 
-     * @param  id 
-          * @return
+     * @param id
+     * @return
      */
     public User getByPrimaryKey(Long id);
 
@@ -46,6 +46,14 @@ public interface UserService  extends UserDetailsService{
      * @param page
      */
     public void page(Page<User> page);
-    
+
+    /**
+     * 修改密码
+     * 
+     * @param username 用户名
+     * @param newPassword 新密码
+     * @param password 原来密码
+     */
+    public void updatePassowrd(String username, String newPassword, String password);
 
 }

@@ -3,6 +3,8 @@
  */
 package com.easy.admin.controller;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.easy.admin.entity.LoginLog;
 import com.easy.admin.service.LoginLogService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
+import com.easy.core.security.util.SecurityUtil;
 
 /**
  * 登陆日志
@@ -50,7 +53,40 @@ public class LoginLogController extends BaseController {
         page.setCriteria(loginLog);
         loginLogService.page(page);
         model.put("page", page);
-        return "admin/loginLog_list";
+        return "admin/login_log_list";
+    }
+
+    /**
+     * 我的登录情况
+     * 
+     * @param request
+     * @param model
+     * @param currentPage
+     * @param startDate
+     * @param endDate
+     * @param loginLog
+     * @return
+     */
+    @RequestMapping(value = "/login_log_my_list")
+    public String myList(HttpServletRequest request, ModelMap model,
+                         @RequestParam(value = "page", defaultValue = "1") int currentPage,
+                         @RequestParam(value = "startDate", required = false) Date startDate,
+                         @RequestParam(value = "endDate", required = false) Date endDate,
+                         LoginLog loginLog) {
+
+        Page<LoginLog> page = new Page<LoginLog>();
+        page.setCurrentPage(currentPage);
+        //查询的用户
+        loginLog.setUsername(SecurityUtil.getLoginUser().getUsername());
+
+        //日期区间
+        loginLog.put("startDate", startDate);
+        loginLog.put("endDate", endDate);
+        // 设置查询条件
+        page.setCriteria(loginLog);
+        loginLogService.page(page);
+        model.put("page", page);
+        return "admin/login_log_my_list";
     }
 
 }

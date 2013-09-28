@@ -33,7 +33,7 @@
         //验证通过提交行为
         submitHandler: function (form) {
         	//加载提交事件
-        	 var sub = jQuery(form).find(":submit");
+        	 var sub = $(form).find(":submit");
              sub.attr("disabled", true);
              form.submit();
         }
