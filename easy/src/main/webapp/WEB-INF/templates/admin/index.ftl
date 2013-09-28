@@ -9,12 +9,23 @@
 	<script type="text/javascript" src="${base}/admin/js/admin.js"></script>
 	<script type="text/javascript" src="${base}/admin/lhgdialog/lhgdialog.js"></script>
 	<script type="text/javascript" src="${base}/admin/js/easy.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//退出按钮
+		$("#logout").click(function(){
+			var url = "${base}/logout";
+			$.easy.confirm("确定退出系统?", function() {
+				top.window.location.href=url;
+			});
+		});
+	});
+	</script>
 </head>
 <body>
 	<div class="top_bg">
 		<div class="top">
 			<div class="top_logo">&nbsp;</div>
-			<span class="top_link">管理员：<a href="#">webmis</a>&nbsp;&nbsp;[&nbsp;&nbsp;测试部-测试用户&nbsp;&nbsp;]&nbsp;&nbsp;<a href="http://webmis.ksphp.com/admin/index_c/loginOut.html"><b>注销</b></a></span>
+			<span class="top_link">${enums.valueOf('com.easy.admin.enums.UserType',user.userType).desc}：<a>${user.username}</a>&nbsp;&nbsp;[${user.name!''}]&nbsp;&nbsp;<a id="logout" href="javascript:;"><b>注销</b></a></span>
 		</div>
 		<div class="top_nav">
 			<div class="title">
@@ -49,15 +60,13 @@
 									<span class="title">桌面</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a target="mainframe" href="content.html"><em class="ico-user"></em>&nbsp;&nbsp;用户首页</a></li>
-									<li><a target="mainframe" href="admin/admin_list"><em class="ico-user"></em>&nbsp;&nbsp;用户首页</a></li>
-									<li><a target="mainframe" href="input.html"><em class="ico-user"></em>&nbsp;&nbsp;用户首页</a></li>
+									<li><a target="mainframe" href="${base}/admin/system_index"><em class="ico-user"></em>&nbsp;&nbsp;用户首页</a></li>
 								</ul>
 								<div class="menu_an_bg1 UI">
 									<span class="title">帐号管理</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="http://webmis.ksphp.com/admin/sys_change_passwd.html"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
+									<li><a href="${base}/admin/change_pwd"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
 								</ul>
 							</div>
 							<div class="menuOne display_n">
@@ -102,13 +111,13 @@
 					<div class="UI left_show" title="显示/隐藏">&nbsp;</div>
 				</td>
 				<td class="tb_right">
-					<!-- Content --> <iframe src="list.html" frameborder="0" width="100%" name="mainframe" height="100%"></iframe> <!-- Content End -->
+					<!-- Content --> <iframe src="${base}/admin/system_index" frameborder="0" width="100%" name="mainframe" height="100%"></iframe> <!-- Content End -->
 				</td>
 			</tr>
 		</table>
 	</div>
 	<div class="copyright">
-		Built by KSPHP and the <a href="http://www.ksphp.com/" target="_blank"><b>KSPHP.COM</b></a> community
+		© 2013 <a href="${base}/admin/index"><b>Easy</b></a> System
 	</div>
 </body>
 </html>

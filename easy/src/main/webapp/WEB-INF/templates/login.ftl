@@ -93,7 +93,7 @@
 							<div class="message" id="message">
 								${message!""}
 							</div>
-							<form id="loginForm" method="post" action="${base}/loginvalidate">
+							<form id="loginForm" method="post" action="${base}/loginvalidate" autocomplete="off">
 								<div class="user">
 									<span class="text">用户名：</span> <input name="j_username" id="username" type="text"value="${username!''}" class="input"/>
 								</div>
@@ -110,7 +110,7 @@
 									<input type="checkbox" name="j_remember" checked="checked" class="check" /> <span class="remember">记住我的用户名</span>
 								</div>
 								<div class="login_btn">
-									<input type="button" name="login" value="登录" class="submit" />
+									<input type="submit" name="login" value="登录" class="submit" />
 								</div>
 							</form>
 						</div>

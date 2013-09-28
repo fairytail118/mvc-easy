@@ -51,13 +51,15 @@ public class RequestUtil {
             // 多次反向代理后会有多个IP值，第一个为真实IP。
             int index = ip.indexOf(',');
             if (index != -1) {
-                return ip.substring(0, index);
-            } else {
-                return ip;
+                ip = ip.substring(0, index);
             }
         } else {
-            return request.getRemoteAddr();
+            ip = request.getRemoteAddr();
         }
+        if (StringUtils.indexOf(ip, ":") != -1) {
+            return "127.0.0.1";
+        }
+        return ip;
     }
 
     /**

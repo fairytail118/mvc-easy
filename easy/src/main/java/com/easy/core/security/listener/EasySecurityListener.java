@@ -5,9 +5,10 @@ package com.easy.core.security.listener;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
@@ -36,7 +37,7 @@ public class EasySecurityListener implements ApplicationListener<ApplicationEven
 
     private final static Logger logger = LoggerFactory.getLogger(EasySecurityListener.class);
 
-    @Autowired
+    @Resource
     private LoginLogService     loginLogService;
 
     /**
@@ -103,7 +104,7 @@ public class EasySecurityListener implements ApplicationListener<ApplicationEven
             }
             StringBuffer content = new StringBuffer();
             content.append("【").append(loginUsername).append("】")
-                .append(LoginLogAction.LOGIN.getCode()).append("系统").append("失败");
+                .append(LoginLogAction.LOGIN.getDesc()).append("系统").append("失败");
             log.setContent(content.toString());
             log.setAction(LoginLogAction.LOGIN.getCode());
             log.setCreateTime(date);

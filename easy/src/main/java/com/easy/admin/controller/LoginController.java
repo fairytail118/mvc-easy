@@ -70,11 +70,9 @@ public class LoginController extends BaseController {
                 model.put("message", "您的账号已被锁定,无法登录!");
             } else if (springSecurityLastException instanceof AccountExpiredException) {
                 model.put("message", "您的账号已过期,无法登录!");
-            } 
-            else if(springSecurityLastException instanceof CodeAuthenticationServiceException){
+            } else if (springSecurityLastException instanceof CodeAuthenticationServiceException) {
                 model.put("message", springSecurityLastException.getMessage());
-            }
-            else if (springSecurityLastException instanceof AuthenticationServiceException) {
+            } else if (springSecurityLastException instanceof AuthenticationServiceException) {
                 String message = springSecurityLastException.getMessage();
                 if (message != null && message.contains("Connection")) {
                     model.put("message", "数据库连接异常");
