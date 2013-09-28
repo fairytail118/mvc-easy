@@ -66,7 +66,8 @@
 									<span class="title">帐号管理</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="${base}/admin/change_pwd"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
+									<li><a target="mainframe" href="${base}/admin/login_log_my_list"><em class="ico-pwd"></em>&nbsp;&nbsp;我的登录</a></li>
+									<li><a target="mainframe" href="${base}/admin/change_pwd"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
 								</ul>
 							</div>
 							<div class="menuOne display_n">

@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.easy.core.validator.annotations.EmailValidator;
+import com.easy.core.validator.annotations.EqualsStringValidator;
 import com.easy.core.validator.annotations.NumberRangeValidator;
 import com.easy.core.validator.annotations.NumberValidator;
 import com.easy.core.validator.annotations.RegexValidator;
@@ -104,6 +105,15 @@ public abstract class AbstractValidator implements Validator {
         StringLengthFieldValidator stringLengthFieldValidator = new StringLengthFieldValidator();
         for (StringLengthValidator validator : validations.stringLengthValidators()) {
             result = stringLengthFieldValidator.isValid(validator, request);
+            if (result.isSuccess()) {
+                continue;
+            }
+            list.add(result);
+        }
+        //字符串匹配
+        EqualsStringFieldValidator equalsStringFieldValidator = new EqualsStringFieldValidator();
+        for (EqualsStringValidator validator : validations.equalsStringValidators()) {
+            result = equalsStringFieldValidator.isValid(validator, request);
             if (result.isSuccess()) {
                 continue;
             }

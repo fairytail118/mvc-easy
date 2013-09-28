@@ -159,8 +159,7 @@ $.easy = {
 					form.find(options.currentPage).val("1");
 					form.submit();
 					return true;
-				}
-				else{
+				} else {
 					return false;
 				}
 			},
@@ -188,6 +187,25 @@ $.easy = {
 
 		return data;
 
+	},
+	/**
+	 * 显示错误信息
+	 * 
+	 * @param data
+	 * @param form
+	 */
+	showFieldErrors : function(data,form){
+		for(var key in data){
+			var error = $('<label for="'+key+'" class="error">'+data[key]+'</label>');
+			var element = $(form).find("[name='"+key+"']");
+            if ((element.is(":radio") || element.is(":checkbox"))&&element.parent().is("label")) {
+            	element.parent().parent().find("label.success[for='"+key+"']").remove();
+                error.appendTo(element.parent().parent());
+            } else {
+            	element.parent().find("label.success[for='"+key+"']").remove();
+                error.appendTo(element.parent());
+            }
+		}
 	}
 };
 
@@ -212,7 +230,7 @@ $.extend($.fn, {
 		// 参数
 		var options = $.extend(true, defaults, options);
 
-		var checkboxes = $(options.table + " " + options.key+":checked");
+		var checkboxes = $(options.table + " " + options.key + ":checked");
 
 		var url = $(this).attr("url");
 		if (checkboxes.size() == 0) {

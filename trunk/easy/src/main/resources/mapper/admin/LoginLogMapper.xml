@@ -119,9 +119,26 @@
 	<sql id="defaultCriteria">
 		<where>
 			<!-- 关键字查询字段 -->
-			<if test="keyword!=null and keyword!=''">
-				AND name like "%"#{keyword}"%"
+			<if test="keyword!=null and keyword.trim()!=''">
+				AND username like "%"#{keyword}"%"
 			</if>
+			<if test="username!=null and username.trim()!=''">
+				AND username = #{username}
+			</if>
+			<if test="action!=null and action.trim()!=''">
+				AND action = #{action}
+			</if>
+			<if test="status!=null and status.trim()!=''">
+				AND status = #{status}
+			</if>
+			<if test="criteria.startDate!=null">
+			    loginTime &gt;=#{criteria.startDate}
+			</if>
+			<if test="criteria.endDate!=null">
+			    loginTime &lt;=#{criteria.endDate}
+			</if>
+			
+			
 		</where>
 	</sql>
 	

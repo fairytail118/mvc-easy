@@ -53,4 +53,11 @@ public @interface Validations {
      */
     public StringLengthValidator[] stringLengthValidators() default {};
 
+    /**
+     * 字符串匹配
+     * 
+     * @return
+     */
+    public EqualsStringValidator[] equalsStringValidators() default {};
+
 }
