@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>${lower_entity}${r"<#if"} ${lower_entity}??&&${lower_entity}.id${r"??"}> 编辑 ${r"<#else>"}添加${r"</#if>"}-${r"${easySystem.name} ${easySystem.version}"}</title>
+<title>${tableComent!''}${r"<#if"} ${lower_entity}??&&${lower_entity}.id${r"??"}> 编辑 ${r"<#else>"}添加${r"</#if>"}-${r"${easySystem.name} ${easySystem.version}"}</title>
 ${r" <#include "}"/templates/common/admin_head.ftl"> 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -43,7 +43,7 @@ $(document).ready(function(){
 	<input type="hidden" name="id" value="${r"${(${lower_entity}.id)!}"}"/>
 		<table class="action">
 			<tr>
-				<td class="title">${r"<#if ${lower_entity}??&&${lower_entity}.id??>编辑 <#else>添加</#if>"}</td>
+				<td class="title">S{tableComent!''}${r"<#if ${lower_entity}??&&${lower_entity}.id??>编辑 <#else>添加</#if>"}</td>
 				<td>
 					<ul class="action_ct">
 						<li class="history"><a href="${r"${base}"}/${lower_entity}/${lower_entity}_list"><em class="ico-history"></em>&nbsp;返回</a></li>

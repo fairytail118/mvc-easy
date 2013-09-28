@@ -119,17 +119,20 @@ public class MybatisMapperFileUtil {
 		return sql.toString();
 	}
 	
+	//联合主键的情况
 	public static String getMybatisDeleteSql(Table table){
 		StringBuilder sql=new StringBuilder(100);
-		sql.append("DELETE FROM ").append(table.getName()).append(" WHERE ");
+		sql.append("DELETE FROM ").append(table.getName()).append("\n<where>\n");
 		int index=0;
 		for(String pk : table.getPrimaryList()){
-			sql.append(pk).append(" = #{").append(pk).append("} ");
-			index++;
-			if(index!=table.getPrimaryList().size()){
-				sql.append(" AND ");
+			if(index==0){
+				sql.append("\t<if test=\"").append(pk).append("!=null\">\n\t\t").append(pk).append(" = #{").append(pk).append("}\n\t</if>\n");			
+			}else {
+				sql.append("\t<if test=\"").append(pk).append("!=null\">\n\t\t AND ").append(pk).append(" = #{").append(pk).append("}\n\t</if>\n");			
 			}
+			index++;
 		}
+		sql.append(" AND 1=1" );
 		return sql.toString();
 	}
 	
@@ -208,12 +211,12 @@ public class MybatisMapperFileUtil {
 		String table="user";
 		String pkname="id";
 //		System.out.println("insert sql:"+getMybatisInsertSql(colum, table, pkname));
-		System.out.println("update sql:"+getMybatisUpdateSql(colum, table, pkname));
+//		System.out.println("update sql:"+getMybatisUpdateSql(colum, table, pkname));
 //		System.out.println("delete sql:"+getMybatisDeleteSql(table, pkname));
 //		System.out.println("select sql:"+getMybatisSelectSql(table, pkname));
 //		System.out.println("cloums:"+getCloumnStr(colum));
 //		System.out.println("result map:"+getResultMap(colum, pkname));
-		
+		System.out.println(getMybatisDeleteSql(TableUtil.getTable("role_permission")));
 	}
 
 }
