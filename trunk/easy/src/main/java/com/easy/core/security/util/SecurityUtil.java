@@ -54,7 +54,7 @@ public class SecurityUtil {
     public static boolean isSuperAdmin(User user) {
         UserType userType = EnumsUtil.valueOfIgnoreCase(UserType.class, user.getUserType());
         //如果是超级管理员
-        return (userType != null && userType == UserType.super_admin);
+        return (userType != null && userType == UserType.SUPER_ADMIN);
     }
 
     /**
