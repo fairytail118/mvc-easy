@@ -21,12 +21,7 @@
 	<update id="update" parameterType="User">
 		UPDATE
 			user
-		<set>
-
-			<if test="id!=null">
-			id = #{id},
-			</if>
-								
+		<set>								
 			<if test="modifyTime!=null">
 			modifyTime = #{modifyTime},
 			</if>

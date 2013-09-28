@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>权限-${easySystem.name} ${easySystem.version}</title>
+<title>权限管理-${easySystem.name} ${easySystem.version}</title>
 <#include "/templates/common/admin_head.ftl">
 </head>
 <body>
 	<form action="${base}/admin/permission_list" method="post" name="listForm">
 		<table class="action">
 			<tr>
-				<td class="title">管理员管理</td>
+				<td class="title">权限管理</td>
 				<td>
 					<ul class="action_ct">
 						<li><a href="${base}/admin/permissionlist"><em class="ico-list"></em>&nbsp;列表</a></li>
@@ -41,7 +41,7 @@
 				<tr>
 					<td><input type="checkbox" name="key" value="${item.id}" /></td>
 					<td>${(item.id)!}</td>
-					<td>${(item.parentId)!}</td>
+					<td>${(item.parentId)!'一级权限'}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>
 					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>

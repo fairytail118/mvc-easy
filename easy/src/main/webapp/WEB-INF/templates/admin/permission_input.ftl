@@ -9,14 +9,17 @@ $(document).ready(function(){
 	var valid = $("form[name='inputForm']").validate({
 			rules : {
 				parentId:{
-					required:true,
+					digst:true
 				},
 				name:{
 					required:true,
+					maxlength:32
 				},
 				code:{
 					required:true,
-				}			}
+					maxlength:32
+				}
+			}	
 		});
 		$("input[type='reset']").click(function(){
 			valid.resetForm();
@@ -30,7 +33,7 @@ $(document).ready(function(){
 	<input type="hidden" name="id" value="${(permission.id)!}"/>
 		<table class="action">
 			<tr>
-				<td class="title">管理员<#if permission??&&permission.id??>编辑 <#else>添加</#if></td>
+				<td class="title">权限<#if permission??&&permission.id??>编辑 <#else>添加</#if></td>
 				<td>
 					<ul class="action_ct">
 						<li class="history"><a href="${base}/admin/permission_list"><em class="ico-history"></em>&nbsp;返回</a></li>
