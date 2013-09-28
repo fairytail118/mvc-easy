@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.easy.admin.dao.PermissionDao;
+import com.easy.admin.dao.RolePermissionDao;
 import com.easy.admin.entity.Permission;
 import com.easy.admin.service.PermissionService;
 import com.easy.core.common.Page;
@@ -23,6 +24,9 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Resource
     private PermissionDao permissionDao;
+    
+    @Resource
+    private RolePermissionDao rolePermissionDao;
 
     /**
      * @see com.easy.admin.service.PermissionService#save(com.easy.admin.entity.Permission)
@@ -43,6 +47,10 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public void deleteByPrimaryKeys(java.lang.Long[] keys) {
         permissionDao.deleteByPrimaryKeys(keys);
+        //删除role_permission中关联的记录
+//        for(long permissionId : keys){
+//        	rolePermissionDao.deleteByPrimaryKeys(null, permissionId);
+//        }
     }
 
     /**
