@@ -1,0 +1,25 @@
+
+一、freemarker中影藏对象
+1、页面枚举转换  EnumsTool
+	a.获取枚举属性集合:enums.values('com.easy.admin.enums.LoginLogStatus')
+	b.获取转换的枚举对象:${enums.valueOf('com.easy.admin.enums.LoginLogAction',item.action).desc}
+2、权限判断  SecurityTool
+	a.是否有任意一个权限:ses.anyGranted('权限码，以逗号隔开')
+	b.是否有所有的权限:ses.allGranted('权限码，以逗号隔开')
+3、当前项目contextPath ${base}
+
+二、controller中的字段验证使用@Validations注解来处理，详见各表单的保存controller方法，
+	a.判断验证是否通过通过RequestUtil.hasErrors(request)来判断
+	b.获取表单的验证结果通过RequestUtil.getFormErrors(request)来获取
+	c.ajax表单提交验证，详见修改密码
+
+三、AJax请求
+1、所有的ajax返回通过Result来返回，定义返回的状态success
+2、返回结果如果success为false，请注意判断denied是否为false，如果为false表示没有权限,可参考change_pwd.ftl
+
+四、权限配置
+1、url权限：permission.properties中配置url=多个所需的权限码，以逗号隔开，判断时具有其中一个即可访问
+2、action中如果需要判断，请通过SecurityUtil中方法处理
+
+五、其他
+ 1、获取当前登录用户:SecurityUtil.getLoginUser()
