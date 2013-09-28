@@ -54,19 +54,5 @@ public interface ${entity}Dao {
      * @return
      */
     public List<${entity}> selectByCriteria(${entity} ${lower_entity});
-    
-    <#if pklist??>
-		<#list pklist as pk>
-	/**
-     * 根据${pk}删除${entity_comment}
-     * 
-     * @param ${pk}
-     * @return
-     */
-    public int deleteBy${pk?cap_first}(Long ${pk});		
-		</#list>
-	</#if>
-    
-    
 
 }

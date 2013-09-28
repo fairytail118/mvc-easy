@@ -184,7 +184,9 @@ public class FreemarkerCoder {
 		datas.put("tableName", tableName);
 		String lower_entity=entityName.substring(0, 1).toLowerCase()+entityName.substring(1);//实体类名的第一个字符给为小写
 		datas.put("lower_entity", lower_entity);
-		datas.put("colums", TableUtil.getTable(tableName).getColumnList());
+		Table table=TableUtil.getTable(tableName);
+		datas.put("colums", table.getColumnList());
+		datas.put("tableComent", table.getDesc());
 		return datas;
 	}
 	

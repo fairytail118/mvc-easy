@@ -53,18 +53,6 @@
 			${lower_entity}
 		<include refid="defaultCriteria"/>
 	</select>
-	
-	<#else>
-		<#if pklist??>
-		<#list pklist as pk>
-	<delete id="deleteBy${pk?cap_first}">
-		DELETE FROM
-			${lower_entity}
-		WHERE
-		${pk}=${r"#{"}${pk}${r"}"}
-	</delete>
-	</#list>
-	</#if>
 	</#if>
 	
 	

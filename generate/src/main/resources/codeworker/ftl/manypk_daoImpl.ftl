@@ -63,12 +63,6 @@ public class ${entity}DaoImpl extends MyBatisGenericDao implements ${entity}Dao 
         return list("${dao_package}.${entity}Dao.selectByCriteria", ${lower_entity});
     }
     
-     <#if pklist??>
-		<#list pklist as pk>
-    public int deleteBy${pk?cap_first}(Long ${pk}){
-    	return delete("${dao_package}.${entity}Dao.deleteBy${pk?cap_first}", ${pk});
-    }		
-		</#list>
-	</#if>
+
 
 }
