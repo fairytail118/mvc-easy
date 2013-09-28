@@ -22,7 +22,7 @@ public class EnumUtilTest {
 
         UserType userType = EnumsUtil.valueOf(UserType.class, "user");
 
-        Assert.assertTrue(userType == UserType.user);
+        Assert.assertTrue(userType == UserType.USER);
 
     }
 
@@ -31,7 +31,7 @@ public class EnumUtilTest {
 
         UserType userType = EnumsUtil.valueOfIgnoreCase(UserType.class, "user");
 
-        Assert.assertTrue(userType == UserType.user);
+        Assert.assertTrue(userType == UserType.USER);
 
     }
 

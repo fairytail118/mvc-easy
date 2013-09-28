@@ -14,13 +14,13 @@ import com.easy.core.enums.IEnum;
 public enum UserType implements IEnum {
 
     /** 超级管理员 */
-    super_admin("super_admin", "超级管理员"),
+    SUPER_ADMIN("super_admin", "超级管理员"),
 
     /** 管理员 */
-    admin("admin", "普通管理员"),
+    ADMIN("admin", "普通管理员"),
 
     /** 一般用户 */
-    user("user", "一般用户");
+    USER("user", "一般用户");
 
     /** 编码 */
     private String code;

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC 
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easy.admin.dao.LoginLogDao">
+	<!-- 增加操作 -->
+	<insert id="create" parameterType="LoginLog" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO
+			login_log(
+				 id, username, password, action, status, content, clientIp, clientBrowser, loginTime, clientArea, clientOs				
+			)
+		VALUES(
+			 #{id}, #{username}, #{password}, #{action}, #{status}, #{content}, #{clientIp}, #{clientBrowser}, #{loginTime}, #{clientArea}, #{clientOs}			
+		)
+	</insert>
+
+	<!-- 更新操作 -->
+	<update id="update" parameterType="LoginLog">
+		UPDATE
+			login_log
+		<set>
+
+			<if test="id!=null">
+			id = #{id},
+			</if>
+				
+			<if test="username!=null and username.trim()!=''">
+			username = #{username},
+			</if>
+						
+			<if test="password!=null and password.trim()!=''">
+			password = #{password},
+			</if>
+						
+			<if test="action!=null and action.trim()!=''">
+			action = #{action},
+			</if>
+						
+			<if test="status!=null and status.trim()!=''">
+			status = #{status},
+			</if>
+						
+			<if test="content!=null and content.trim()!=''">
+			content = #{content},
+			</if>
+						
+			<if test="clientIp!=null and clientIp.trim()!=''">
+			clientIp = #{clientIp},
+			</if>
+						
+			<if test="clientBrowser!=null and clientBrowser.trim()!=''">
+			clientBrowser = #{clientBrowser},
+			</if>
+						
+			<if test="loginTime!=null">
+			loginTime = #{loginTime},
+			</if>
+				
+			<if test="clientArea!=null and clientArea.trim()!=''">
+			clientArea = #{clientArea},
+			</if>
+						
+			<if test="clientOs!=null and clientOs.trim()!=''">
+			clientOs = #{clientOs},
+			</if>
+						
+		</set>
+		WHERE
+		id = #{id}
+				
+	</update>
+
+	<!-- 根据主键删除 -->
+	<delete id="deleteByPrimaryKeys">
+		DELETE FROM
+			login_log
+		WHERE
+			id IN
+		
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<!-- 根据主键查询 -->
+	<select id="getByPrimaryKey" resultMap="resultMap" parameterType="long">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			login_log
+		WHERE
+			id = #{id}
+				
+	</select>
+	
+	<!-- 根据参数查询列表 -->
+	<select id="selectByCriteria" resultMap="resultMap" parameterType="LoginLog">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			login_log
+		<include refid="defaultCriteria"/>
+		<include refid="orderByClause"/>
+	</select>
+	
+	<!-- 根据参数查询数量-->
+	<select id="countByCriteria" resultType="int" parameterType="long">
+		SELECT
+			count(*)
+		FROM
+			login_log
+		<include refid="defaultCriteria"/>
+	</select>
+	
+	<!-- 默认的查询条件 -->
+	<sql id="defaultCriteria">
+		<where>
+			<!-- 关键字查询字段 -->
+			<if test="keyword!=null and keyword!=''">
+				AND name like "%"#{keyword}"%"
+			</if>
+		</where>
+	</sql>
+	
+	<!-- 排序字段 -->
+	<sql id="orderByClause">
+		<if test="orderByClause!=null">
+			${orderByClause}
+		</if>
+	</sql>
+	
+	<!-- 默认的数据库字段 -->
+	<sql id="columns">
+		id,username,password,action,status,content,clientIp,clientBrowser,loginTime,clientArea,clientOs	
+	</sql>
+
+
+	<!-- 默认的数据库映射 -->
+	<resultMap type="LoginLog" id="resultMap">
+		<!-- 主键ID -->
+		<result property="id" column="id" />
+		<!-- 用户名 -->
+		<result property="username" column="username" />
+		<!-- 密码 -->
+		<result property="password" column="password" />
+		<!-- 动作(登录/退出) -->
+		<result property="action" column="action" />
+		<!-- 状态 -->
+		<result property="status" column="status" />
+		<!-- 日志内容 -->
+		<result property="content" column="content" />
+		<!-- 客户端IP -->
+		<result property="clientIp" column="clientIp" />
+		<!-- 客户端浏览器 -->
+		<result property="clientBrowser" column="clientBrowser" />
+		<!-- 登录时间 -->
+		<result property="loginTime" column="loginTime" />
+		<!-- 客户端所在地区 -->
+		<result property="clientArea" column="clientArea" />
+		<!-- 客户端操作系统 -->
+		<result property="clientOs" column="clientOs" />
+	
+	</resultMap>
+</mapper>
