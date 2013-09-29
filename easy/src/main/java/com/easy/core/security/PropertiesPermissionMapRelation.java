@@ -3,12 +3,16 @@
  */
 package com.easy.core.security;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +38,9 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     /** 加载的资源文件 */
     private List<Resource>                                  resources;
 
+    /** 文件编码 */
+    private String                                          fileEncoding;
+
     /** url对应的权限列表 */
     private final static Map<String, List<ConfigAttribute>> URL_PERMISSION_MAP = new HashMap<String, List<ConfigAttribute>>();
 
@@ -43,8 +50,7 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     /**
      * Setter method for property <tt>resources</tt>.
      * 
-     * @param resources
-     *            value to be assigned to property resources
+     * @param resources value to be assigned to property resources
      */
     public void setResources(List<Resource> resources) {
         this.resources = resources;
@@ -53,11 +59,19 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     /**
      * Setter method for property <tt>prefixPermission</tt>.
      * 
-     * @param prefixPermission
-     *            value to be assigned to property prefixPermission
+     * @param prefixPermission value to be assigned to property prefixPermission
      */
     public void setPrefixPermission(String prefixPermission) {
         this.prefixPermission = prefixPermission;
+    }
+
+    /**
+     * Setter method for property <tt>fileEncoding</tt>.
+     * 
+     * @param fileEncoding value to be assigned to property fileEncoding
+     */
+    public void setFileEncoding(String fileEncoding) {
+        this.fileEncoding = fileEncoding;
     }
 
     /**
@@ -76,12 +90,23 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
         Assert.isTrue(StringUtils.isNotBlank(prefixPermission), "权限前缀不能为空");
         Assert.notEmpty(resources, "权限文件不能为空");
         Properties properties = new Properties();
-        for (Resource resource : resources) {
-            if (resource == null || !resource.exists()) {
-                log.warn("找不到权限的资源文件,{}", resource != null ? resource.getURI().getPath() : "");
-                continue;
+        for (Resource location : resources) {
+            log.debug("Loading properties file from " + location);
+            InputStream is = null;
+            try {
+                is = location.getInputStream();
+                if (this.fileEncoding != null) {
+                    properties.load(new InputStreamReader(is, this.fileEncoding));
+                } else {
+                    properties.load(is);
+                }
             }
-            properties.load(resource.getInputStream());
+            catch (IOException ex) {
+                log.warn("Could not load properties from {}: {}", location, ex.getMessage());
+            }
+            finally {
+                IOUtils.closeQuietly(is);
+            }
         }
         for (Object object : properties.keySet()) {
             String url = object.toString();
