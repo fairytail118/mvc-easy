@@ -87,6 +87,9 @@
 			<#if page.criteria.action??>
 			$("select[name='action']").val('${page.criteria.action}');
 			</#if>
+			<#if page.criteria.status??>
+			$("select[name='status']").val('${page.criteria.status}');
+			</#if>
 		});
 	</script>
 </body>

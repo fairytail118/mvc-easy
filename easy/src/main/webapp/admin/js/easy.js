@@ -146,6 +146,7 @@ $.easy = {
 
 		// 搜索框
 		var box = $(options.box).clone(true).show();
+		this.cloneFormValue(options.box, box);
 		var form = $(options.form);
 
 		$.dialog({
@@ -153,8 +154,9 @@ $.easy = {
 			content : box,
 			okVal : '搜索',
 			ok : function() {
+				$.easy.cloneFormValue(box, options.box);
 				// 替换原有的
-				$(options.box).replaceWith(box.hide());
+				//$(options.box).replaceWith(box.hide());
 				if (options.before(options)) {
 					form.find(options.currentPage).val("1");
 					form.submit();
@@ -166,6 +168,49 @@ $.easy = {
 			cancel : true
 		});
 	},
+	/**
+	 * 复制有name元素到另外的一个表单
+	 * 
+	 * @param form1
+	 * @param form2
+	 */
+	cloneFormValue : function(form1, form2) {
+		//复制多选/单选
+		$(form1).find("input:checkbox,input:radio").each(function(){
+			var name = $(this).attr("name");
+			var id = $(this).attr("id");
+			if(this.checked&&name){
+				$(form2).find("input[name='"+name+"'][value='"+this.value+"']").attr("checked",true);
+			}
+			else if(id){
+				$(form2).find("#"+id).eq(index).attr("checked",true);
+			}
+		});
+		
+		$(form1).find("select").each(function(){
+			var name = $(this).attr("name");
+			var id = $(this).attr("id");
+			var index = $(form1).find("select[name='"+name+"']").index(this);
+			var value = $(this).val();
+			if(name){
+				$(form2).find("select[name='"+name+"']").eq(index).val(value);
+			}
+			else if(id){
+				$(form2).find("#"+id).eq(index).val(value);
+			}
+		});
+		
+		$(form1).find("input:hidden,input:text,input:password,textarea").each(function(){
+			var name = $(this).attr("name");
+			var index = $(form1).find("select[name='"+name+"']").index(this);
+			var value = $(this).val();
+			if(name){
+				$(form2).find(this.tagName+"[name='"+name+"']").eq(index).val(value);
+			}
+		});
+		
+	},
+
 	/**
 	 * 获取选择的值
 	 */
@@ -194,17 +239,21 @@ $.easy = {
 	 * @param data
 	 * @param form
 	 */
-	showFieldErrors : function(data,form){
-		for(var key in data){
-			var error = $('<label for="'+key+'" class="error">'+data[key]+'</label>');
-			var element = $(form).find("[name='"+key+"']");
-            if ((element.is(":radio") || element.is(":checkbox"))&&element.parent().is("label")) {
-            	element.parent().parent().find("label.success[for='"+key+"']").remove();
-                error.appendTo(element.parent().parent());
-            } else {
-            	element.parent().find("label.success[for='"+key+"']").remove();
-                error.appendTo(element.parent());
-            }
+	showFieldErrors : function(data, form) {
+		for ( var key in data) {
+			var error = $('<label for="' + key + '" class="error">' + data[key]
+					+ '</label>');
+			var element = $(form).find("[name='" + key + "']");
+			if ((element.is(":radio") || element.is(":checkbox"))
+					&& element.parent().is("label")) {
+				element.parent().parent().find(
+						"label.success[for='" + key + "']").remove();
+				error.appendTo(element.parent().parent());
+			} else {
+				element.parent().find("label.success[for='" + key + "']")
+						.remove();
+				error.appendTo(element.parent());
+			}
 		}
 	}
 };
