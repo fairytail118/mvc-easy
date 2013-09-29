@@ -3,15 +3,17 @@
  */
 package com.easy.admin.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.easy.admin.dao.PermissionDao;
-import com.easy.admin.dao.RolePermissionDao;
 import com.easy.admin.entity.Permission;
 import com.easy.admin.service.PermissionService;
 import com.easy.core.common.Page;
+import com.easy.core.exceptions.EasyException;
 
 /**
  * 权限ServiceImpl
@@ -24,15 +26,15 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Resource
     private PermissionDao permissionDao;
-    
-    @Resource
-    private RolePermissionDao rolePermissionDao;
 
     /**
      * @see com.easy.admin.service.PermissionService#save(com.easy.admin.entity.Permission)
      */
     @Override
     public Permission save(Permission permission) {
+        if(this.checkCodeExists(permission.getCode(), permission.getId())){
+            throw new EasyException("编码已经存在!");
+        }
         if (permission.getId() == null) {
             permissionDao.create(permission);
         } else {
@@ -48,9 +50,9 @@ public class PermissionServiceImpl implements PermissionService {
     public void deleteByPrimaryKeys(java.lang.Long[] keys) {
         permissionDao.deleteByPrimaryKeys(keys);
         //删除role_permission中关联的记录
-//        for(long permissionId : keys){
-//        	rolePermissionDao.deleteByPrimaryKeys(null, permissionId);
-//        }
+        //        for(long permissionId : keys){
+        //        	rolePermissionDao.deleteByPrimaryKeys(null, permissionId);
+        //        }
     }
 
     /**
@@ -68,6 +70,35 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public void page(Page<Permission> page) {
         permissionDao.page(page);
+    }
+
+    /**
+     * @see com.easy.admin.service.PermissionService#firstPermissionList()
+     */
+    @Override
+    public List<Permission> firstPermissionList() {
+        return permissionDao.firstPermissionList();
+    }
+
+    /**
+     * @see com.easy.admin.service.PermissionService#checkCodeExists(java.lang.String,
+     *      java.lang.Long)
+     */
+    @Override
+    public boolean checkCodeExists(String code, Long id) {
+        Permission permission = new Permission();
+        permission.setCode(code);
+        List<Permission> list = permissionDao.selectByCriteria(permission);
+        if (list.isEmpty()) {
+            return false;
+        }
+        //如果没有id，但是存在
+        else if (id == null) {
+            return true;
+        } else if (id.equals(list.get(0).getId())) {
+            return false;
+        }
+        return true;
     }
 
 }

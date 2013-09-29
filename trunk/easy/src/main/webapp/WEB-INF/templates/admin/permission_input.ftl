@@ -17,7 +17,20 @@ $(document).ready(function(){
 				},
 				code:{
 					required:true,
-					maxlength:32
+					maxlength:32,
+					remoteResult:{
+						url: "${base}/admin/permission_check_code",
+                        type: "post",
+                        dataType: "json",
+                        data: {  
+        					code:function(){
+        						return $("input[name='code']").val();
+        					},
+        					id:function(){
+        						return $("input[name='id']").val();
+        					}
+                           }
+					}
 				}
 			}	
 		});
@@ -45,8 +58,15 @@ $(document).ready(function(){
 		<!-- Content -->
 		<table class="table_add">
 			<tr>
-				<td class="w80  text_r">父权限ID:</td>
-				<td><input type="text" name="parentId" value="${(permission.parentId)!}" class="input w200"/><@easy.fieldError field="parentId"/></td>
+				<td class="w80  text_r">父权限:</td>
+				<td>
+				<select name="parentId">
+					<option value="">一级权限</option>
+					<#list firstList as item>
+					<option value="${item.id}">${item.name!''}</option>
+					</#list>
+				</select>
+				</td>
 			</tr>
 			<tr>
 				<td class=" text_r">权限名称:</td>

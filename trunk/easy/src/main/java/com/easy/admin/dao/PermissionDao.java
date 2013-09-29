@@ -78,4 +78,11 @@ public interface PermissionDao {
      * @return
      */
     public List<Permission> selectByUserId(Long userId);
+
+    /**
+     * 第一等级的权限
+     * 
+     * @return
+     */
+    public List<Permission> firstPermissionList();
 }

@@ -3,8 +3,11 @@
  */
 package com.easy.admin.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,14 +51,53 @@ public class PermissionController extends BaseController {
     public String input(HttpServletRequest request, ModelMap model,
                         @RequestParam(value = "id", required = false) Long id) {
 
+        List<Permission> list = permissionService.firstPermissionList();
+
         if (id != null) {
             Permission permission = permissionService.getByPrimaryKey(id);
             model.put("permission", permission);
+            //父级不能为本身
+            if (permission != null) {
+                list.remove(permission);
+            }
         } else {
             model.put("permission", new Permission());
         }
 
+        model.put("firstList", list);
+
         return "admin/permission_input";
+    }
+
+    /**
+     * 检查编码是否存在
+     * 
+     * @param request
+     * @param code 编码
+     * @param id id
+     * @return
+     */
+    @RequestMapping(value = "/permission_check_code")
+    @ResponseBody
+    public Result checkCode(HttpServletRequest request,
+                            @RequestParam(value = "code", required = false) String code,
+                            @RequestParam(value = "id", required = false) Long id) {
+
+        if (StringUtils.isBlank(code)) {
+            return new Result(false, "编码不能为空!");
+        }
+
+        try {
+            boolean exists = permissionService.checkCodeExists(code, id);
+            if (!exists) {
+                return new Result();
+            }
+            return new Result(false, "重复编码!");
+        }
+        catch (Exception e) {
+            log.error("检查编码是否存在出错", e);
+            return new Result(e);
+        }
     }
 
     /**
@@ -69,7 +111,6 @@ public class PermissionController extends BaseController {
     @Validations(
 
     requiredStringValidators = {
-            @RequiredStringValidator(field = "parentId", message = "父权限ID不能为空!", trim = true),
             @RequiredStringValidator(field = "name", message = "权限名称不能为空!", trim = true),
             @RequiredStringValidator(field = "code", message = "权限编码不能为空!", trim = true) })
     @RequestMapping(value = "/permission_save")
