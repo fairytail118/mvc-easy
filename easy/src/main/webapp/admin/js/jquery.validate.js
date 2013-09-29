@@ -281,6 +281,8 @@ $.extend($.validator, {
 	messages: {
 		required: "This field is required.",
 		remote: "Please fix this field.",
+		remoteResult: "Please fix this field.",
+		remote: "Please fix this field.",
 		email: "Please enter a valid email address.",
 		url: "Please enter a valid URL.",
 		date: "Please enter a valid date.",
@@ -1170,7 +1172,62 @@ $.extend($.validator, {
 				}
 			}, param));
 			return "pending";
+		},
+		
+		remoteResult : function( value, element, param){
+			if ( this.optional(element) ) {
+				return "dependency-mismatch";
+			}
+			var previous = this.previousValue(element);
+			if (!this.settings.messages[element.name] ) {
+				this.settings.messages[element.name] = {};
+			}
+			previous.originalMessage = this.settings.messages[element.name].remoteResult;
+			this.settings.messages[element.name].remoteResult = previous.message;
+
+			param = typeof param === "string" && {url:param} || param;
+
+			if ( previous.old === value ) {
+				return previous.valid;
+			}
+
+			previous.old = value;
+			var validator = this;
+			this.startRequest(element);
+			var data = {};
+			data[element.name] = value;
+			$.ajax($.extend(true, {
+				url: param,
+				mode: "abort",
+				port: "validate" + element.name,
+				dataType: "json",
+				data: data,
+				success: function( response ) {
+					validator.settings.messages[element.name].remoteResult = previous.originalMessage;
+					var valid = response.success;
+					if ( valid ) {
+						var submitted = validator.formSubmitted;
+						validator.prepareElement(element);
+						validator.formSubmitted = submitted;
+						validator.successList.push(element);
+						delete validator.invalid[element.name];
+						validator.showErrors();
+					} 
+					else {
+						var errors = {};
+						var message = valid.denied?"没有权限访问Url!":response.data;
+						errors[element.name] = previous.message = $.isFunction(message) ? message(value) : message;
+						validator.invalid[element.name] = true;
+						validator.showErrors(errors);
+					}
+					previous.valid = valid;
+					validator.stopRequest(element, valid);
+				}
+			}, param));
+			return "pending";
 		}
+		
+		
 
 	}
 

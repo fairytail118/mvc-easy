@@ -3,6 +3,8 @@
  */
 package com.easy.admin.service;
 
+import java.util.List;
+
 import com.easy.admin.entity.Permission;
 import com.easy.core.common.Page;
 
@@ -13,12 +15,12 @@ import com.easy.core.common.Page;
  * @version v 0.1 13-09-23 下午 20:32:33 wy Exp $
  */
 public interface PermissionService {
-    
+
     /**
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param permission
-     * @return 
+     * @return
      */
     public Permission save(Permission permission);
 
@@ -33,8 +35,8 @@ public interface PermissionService {
     /**
      * 根据主键查询
      * 
-     * @param  id 
-          * @return
+     * @param id
+     * @return
      */
     public Permission getByPrimaryKey(Long id);
 
@@ -44,6 +46,21 @@ public interface PermissionService {
      * @param page
      */
     public void page(Page<Permission> page);
-    
+
+    /**
+     * 第一等级的权限
+     * 
+     * @return
+     */
+    public List<Permission> firstPermissionList();
+
+    /**
+     * 检查编码是否存在
+     * 
+     * @param code
+     * @param id
+     * @return
+     */
+    public boolean checkCodeExists(String code,Long id);
 
 }

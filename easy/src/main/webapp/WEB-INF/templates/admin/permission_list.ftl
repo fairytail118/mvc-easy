@@ -27,8 +27,7 @@
 		<table class="table_list">
 			<tr class="title">
 				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
-				<td>主键ID</td>
-				<td>父权限ID</td>
+				<td>父权限</td>
 				<td>创建时间</td>
 				<td>创建人</td>
 				<td>修改时间</td>
@@ -40,7 +39,6 @@
 				<#list page.list as item>
 				<tr>
 					<td><input type="checkbox" name="key" value="${item.id}" /></td>
-					<td>${(item.id)!}</td>
 					<td>${(item.parentId)!'一级权限'}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>

@@ -111,12 +111,25 @@
 		ORDER BY id DESC
 	</select> 
 	
+	<!-- 一级的权限 -->
+	<select id="firstPermissionList" resultMap="resultMap">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			permission
+		where parentId is NULL
+		ORDER BY id DESC
+	</select>
+	
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
 		<where>
 			<!-- 关键字查询字段 -->
 			<if test="keyword!=null and keyword!=''">
-				AND name like "%"#{keyword}"%"
+				AND (name LIKE "%"#{keyword}"%" or code LIKE "%"#{keyword}"%" )
+			</if>
+			<if test="code!=null and code!=''">
+			    AND code = #{code}
 			</if>
 		</where>
 	</sql>

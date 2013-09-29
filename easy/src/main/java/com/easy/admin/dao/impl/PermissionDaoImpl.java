@@ -5,11 +5,11 @@ package com.easy.admin.dao.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
 import com.easy.admin.dao.PermissionDao;
 import com.easy.admin.entity.Permission;
-import org.apache.ibatis.session.RowBounds;
 import com.easy.core.common.Page;
 import com.easy.core.dao.impl.MyBatisGenericDao;
 
@@ -89,5 +89,13 @@ public class PermissionDaoImpl extends MyBatisGenericDao implements PermissionDa
     @Override
     public List<Permission> selectByUserId(Long userId) {
         return list("com.easy.admin.dao.PermissionDao.selectByUserId", userId);
+    }
+
+    /**
+     * @see com.easy.admin.dao.PermissionDao#firstPermissionList()
+     */
+    @Override
+    public List<Permission> firstPermissionList() {
+        return list("com.easy.admin.dao.PermissionDao.firstPermissionList");
     }
 }

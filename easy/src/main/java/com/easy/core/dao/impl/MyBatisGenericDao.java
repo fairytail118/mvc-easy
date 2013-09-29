@@ -23,7 +23,7 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected <T> T get(String statement, Object object) {
+    protected final <T> T get(String statement, Object object) {
         if (object == null) {
             return (T) getSqlSession().selectOne(statement);
         }
@@ -38,11 +38,23 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @return
      */
     @SuppressWarnings("unchecked")
-    protected <T> List<T> list(String statement, Object object) {
+    protected final <T> List<T> list(String statement, Object object) {
         if (object == null) {
-            return (List<T>) getSqlSession().selectList(statement);
+            return list(statement);
         }
         return (List<T>) getSqlSession().selectList(statement, object);
+    }
+
+    /**
+     * 查询出列表
+     * 
+     * @param statement
+     * @param param
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    protected final <T> List<T> list(String statement) {
+        return (List<T>) getSqlSession().selectList(statement);
     }
 
     /**
@@ -52,7 +64,7 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @param rowBounds
      * @return
      */
-    protected <T> List<T> list(String statement, RowBounds rowBounds) {
+    protected final <T> List<T> list(String statement, RowBounds rowBounds) {
         return list(statement, null, rowBounds);
     }
 
@@ -91,7 +103,7 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @param object
      * @return
      */
-    protected int update(String statement, Object object) {
+    protected final int update(String statement, Object object) {
         if (object == null) {
             return getSqlSession().update(statement);
         }
@@ -105,7 +117,7 @@ public abstract class MyBatisGenericDao extends SqlSessionDaoSupport {
      * @param object
      * @return
      */
-    protected int delete(String statement, Object object) {
+    protected final int delete(String statement, Object object) {
         if (object == null) {
             return getSqlSession().delete(statement);
         }
