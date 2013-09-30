@@ -32,7 +32,7 @@ public class PermissionServiceImpl implements PermissionService {
      */
     @Override
     public Permission save(Permission permission) {
-        if(this.checkCodeExists(permission.getCode(), permission.getId())){
+        if (this.checkCodeExists(permission.getCode(), permission.getId())) {
             throw new EasyException("编码已经存在!");
         }
         if (permission.getId() == null) {
@@ -70,6 +70,14 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public void page(Page<Permission> page) {
         permissionDao.page(page);
+
+        for (Permission permission : page.getList()) {
+            if (permission.getParentId() != null) {
+                permission.setParentPermission(permissionDao.getByPrimaryKey(permission
+                    .getParentId()));
+            }
+        }
+
     }
 
     /**

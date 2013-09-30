@@ -39,7 +39,13 @@
 				<#list page.list as item>
 				<tr>
 					<td><input type="checkbox" name="key" value="${item.id}" /></td>
-					<td>${(item.parentId)!'一级权限'}</td>
+					<td>
+					<#if item.parentId??>
+						${(item.parentPermission.name)!''}
+					<#else>
+						顶级权限
+					</#if>
+					</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>
 					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>

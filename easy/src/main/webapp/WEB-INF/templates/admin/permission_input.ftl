@@ -61,7 +61,7 @@ $(document).ready(function(){
 				<td class="w80  text_r">父权限:</td>
 				<td>
 				<select name="parentId">
-					<option value="">一级权限</option>
+					<option value="">--顶级--</option>
 					<#list firstList as item>
 					<option value="${item.id}">${item.name!''}</option>
 					</#list>
