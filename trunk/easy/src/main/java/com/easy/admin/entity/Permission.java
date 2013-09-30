@@ -25,6 +25,9 @@ public class Permission extends IdEntity {
     /** 权限编码 */
     private String            code;
 
+    /** 父权限 */
+    private Permission        parentPermission;
+
     /**
      * Getter method for property <tt>parentId</tt>.
      * 
@@ -77,6 +80,24 @@ public class Permission extends IdEntity {
      */
     public void setCode(String code) {
         this.code = code;
+    }
+
+    /**
+     * Getter method for property <tt>parentPermission</tt>.
+     * 
+     * @return property value of parentPermission
+     */
+    public Permission getParentPermission() {
+        return parentPermission;
+    }
+
+    /**
+     * Setter method for property <tt>parentPermission</tt>.
+     * 
+     * @param parentPermission value to be assigned to property parentPermission
+     */
+    public void setParentPermission(Permission parentPermission) {
+        this.parentPermission = parentPermission;
     }
 
 }
