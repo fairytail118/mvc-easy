@@ -25,7 +25,7 @@
 	<div class="top_bg">
 		<div class="top">
 			<div class="top_logo">&nbsp;</div>
-			<span class="top_link">${enums.valueOf('com.easy.admin.enums.UserType',user.userType).desc}：<a>${user.username}</a>&nbsp;&nbsp;[${user.name!''}]&nbsp;&nbsp;<a id="logout" href="javascript:;"><b>注销</b></a></span>
+			<span class="top_link">${enumTool.valueOf('com.easy.admin.enums.UserType',user.userType).desc}：<a>${user.username}</a>&nbsp;&nbsp;[${user.name!''}]&nbsp;&nbsp;<a id="logout" href="javascript:;"><b>注销</b></a></span>
 		</div>
 		<div class="top_nav">
 			<div class="title">
@@ -66,7 +66,7 @@
 									<span class="title">帐号管理</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a target="mainframe" href="${base}/admin/login_log_my_list"><em class="ico-pwd"></em>&nbsp;&nbsp;我的登录</a></li>
+									<li><a target="mainframe" href="${base}/admin/login_log_my_list"><em class="ico-logs"></em>&nbsp;&nbsp;我的登录</a></li>
 									<li><a target="mainframe" href="${base}/admin/change_pwd"><em class="ico-pwd"></em>&nbsp;&nbsp;修改密码</a></li>
 								</ul>
 							</div>
@@ -75,8 +75,11 @@
 									<span class="title">系统管理</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="http://webmis.ksphp.com/admin/sys_menus.html"><em class="ico-menu"></em>&nbsp;&nbsp;菜单管理</a></li>
-									<li><a href="http://webmis.ksphp.com/admin/sys_menus.html"><em class="ico-setting"></em>&nbsp;&nbsp;系统设置</a></li>
+									<li><a target="mainframe" href="${base}/admin/menu_list"><em class="ico-menu"></em>&nbsp;&nbsp;菜单管理</a></li>
+									<li><a target="mainframe" href="${base}/admin/sysytem_setting"><em class="ico-setting"></em>&nbsp;&nbsp;系统设置</a></li>
+									<li><a target="mainframe" href="${base}/admin/user_list"><em class="ico-user"></em>&nbsp;&nbsp;用户管理</a></li>
+									<li><a target="mainframe" href="${base}/admin/role_list"><em class="ico-role"></em>&nbsp;&nbsp;角色管理</a></li>
+									<li><a target="mainframe" href="${base}/admin/permission_list"><em class="ico-permission"></em>&nbsp;&nbsp;权限管理</a></li>
 								</ul>
 								<div class="menu_an_bg1 UI" onclick="menuTwo('12')">
 									<span class="title">系统日志</span><span class="jia UI">&nbsp;</span>

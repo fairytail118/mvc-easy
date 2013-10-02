@@ -24,7 +24,7 @@
 	<!-- Content -->
 	<table class="table_list">
 		<tr>
-			<td colspan="4" class="title" style="font-weight: normal;" align="left">&nbsp;&nbsp;用户类型：${enums.valueOf('com.easy.admin.enums.UserType',user.userType).desc} &nbsp;&nbsp; 登录名：${user.username!''}&nbsp;&nbsp; 姓名：${user.name!''}</td>
+			<td colspan="4" class="title" style="font-weight: normal;" align="left">&nbsp;&nbsp;用户类型：${enumTool.valueOf('com.easy.admin.enums.UserType',user.userType).desc} &nbsp;&nbsp; 登录名：${user.username!''}&nbsp;&nbsp; 姓名：${user.name!''}</td>
 		</tr>
 		<tbody>
 			<tr>

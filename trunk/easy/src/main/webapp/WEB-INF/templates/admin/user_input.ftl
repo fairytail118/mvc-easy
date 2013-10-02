@@ -84,7 +84,7 @@ $(document).ready(function(){
 				<td class=" text_r">用户类型:</td>
 				<td>
 					<select name="userType">
-					<#list enums.values('com.easy.admin.enums.UserType') as item>
+					<#list enumTools('com.easy.admin.enums.UserType') as item>
 						<option value="${item.code}">${item.desc}</option>
 					</#list>
 					</select>

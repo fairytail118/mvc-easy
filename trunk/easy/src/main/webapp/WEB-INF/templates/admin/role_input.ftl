@@ -10,10 +10,26 @@ $(document).ready(function(){
 			rules : {
 				name:{
 					required:true,
+					maxlength:32
 				},
 				code:{
 					required:true,
-				}			}
+					maxlength:32,
+					remoteResult:{
+						url: "${base}/admin/permission_check_code",
+                        type: "post",
+                        dataType: "json",
+                        data: {  
+        					code:function(){
+        						return $("input[name='code']").val();
+        					},
+        					id:function(){
+        						return $("input[name='id']").val();
+        					}
+                           }
+					}
+				}		
+			}
 		});
 		$("input[type='reset']").click(function(){
 			valid.resetForm();

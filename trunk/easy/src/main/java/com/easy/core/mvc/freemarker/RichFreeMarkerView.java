@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerView;
 
 import com.easy.core.bean.SystemConfig;
-import com.easy.core.mvc.freemarker.tools.EnumsTool;
+import com.easy.core.mvc.freemarker.tools.EnumTool;
 import com.easy.core.mvc.freemarker.tools.SecurityTool;
+import com.easy.core.mvc.freemarker.tools.UserTool;
 import com.easy.core.utils.RequestUtil;
 
 /**
@@ -39,11 +40,15 @@ public class RichFreeMarkerView extends FreeMarkerView {
         model.put("easySystem", new SystemConfig("Easy系统", "Version 1.0"));
 
         //枚举类操作
-        model.put("enums", new EnumsTool());
+        model.put("enumTool", new EnumTool());
 
         //权限判断
-        model.put("ses", new SecurityTool());
+        model.put("sesTool", new SecurityTool());
+        
+        //用户
+        model.put("userTool", new UserTool());
 
+        //表单错误信息
         model.put("formErrors", RequestUtil.getFormErrors(request));
     }
 }
