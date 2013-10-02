@@ -61,10 +61,28 @@ $(document).ready(function(){
 				<td class="w80  text_r">父权限:</td>
 				<td>
 				<select name="parentId">
+				<#if permission??&&permission.id??>
+					<#if permission.parentId??>
+					<option value="">--顶级--</option>
+					<#list firstList as item>
+						<#if item.id==permission.parentId>
+						<option value="${item.id}" selected="selected">${item.name!''}</option>
+						<#else>
+						<option value="${item.id}">${item.name!''}</option>	
+						</#if>					
+					</#list>
+					<#else>
+					<option value="" selected="selected">--顶级--</option>
+					<#list firstList as item>
+					<option value="${item.id}">${item.name!''}</option>
+					</#list>
+					</#if>
+				<#else>
 					<option value="">--顶级--</option>
 					<#list firstList as item>
 					<option value="${item.id}">${item.name!''}</option>
 					</#list>
+				</#if>	
 				</select>
 				</td>
 			</tr>
