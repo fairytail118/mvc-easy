@@ -81,30 +81,30 @@
 									<li><a target="mainframe" href="${base}/admin/role_list"><em class="ico-role"></em>&nbsp;&nbsp;角色管理</a></li>
 									<li><a target="mainframe" href="${base}/admin/permission_list"><em class="ico-permission"></em>&nbsp;&nbsp;权限管理</a></li>
 								</ul>
-								<div class="menu_an_bg1 UI" onclick="menuTwo('12')">
+								<div class="menu_an_bg1 UI">
 									<span class="title">系统日志</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="http://webmis.ksphp.com/admin/sys_admin_login_log.html"><em class="ico-logs"></em>&nbsp;&nbsp;登录日志</a></li>
+									<li><a target="mainframe" href="${base}/admin/login_log_list"><em class="ico-logs"></em>&nbsp;&nbsp;登录日志</a></li>
 								</ul>
-								<div class="menu_an_bg1 UI" onclick="menuTwo('23')">
+								<div class="menu_an_bg1 UI">
 									<span class="title">数据库</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="http://webmis.ksphp.com/admin/sys_db_restore.html"><em class="ico-db"></em>&nbsp;&nbsp;数据恢复</a></li>
+									<li><a href="${base}/admin/sys_db_restore.html"><em class="ico-db"></em>&nbsp;&nbsp;数据恢复</a></li>
 								</ul>
 							</div>
 							<!-- # End -->
 
 							<!-- 自定义菜单 -->
 							<div class="menuOne display_n">
-								<div class="menu_an_bg1 UI" onclick="menuTwo('17')">
+								<div class="menu_an_bg1 UI">
 									<span class="title">内容管理</span><span class="jia UI">&nbsp;</span>
 								</div>
 								<ul class="menu_list">
-									<li><a href="http://webmis.ksphp.com/admin/web_news.html"><em class=""></em>&nbsp;&nbsp;新闻管理</a></li>
-									<li><a href="http://webmis.ksphp.com/admin/web_class.html"><em class=""></em>&nbsp;&nbsp;导航管理</a></li>
-									<li><a href="http://webmis.ksphp.com/admin/web_html.html"><em class=""></em>&nbsp;&nbsp;静态页面</a></li>
+									<li><a href="${base}/admin/web_news.html"><em class=""></em>&nbsp;&nbsp;新闻管理</a></li>
+									<li><a href="${base}/admin/web_class.html"><em class=""></em>&nbsp;&nbsp;导航管理</a></li>
+									<li><a href="${base}/admin/web_html.html"><em class=""></em>&nbsp;&nbsp;静态页面</a></li>
 								</ul>
 							</div>
 							<!-- # End -->

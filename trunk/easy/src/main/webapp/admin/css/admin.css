@@ -82,6 +82,10 @@
 .table_add{width: 100%; border-collapse: collapse;}
 .table_add td{padding: 5px;}
 
+/**表格换行颜色*/
+.tr_odd{background: #F4F7FA;}
+.tr_over{background: #E2ECF7;}
+
 /**搜索框*/
 .search_box{width: 360px;border-collapse: collapse;}
 .search_box td{padding: 5px;}
@@ -132,8 +136,8 @@ label.loading{padding-left:20px; background:url(../imgs/onLoad.gif) no-repeat le
 .ico-menu:before {content: "\e0b3";}
 .ico-setting:before {content: "\e00f";}
 
-.icon-locked:before {content: "\e00b";}
-.icon-unlocked:before {content: "\e00c";}
+.ico-locked:before {content: "\e00b";}
+.ico-unlocked:before {content: "\e00c";}
 
 .ico-logs:before {content: "\49";}
 .ico-db:before {content: "\51";}
@@ -141,7 +145,8 @@ label.loading{padding-left:20px; background:url(../imgs/onLoad.gif) no-repeat le
 .ico-new:before {content: "\36";}
 .ico-copy:before {content: "\37";}
 
-
+.ico-enable:before {content: "\e054";}
+.ico-disable:before {content: "\e055";}
 
 .ico-list:before {content: "\e0cb";}
 .ico-history:before {content: "\4e";}

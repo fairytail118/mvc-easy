@@ -12,11 +12,11 @@
 				<td class="title">管理员管理</td>
 				<td>
 					<ul class="action_ct">
-						<li><a href="${base}/admin/user_list"><em class="ico-list"></em>&nbsp;列表</a></li>
-						<li><a href="javascript:;" onclick="$.easy.search();" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
-						<li><a href="${base}/admin/user_input" id="ico-add"><em class="ico-add"></em>&nbsp;添加</a></li>
-						<li><a href="javascript:;" url="${base}/admin/user_input?id=" onclick="$(this).easy_edit()" id="ico-edit"><em class="ico-edit"></em>&nbsp;编辑</a></li>
-						<li><a href="javascript:;" url="${base}/admin/user_delete" onclick="$(this).easy_del()"  id="ico-del"><em class="ico-del"></em>&nbsp;删除</a></li>
+						<li><a id="action_list" href="${base}/admin/user_list"><em class="ico-list"></em>&nbsp;列表</a></li>
+						<li><a id="action_search" href="javascript:;"><em class="ico-search"></em>&nbsp;搜索</a></li>
+						<li><a id="action_add" href="${base}/admin/user_input"><em class="ico-add"></em>&nbsp;添加</a></li>
+						<li><a id="action_edit" href="javascript:;" url="${base}/admin/user_input?id="><em class="ico-edit"></em>&nbsp;编辑</a></li>
+						<li><a id="action_delete" href="javascript:;" url="${base}/admin/user_delete"><em class="ico-del"></em>&nbsp;删除</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -27,37 +27,33 @@
 		<table class="table_list">
 			<tr class="title">
 				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
-				<td>主键ID</td>
-				<td>创建时间</td>
-				<td>创建人</td>
-				<td>修改时间</td>
-				<td>修改人</td>
 				<td>姓名</td>
 				<td>邮箱</td>
 				<td>手机</td>
 				<td>用户名</td>
-				<td>密码</td>
-				<td>是否锁定</td>
-				<td>是否启用</td>
+				<td>锁定</td>
+				<td>启用</td>
 				<td>用户类型</td>
+				<td>创建时间</td>
+				<td>创建人</td>
+				<td>修改时间</td>
+				<td>修改人</td>
 			</tr>
 			<tbody>
 				<#list page.list as item>
 				<tr>
 					<td><input type="checkbox" name="key" value="${item.id}" /></td>
-					<td>${(item.id)!}</td>
-					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-					<td>${(item.createUser)!"&nbsp;"}</td>
-					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
-					<td>${(item.modifyUser)!"&nbsp;"}</td>
 					<td>${(item.name)!"&nbsp;"}</td>
 					<td>${(item.email)!"&nbsp;"}</td>
 					<td>${(item.mobile)!"&nbsp;"}</td>
 					<td>${(item.username)!"&nbsp;"}</td>
-					<td>${(item.password)!"&nbsp;"}</td>
-					<td>${(item.isLocked??&&item.isLocked)?string('是','否')}</td>
-					<td>${(item.isEnabled??&&item.isEnabled)?string('是','否')}</td>
-					<td>${(item.userType)!"&nbsp;"}</td>
+					<td><a title="${(item.isLocked??&&item.isLocked)?string('点击解锁','点击锁定')}" href="javascript:;"><#if item.isLocked??&&item.isLocked> <em class="ico-locked"></em> <#else> <em class="ico-unlocked"></em> </#if>&nbsp;</a></td>
+					<td><a title="${(item.enable??&&item.enable)?string('点击禁用','点击启用')}" href="javascript:;"><#if item.enable??&&item.enable> <em class="ico-enable"></em> <#else> <em class="ico-disable"></em> </#if>&nbsp;</a></td>
+					<td>${enumTool.valueOf('com.easy.admin.enums.UserType',item.userType).desc}</td>
+					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+					<td>${(item.createUser)!"&nbsp;"}</td>
+					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
+					<td>${(item.modifyUser)!"&nbsp;"}</td>
 				</tr>
 				</#list>
 			</tbody>
@@ -71,5 +67,15 @@
 			</tr>
 		</table>
 	</form>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//表格颜色
+			$('table.table_list tbody').easy_table_color();
+			$('#action_search').easy_search();
+			$('#action_edit').easy_edit();
+			$('#action_delete').easy_del();
+			
+		});
+	</script>
 </body>
 </html>
