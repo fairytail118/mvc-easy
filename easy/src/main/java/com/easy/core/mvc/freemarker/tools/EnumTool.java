@@ -19,10 +19,10 @@ import com.easy.core.enums.IEnum;
  * @author wy
  * @version v 0.1 2013-9-27 下午10:37:57 wy Exp $
  */
-public class EnumsTool {
+public class EnumTool {
 
     /** 日志 */
-    private static final Logger log = LoggerFactory.getLogger(EnumsTool.class);
+    private static final Logger log = LoggerFactory.getLogger(EnumTool.class);
 
     /**
      * 获取

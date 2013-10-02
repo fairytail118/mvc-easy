@@ -36,8 +36,8 @@
 				<#list page.list as item>
 				<tr>
 					<td>${(item.username)!"&nbsp;"}</td>
-					<td>${enums.valueOf('com.easy.admin.enums.LoginLogAction',item.action).desc}</td>
-					<td>${enums.valueOf('com.easy.admin.enums.LoginLogStatus',item.status).desc}</td>
+					<td>${enumTool.valueOf('com.easy.admin.enums.LoginLogAction',item.action).desc}</td>
+					<td>${enumTool.valueOf('com.easy.admin.enums.LoginLogStatus',item.status).desc}</td>
 					<td>${(item.content)!"&nbsp;"}</td>
 					<td>${(item.clientIp)!"&nbsp;"}</td>
 					<td>${(item.clientBrowser)!"&nbsp;"}</td>
@@ -55,7 +55,7 @@
 				<td>
 					<select name="action">
 						<option value="">请选择</option>
-					<#list enums.values('com.easy.admin.enums.LoginLogAction') as item>
+					<#list enumTools('com.easy.admin.enums.LoginLogAction') as item>
 						<option value="${item.code}">${item.desc}</option>
 					</#list>
 					</select>
@@ -66,7 +66,7 @@
 				<td>
 					<select name="status">
 						<option value="">请选择</option>
-					<#list enums.values('com.easy.admin.enums.LoginLogStatus') as item>
+					<#list enumTools('com.easy.admin.enums.LoginLogStatus') as item>
 						<option value="${item.code}">${item.desc}</option>
 					</#list>
 					</select>

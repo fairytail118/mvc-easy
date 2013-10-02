@@ -126,6 +126,8 @@ label.loading{padding-left:20px; background:url(../imgs/onLoad.gif) no-repeat le
 .ico-disktop:before {content: "\e201";}
 .ico-user:before {content: "\69";}
 .ico-pwd:before {content: "\e005";}
+.ico-role:before {content: "\e0d1";}
+.ico-permission:before {content: "\e0d0";}
 
 .ico-menu:before {content: "\e0b3";}
 .ico-setting:before {content: "\e00f";}

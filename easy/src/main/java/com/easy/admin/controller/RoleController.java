@@ -5,6 +5,7 @@ package com.easy.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,37 @@ public class RoleController extends BaseController {
         }
 
         return "admin/role_input";
+    }
+    
+    /**
+     * 检查编码是否存在
+     * 
+     * @param request
+     * @param code 编码
+     * @param id id
+     * @return
+     */
+    @RequestMapping(value = "/role_check_code")
+    @ResponseBody
+    public Result checkCode(HttpServletRequest request,
+                            @RequestParam(value = "code", required = false) String code,
+                            @RequestParam(value = "id", required = false) Long id) {
+
+        if (StringUtils.isBlank(code)) {
+            return new Result(false, "编码不能为空!");
+        }
+
+        try {
+            boolean exists = roleService.checkCodeExists(code, id);
+            if (!exists) {
+                return new Result();
+            }
+            return new Result(false, "重复编码!");
+        }
+        catch (Exception e) {
+            log.error("检查编码是否存在出错", e);
+            return new Result(e);
+        }
     }
 
     /**

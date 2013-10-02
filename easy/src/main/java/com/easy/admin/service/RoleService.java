@@ -13,12 +13,12 @@ import com.easy.core.common.Page;
  * @version v 0.1 13-09-23 下午 20:32:33 wy Exp $
  */
 public interface RoleService {
-    
+
     /**
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param role
-     * @return 
+     * @return
      */
     public Role save(Role role);
 
@@ -33,8 +33,8 @@ public interface RoleService {
     /**
      * 根据主键查询
      * 
-     * @param  id 
-          * @return
+     * @param id
+     * @return
      */
     public Role getByPrimaryKey(Long id);
 
@@ -44,6 +44,14 @@ public interface RoleService {
      * @param page
      */
     public void page(Page<Role> page);
-    
+
+    /**
+     * 检查编码是否存在
+     * 
+     * @param code
+     * @param id
+     * @return
+     */
+    public boolean checkCodeExists(String code, Long id);
 
 }
