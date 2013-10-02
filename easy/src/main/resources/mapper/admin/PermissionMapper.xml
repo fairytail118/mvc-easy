@@ -21,15 +21,8 @@
 	<update id="update" parameterType="Permission">
 		UPDATE
 			permission
-		<set>
-
-			<if test="id!=null">
-			id = #{id},
-			</if>
-				
-			<if test="parentId!=null">
+		<set>		
 			parentId = #{parentId},
-			</if>
 								
 			<if test="modifyTime!=null">
 			modifyTime = #{modifyTime},
