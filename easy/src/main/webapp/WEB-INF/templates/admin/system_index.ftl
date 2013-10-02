@@ -69,5 +69,12 @@
 			</tr>
 		</tbody>
 	</table>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			//表格颜色
+			$('table.table_list tbody').easy_table_color();
+		});
+	</script>
 </body>
 </html>

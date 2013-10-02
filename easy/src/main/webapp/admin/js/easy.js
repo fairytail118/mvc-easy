@@ -52,7 +52,7 @@ $(function() {
 				}
 			});
 
-});
+	});
 
 $.easy = {
 	/**
@@ -122,53 +122,6 @@ $.easy = {
 		dialog.close();
 	},
 	/**
-	 * 搜索框
-	 * 
-	 * @param options
-	 *            {exp:选择的表达式，默认为table.search,form:提交的表单}
-	 */
-	search : function(options) {
-		var defaults = {
-			//
-			box : 'table.search_box',
-			// 提交的表单
-			form : 'form[name="listForm"]',
-			// 搜索之前
-			before : function() {
-				return true;
-			},
-			currentPage : 'input[name="page"]'
-
-		};
-
-		// 参数
-		var options = $.extend(true, defaults, options);
-
-		// 搜索框
-		var box = $(options.box).clone(true).show();
-		this.cloneFormValue(options.box, box);
-		var form = $(options.form);
-
-		$.dialog({
-			title : '搜索',
-			content : box,
-			okVal : '搜索',
-			ok : function() {
-				$.easy.cloneFormValue(box, options.box);
-				// 替换原有的
-				//$(options.box).replaceWith(box.hide());
-				if (options.before(options)) {
-					form.find(options.currentPage).val("1");
-					form.submit();
-					return true;
-				} else {
-					return false;
-				}
-			},
-			cancel : true
-		});
-	},
-	/**
 	 * 复制有name元素到另外的一个表单
 	 * 
 	 * @param form1
@@ -221,7 +174,7 @@ $.easy = {
 		};
 
 		// 参数
-		var options = $.extend(true, defaults, options);
+		options = $.extend(true, defaults, options);
 
 		var checkboxes = $(options.table + " " + key);
 
@@ -255,6 +208,153 @@ $.easy = {
 				error.appendTo(element.parent());
 			}
 		}
+	},
+	/**
+	 * 搜索框
+	 * 
+	 * @param options
+	 *            {exp:选择的表达式，默认为table.search,form:提交的表单}
+	 */
+	toSearch : function(options) {
+		var defaults = {
+			//
+			box : 'table.search_box',
+			// 提交的表单
+			form : 'form[name="listForm"]',
+			// 搜索之前
+			before : function() {
+				return true;
+			},
+			currentPage : 'input[name="page"]'
+
+		};
+
+		// 参数
+		options = $.extend(true, defaults, options);
+
+		// 搜索框
+		var box = $(options.box).clone(true).show();
+		this.cloneFormValue(options.box, box);
+		var form = $(options.form);
+
+		$.dialog({
+			title : '搜索',
+			content : box,
+			okVal : '搜索',
+			ok : function() {
+				$.easy.cloneFormValue(box, options.box);
+				// 替换原有的
+				//$(options.box).replaceWith(box.hide());
+				if (options.before(options)) {
+					form.find(options.currentPage).val("1");
+					form.submit();
+					return true;
+				} else {
+					return false;
+				}
+			},
+			cancel : true
+		});
+	},
+	/**
+	 * 删除
+	 * 
+	 * @param options
+	 */
+	toDelete : function (options){
+		var defaults = {
+				// 搜索之前
+				before : function() {
+					return true;
+				},
+				// 表格元素
+				table : 'table.table_list tbody',
+				// 多选框元素
+				key : 'input[name="key"]',
+				url:''
+			};
+
+			// 参数
+			options = $.extend(true, defaults, options);
+
+			var checkboxes = $(options.table + " " + options.key + ":checked");
+
+			var url = options.url;
+			if (checkboxes.size() == 0) {
+				$.easy.tip("请选择要删除的记录!");
+				return false;
+			} else if (url == '') {
+				$.easy.alert("url为空", null);
+				return false;
+			}
+
+			if (!options.before(options)) {
+				return false;
+			}
+
+			// 加载删除的方法
+			var load = function() {
+				var loadDialog = $.dialog.load('删除中...');
+				$.ajax({
+					url : url,
+					data : checkboxes.serialize(),
+					dataType : "json",
+					async : true,
+					beforeSend : function(data) {
+					},
+					success : function(data) {
+						if (data.success) {
+							// 移除
+							checkboxes.parent().parent().remove();
+							// 提示删除成功
+							$.easy.success("删除成功!");
+						} else {
+							$.easy.fail("删除失败!" + data.message);
+						}
+					},
+					complete : function(XHR, TS) {
+						loadDialog.close();
+					}
+				});
+			};
+			$.easy.confirm("确定删除这" + checkboxes.size() + "条记录?", function() {
+				load();
+			});
+	},
+	/**
+	 * 编辑
+	 * 
+	 * @param options
+	 * @returns {Boolean}
+	 */
+	toEdit : function(options){
+		var defaults = {
+				// 之前
+				before : function() {
+					return true;
+				},
+				table : 'table.table_list tbody',
+				key : 'input[name="key"]:checked',
+				url:''
+			};
+
+			// 参数
+			options = $.extend(true, defaults, options);
+
+			var checkboxes = $(options.table + " " + options.key);
+
+			var data = new Array();
+			checkboxes.each(function() {
+				data.push(this.value);
+			});
+			if (data.length == 0) {
+				$.easy.tip("请选择要编辑的记录!");
+				return false;
+			}
+			if (!options.before(options)) {
+				return false;
+			}
+			window.location.href = options.url + data[0];
 	}
 };
 
@@ -264,88 +364,53 @@ $.extend($.fn, {
 	 * 删除
 	 */
 	easy_del : function(options) {
-		var url = this.href;
-		var defaults = {
-			// 搜索之前
-			before : function() {
-				return true;
-			},
-			// 表格元素
-			table : 'table.table_list tbody',
-			// 多选框元素
-			key : 'input[name="key"]',
-		};
-
-		// 参数
-		var options = $.extend(true, defaults, options);
-
-		var checkboxes = $(options.table + " " + options.key + ":checked");
-
+		options = $.extend(true, {}, options);
 		var url = $(this).attr("url");
-		if (checkboxes.size() == 0) {
-			$.easy.tip("请选择要删除的记录!");
-			return false;
-		} else if (url == '') {
-			$.easy.alert("url为空", null);
-			return false;
-		}
-
-		if (!options.before(options)) {
-			return false;
-		}
-
-		// 加载删除的方法
-		var load = function() {
-			var loadDialog = $.dialog.load('删除中...');
-			$.ajax({
-				url : url,
-				data : checkboxes.serialize(),
-				dataType : "json",
-				async : true,
-				beforeSend : function(data) {
-				},
-				success : function(data) {
-					if (data.success) {
-						// 移除
-						checkboxes.parent().parent().remove();
-						// 提示删除成功
-						$.easy.success("删除成功!");
-					} else {
-						$.easy.fail("删除失败!" + data.message);
-					}
-				},
-				complete : function(XHR, TS) {
-					loadDialog.close();
-				}
-			});
-		}
-		$.easy.confirm("确定删除这" + checkboxes.size() + "条记录?", function() {
-			load();
+		options['url'] = url;
+		$(this).click(function(){
+			$.easy.toDelete(options);
 		});
 	},
 
 	/**
-	 * 编辑一条记录
+	 * 编辑
 	 */
 	easy_edit : function(options) {
-		var defaults = {
-			table : 'table.table_list tbody',
-			key : 'input[name="key"]:checked'
-		};
-
-		// 参数
-		var options = $.extend(true, defaults, options);
-
-		var checkboxes = $(options.table + " " + options.key);
-
-		var data = new Array();
-		checkboxes.each(function() {
-			data.push(this.value);
+		options = $.extend(true, {}, options);
+		var url = $(this).attr("url");
+		options['url'] = url;
+		$(this).click(function(){
+			$.easy.toEdit(options);
 		});
-		if (data.length == 0) {
-			$.easy.tip("请选择要编辑的记录!");
-			return false;
-		}
-		window.location.href = $(this).attr("url") + data[0];
+	},
+	
+	/**
+	 * 搜索
+	 * 
+	 * @param options
+	 */
+	easy_search : function(options){
+		options = $.extend(true, {}, options);
+		$(this).click(function(){
+			$.easy.toSearch(options);
+		});
+	},
+	/**
+	 * 隔行颜色
+	 */
+	easy_table_color : function (options){
+		var defaults = {odd:'tr_odd',over:'tr_over'};
+		options = $.extend(defaults, options);
+		//隔行变色
+		$(this).children('tr:odd').addClass(options.odd);
+		//鼠标经过样式变化处
+		$(this).children('tr').hover(
+			function () { 
+				$(this).addClass(options.over);
+			},
+			function () { 
+				$(this).removeClass(options.over);
+			}
+		);
 	}
 });

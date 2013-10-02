@@ -26,9 +26,6 @@ $(document).ready(function(){
 				isLocked:{
 					required:true,
 				},
-				isEnabled:{
-					required:true,
-				},
 				userType:{
 					required:true,
 				}			}
@@ -57,6 +54,14 @@ $(document).ready(function(){
 		<!-- Content -->
 		<table class="table_add">
 			<tr>
+				<td class=" text_r">用户名:</td>
+				<td><input type="text" name="username" value="${(user.username)!}" class="input w200"/><@easy.fieldError field="username"/></td>
+			</tr>
+			<tr>
+				<td class=" text_r">密码:</td>
+				<td><input type="text" name="password" value="${(user.password)!}" class="input w200"/><@easy.fieldError field="password"/></td>
+			</tr>
+			<tr>
 				<td class="w80  text_r">姓名:</td>
 				<td><input type="text" name="name" value="${(user.name)!}" class="input w200"/><@easy.fieldError field="name"/></td>
 			</tr>
@@ -69,22 +74,10 @@ $(document).ready(function(){
 				<td><input type="text" name="mobile" value="${(user.mobile)!}" class="input w200"/><@easy.fieldError field="mobile"/></td>
 			</tr>
 			<tr>
-				<td class=" text_r">用户名:</td>
-				<td><input type="text" name="username" value="${(user.username)!}" class="input w200"/><@easy.fieldError field="username"/></td>
-			</tr>
-			<tr>
-				<td class=" text_r">密码:</td>
-				<td><input type="text" name="password" value="${(user.password)!}" class="input w200"/><@easy.fieldError field="password"/></td>
-			</tr>
-			<tr>
-				<td class=" text_r">是否锁定:</td>
-				<td><input type="text" name="isLocked" value="${(user.isLocked??&&user.isLocked)?string('true','false')}" class="input w200"/><@easy.fieldError field="isLocked"/></td>
-			</tr>
-			<tr>
 				<td class=" text_r">用户类型:</td>
 				<td>
 					<select name="userType">
-					<#list enumTools('com.easy.admin.enums.UserType') as item>
+					<#list enumTool.values('com.easy.admin.enums.UserType') as item>
 						<option value="${item.code}">${item.desc}</option>
 					</#list>
 					</select>

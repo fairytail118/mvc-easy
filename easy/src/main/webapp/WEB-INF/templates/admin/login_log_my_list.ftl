@@ -12,8 +12,8 @@
 				<td class="title">我的登录情况</td>
 				<td>
 					<ul class="action_ct">
-						<li><a href="${base}/admin/login_log_my_list"><em class="ico-list"></em>&nbsp;列表</a></li>
-						<li><a href="javascript:;" onclick="$.easy.search();" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
+						<li><a id="action_list" href="${base}/admin/login_log_my_list"><em class="ico-list"></em>&nbsp;列表</a></li>
+						<li><a id="action_search" href="javascript:;"><em class="ico-search"></em>&nbsp;搜索</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -55,7 +55,7 @@
 				<td>
 					<select name="action">
 						<option value="">请选择</option>
-					<#list enumTools('com.easy.admin.enums.LoginLogAction') as item>
+					<#list enumTool.values('com.easy.admin.enums.LoginLogAction') as item>
 						<option value="${item.code}">${item.desc}</option>
 					</#list>
 					</select>
@@ -66,7 +66,7 @@
 				<td>
 					<select name="status">
 						<option value="">请选择</option>
-					<#list enumTools('com.easy.admin.enums.LoginLogStatus') as item>
+					<#list enumTool.values('com.easy.admin.enums.LoginLogStatus') as item>
 						<option value="${item.code}">${item.desc}</option>
 					</#list>
 					</select>
@@ -90,6 +90,9 @@
 			<#if page.criteria.status??>
 			$("select[name='status']").val('${page.criteria.status}');
 			</#if>
+			//表格颜色
+			$('table.table_list tbody').easy_table_color();
+			$('#action_search').easy_search();
 		});
 	</script>
 </body>

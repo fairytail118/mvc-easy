@@ -12,11 +12,11 @@
 				<td class="title">管理员管理</td>
 				<td>
 					<ul class="action_ct">
-						<li><a href="${base}/admin/rolelist"><em class="ico-list"></em>&nbsp;列表</a></li>
-						<li><a href="javascript:;" onclick="$.easy.search();" id="ico-search"><em class="ico-search"></em>&nbsp;搜索</a></li>
-						<li><a href="${base}/admin/role_input" id="ico-add"><em class="ico-add"></em>&nbsp;添加</a></li>
-						<li><a href="javascript:;" url="${base}/admin/role_input?id=" onclick="$(this).easy_edit()" id="ico-edit"><em class="ico-edit"></em>&nbsp;编辑</a></li>
-						<li><a href="javascript:;" url="${base}/admin/role_delete" onclick="$(this).easy_del()"  id="ico-del"><em class="ico-del"></em>&nbsp;删除</a></li>
+						<li><a id="action_list" href="${base}/admin/role_list"><em class="ico-list"></em>&nbsp;列表</a></li>
+						<li><a id="action_search" href="javascript:;"><em class="ico-search"></em>&nbsp;搜索</a></li>
+						<li><a id="action_add" href="${base}/admin/role_input"><em class="ico-add"></em>&nbsp;添加</a></li>
+						<li><a id="action_edit" href="javascript:;" url="${base}/admin/role_input?id="><em class="ico-edit"></em>&nbsp;编辑</a></li>
+						<li><a id="action_delete" href="javascript:;" url="${base}/admin/role_delete"><em class="ico-del"></em>&nbsp;删除</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -57,5 +57,15 @@
 			</tr>
 		</table>
 	</form>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//表格颜色
+			$('table.table_list tbody').easy_table_color();
+			$('#action_search').easy_search();
+			$('#action_edit').easy_edit();
+			$('#action_delete').easy_del();
+			
+		});
+	</script>
 </body>
 </html>
