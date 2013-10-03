@@ -31,15 +31,15 @@
 			modifyTime = #{modifyTime},
 			</if>
 				
-			<if test="modifyUser!=null and modifyUser.trim()!=''">
+			<if test="modifyUser!=null and modifyUser!=''">
 			modifyUser = #{modifyUser},
 			</if>
 						
-			<if test="name!=null and name.trim()!=''">
+			<if test="name!=null and name!=''">
 			name = #{name},
 			</if>
 						
-			<if test="code!=null and code.trim()!=''">
+			<if test="code!=null and code!=''">
 			code = #{code},
 			</if>
 						

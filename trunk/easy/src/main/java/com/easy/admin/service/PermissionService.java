@@ -61,6 +61,6 @@ public interface PermissionService {
      * @param id
      * @return
      */
-    public boolean checkCodeExists(String code,Long id);
+    public boolean checkCodeExists(String code, Long id);
 
 }

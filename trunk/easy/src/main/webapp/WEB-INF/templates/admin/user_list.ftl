@@ -16,7 +16,6 @@
 						<li><a id="action_search" href="javascript:;"><em class="ico-search"></em>&nbsp;搜索</a></li>
 						<li><a id="action_add" href="${base}/admin/user_input"><em class="ico-add"></em>&nbsp;添加</a></li>
 						<li><a id="action_edit" href="javascript:;" url="${base}/admin/user_input?id="><em class="ico-edit"></em>&nbsp;编辑</a></li>
-						<li><a id="action_delete" href="javascript:;" url="${base}/admin/user_delete"><em class="ico-del"></em>&nbsp;删除</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -47,8 +46,8 @@
 					<td>${(item.email)!"&nbsp;"}</td>
 					<td>${(item.mobile)!"&nbsp;"}</td>
 					<td>${(item.username)!"&nbsp;"}</td>
-					<td><a title="${(item.isLocked??&&item.isLocked)?string('点击解锁','点击锁定')}" href="javascript:;"><#if item.isLocked??&&item.isLocked> <em class="ico-locked"></em> <#else> <em class="ico-unlocked"></em> </#if>&nbsp;</a></td>
-					<td><a title="${(item.enable??&&item.enable)?string('点击禁用','点击启用')}" href="javascript:;"><#if item.enable??&&item.enable> <em class="ico-enable"></em> <#else> <em class="ico-disable"></em> </#if>&nbsp;</a></td>
+					<td><a title="${(item.isLocked??&&item.isLocked)?string('点击解锁','点击锁定')}" href="javascript:;">&nbsp;<#if item.isLocked??&&item.isLocked> <em class="ico-locked"></em> <#else> <em class="ico-unlocked"></em> </#if>&nbsp;</a></td>
+					<td><a title="${(item.enable??&&item.enable)?string('点击禁用','点击启用')}" href="javascript:;">&nbsp;<#if item.enable??&&item.enable> <em class="ico-enable"></em> <#else> <em class="ico-disable"></em> </#if>&nbsp;</a></td>
 					<td>${enumTool.valueOf('com.easy.admin.enums.UserType',item.userType).desc}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>
@@ -73,7 +72,70 @@
 			$('table.table_list tbody').easy_table_color();
 			$('#action_search').easy_search();
 			$('#action_edit').easy_edit();
-			$('#action_delete').easy_del();
+			
+			//锁定、解锁
+			$("em.ico-locked,em.ico-unlocked").parent().click(function(){
+				var _this = this;
+				var isLocked = $(_this).find("em").hasClass("ico-locked");
+				var id = $(_this).parent().siblings().find("input[name='key']:first").val();
+				$.ajax({
+                    url: '${base}/admin/user_switch_lock',
+                    data: {id:id},
+                    dataType: "json",
+                    type: "post",
+                    async: false,
+                    success: function (data) {
+                        if (data.success) {
+                        	if(isLocked){
+                        		$.easy.success("解锁成功");
+                            	$(_this).find("em").addClass("ico-unlocked").removeClass("ico-locked");
+                        	}
+                        	else{
+                        		$.easy.success("锁定成功");
+                            	$(_this).find("em").removeClass("ico-unlocked").addClass("ico-locked");
+                        	}
+                        }
+                        else if(data.denied){
+                        	$.easy.fail("没有权限!");
+                        }
+                        else{
+                       		$.easy.fail("操作失败!"+data.message);
+                        }
+                    }
+                });
+			});
+			
+			//禁用启用
+			$("em.ico-enable,em.ico-disable").parent().click(function(){
+				var _this = this;
+				var enable = $(_this).find("em").hasClass("ico-enable");
+				var id = $(_this).parent().siblings().find("input[name='key']:first").val();
+				$.ajax({
+                    url: '${base}/admin/user_switch_enable',
+                    data: {id:id},
+                    dataType: "json",
+                    type: "post",
+                    async: false,
+                    success: function (data) {
+                        if (data.success) {
+                        	if(enable){
+                        		$.easy.success("禁用成功");
+                            	$(_this).find("em").addClass("ico-disable").removeClass("ico-enable");
+                        	}
+                        	else{
+                        		$.easy.success("启用成功");
+                            	$(_this).find("em").removeClass("ico-disable").addClass("ico-enable");
+                        	}
+                        }
+                        else if(data.denied){
+                        	$.easy.fail("没有权限!");
+                        }
+                        else{
+                       		$.easy.fail("操作失败!"+data.message);
+                        }
+                    }
+                });
+			});
 			
 		});
 	</script>

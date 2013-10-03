@@ -59,8 +59,7 @@ public class SystemConfig implements Serializable {
     /**
      * Setter method for property <tt>name</tt>.
      * 
-     * @param name
-     *            value to be assigned to property name
+     * @param name value to be assigned to property name
      */
     public void setName(String name) {
         this.name = name;
@@ -78,8 +77,7 @@ public class SystemConfig implements Serializable {
     /**
      * Setter method for property <tt>domain</tt>.
      * 
-     * @param domain
-     *            value to be assigned to property domain
+     * @param domain value to be assigned to property domain
      */
     public void setDomain(String domain) {
         this.domain = domain;
@@ -97,8 +95,7 @@ public class SystemConfig implements Serializable {
     /**
      * Setter method for property <tt>version</tt>.
      * 
-     * @param version
-     *            value to be assigned to property version
+     * @param version value to be assigned to property version
      */
     public void setVersion(String version) {
         this.version = version;
@@ -116,8 +113,7 @@ public class SystemConfig implements Serializable {
     /**
      * Setter method for property <tt>copyright</tt>.
      * 
-     * @param copyright
-     *            value to be assigned to property copyright
+     * @param copyright value to be assigned to property copyright
      */
     public void setCopyright(String copyright) {
         this.copyright = copyright;
@@ -135,8 +131,7 @@ public class SystemConfig implements Serializable {
     /**
      * Setter method for property <tt>description</tt>.
      * 
-     * @param description
-     *            value to be assigned to property description
+     * @param description value to be assigned to property description
      */
     public void setDescription(String description) {
         this.description = description;

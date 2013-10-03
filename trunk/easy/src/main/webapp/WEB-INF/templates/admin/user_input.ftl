@@ -9,26 +9,63 @@ $(document).ready(function(){
 	var valid = $("form[name='inputForm']").validate({
 			rules : {
 				name:{
-					required:true,
+					required:true
 				},
 				email:{
 					required:true,
+					email:true
 				},
 				mobile:{
-					required:true,
+					required:true
 				},
+				<#if !(user??&&user.id??)>
 				username:{
 					required:true,
+					minlength:6,
+					maxlength:12,
+					remoteResult:{
+						url: "${base}/admin/user_check_username",
+                        type: "post",
+                        dataType: "json",
+                        data: {  
+        					code:function(){
+        						return $("input[name='username']").val();
+        					}
+                          }
+					}
 				},
+				</#if>
+				<#if !(user??&&user.id??)>
 				password:{
 					required:true,
+					minlength:6,
+					maxlength:12
 				},
-				isLocked:{
+				</#if>
+				rePassword:{
+					<#if !(user??&&user.id??)>
 					required:true,
+					</#if>
+					equalTo:$("input[name='password']"),
+					minlength:6,
+					maxlength:12
+				}
+			},
+			messages:{
+				<#if user??&&user.id??>
+				username:{
+					minlength:"用户名长度在6-12之间",
+					maxlength:"用户名长度在6-12之间"
 				},
-				userType:{
-					required:true,
-				}			}
+				</#if>
+				password:{
+					minlength:"密码长度在6-12之间",
+					maxlength:"密码长度在6-12之间"
+				},
+				rePassword:{
+					equalTo:"两次密码不一致"
+				}
+			}
 		});
 		$("input[type='reset']").click(function(){
 			valid.resetForm();
@@ -42,7 +79,7 @@ $(document).ready(function(){
 	<input type="hidden" name="id" value="${(user.id)!}"/>
 		<table class="action">
 			<tr>
-				<td class="title">管理员<#if user??&&user.id??>编辑 <#else>添加</#if></td>
+				<td class="title">用户<#if user??&&user.id??>编辑 <#else>添加</#if></td>
 				<td>
 					<ul class="action_ct">
 						<li class="history"><a href="${base}/admin/user_list"><em class="ico-history"></em>&nbsp;返回</a></li>
@@ -53,13 +90,27 @@ $(document).ready(function(){
 		<div class="line">&nbsp;</div>
 		<!-- Content -->
 		<table class="table_add">
+			<#if !(user??&&user.id??)>
 			<tr>
 				<td class=" text_r">用户名:</td>
 				<td><input type="text" name="username" value="${(user.username)!}" class="input w200"/><@easy.fieldError field="username"/></td>
 			</tr>
+			<#else>
+			<tr>
+				<td class=" text_r">用户名:</td>
+				<td>${(user.username)!}
+				<!-- 后台替换更新的用户名，此处只是为了兼容后台的验证 -->
+				<input type="hidden" name="username" value="${(user.username)!}"/><@easy.fieldError field="username"/>
+				</td>
+			</tr>
+			</#if>
 			<tr>
 				<td class=" text_r">密码:</td>
-				<td><input type="text" name="password" value="${(user.password)!}" class="input w200"/><@easy.fieldError field="password"/></td>
+				<td><input type="password" name="password" value="" class="input w200"/><#if user??&&user.id??><label class="wathet ml5">为空表示不修改</label></#if><@easy.fieldError field="password"/></td>
+			</tr>
+			<tr>
+				<td class=" text_r">确认密码:</td>
+				<td><input type="password" name="rePassword" value="" class="input w200"/><@easy.fieldError field="rePassowrd"/></td>
 			</tr>
 			<tr>
 				<td class="w80  text_r">姓名:</td>

@@ -11,6 +11,7 @@
 	<http use-expressions="true" auto-config="false" entry-point-ref="authenticationProcessingFilterEntryPoint">
 		<!-- 无需进行权限验证的路径 -->
 		<intercept-url pattern="/login" filters="none" />
+		<intercept-url pattern="/captcha" filters="none" />
 		<intercept-url pattern="/admin/css/**" filters="none" />
 		<intercept-url pattern="/admin/js/**" filters="none" />
 		<intercept-url pattern="/admin/imgs/**" filters="none" />

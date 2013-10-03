@@ -67,8 +67,7 @@ public class EasyInvocationSecurityMetadataSource implements FilterInvocationSec
     /**
      * Setter method for property <tt>urlMatcher</tt>.
      * 
-     * @param urlMatcher
-     *            value to be assigned to property urlMatcher
+     * @param urlMatcher value to be assigned to property urlMatcher
      */
     public void setUrlMatcher(UrlMatcher urlMatcher) {
         this.urlMatcher = urlMatcher;
@@ -77,8 +76,7 @@ public class EasyInvocationSecurityMetadataSource implements FilterInvocationSec
     /**
      * Setter method for property <tt>mapRelation</tt>.
      * 
-     * @param mapRelation
-     *            value to be assigned to property mapRelation
+     * @param mapRelation value to be assigned to property mapRelation
      */
     public void setMapRelation(MapRelation mapRelation) {
         this.mapRelation = mapRelation;

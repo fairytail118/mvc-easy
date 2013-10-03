@@ -25,14 +25,6 @@ public interface UserService extends UserDetailsService {
     public User save(User user);
 
     /**
-     * 根据主键删除
-     * 
-     * @param keys
-     * @return
-     */
-    public void deleteByPrimaryKeys(Long[] keys);
-
-    /**
      * 根据主键查询
      * 
      * @param id
@@ -55,5 +47,27 @@ public interface UserService extends UserDetailsService {
      * @param password 原来密码
      */
     public void updatePassowrd(String username, String newPassword, String password);
+
+    /**
+     * 切换锁定状态
+     * 
+     * @param id
+     */
+    public void switchLock(Long id);
+
+    /**
+     * 切换启用禁用状态
+     * 
+     * @param id
+     */
+    public void switchEnable(Long id);
+
+    /**
+     * 检查用户名是否存在，只有新增才验证，更新不变更用户名
+     * 
+     * @param username
+     * @return
+     */
+    public boolean checkUsernameExists(String username);
 
 }

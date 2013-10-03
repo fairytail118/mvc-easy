@@ -31,7 +31,7 @@
 			<if test="modifyTime!=null">
 				modifyTime = #{modifyTime},
 			</if>
-			<if test="modifyUser!=null and modifyUser.trim()!=''">
+			<if test="modifyUser!=null and modifyUser!=''">
 				modifyUser = #{modifyUser},
 			</if>
 

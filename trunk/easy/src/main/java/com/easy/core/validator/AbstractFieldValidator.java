@@ -45,12 +45,9 @@ public abstract class AbstractFieldValidator<T> implements FieldValidator<T> {
     /**
      * 获取提示信息
      * 
-     * @param message
-     *            消息
-     * @param key
-     *            资源文件的key
-     * @param validParam
-     *            验证参数
+     * @param message 消息
+     * @param key 资源文件的key
+     * @param validParam 验证参数
      * @return
      */
     public String getMessage(String message, String key, LinkedHashMap<String, String> validParam) {

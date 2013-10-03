@@ -12,6 +12,7 @@ import com.easy.admin.entity.RolePermission;
 import java.util.HashMap;
 import java.util.Map;
 import com.easy.core.dao.impl.MyBatisGenericDao;
+
 /**
  * 分配权限DaoImpl
  * 
@@ -21,27 +22,29 @@ import com.easy.core.dao.impl.MyBatisGenericDao;
 @Repository
 public class RolePermissionDaoImpl extends MyBatisGenericDao implements RolePermissionDao {
 
-	/**
-	 * @see com.easy.admin.dao.RolePermissionDao#create(com.easy.admin.entity.RolePermission)
-	 */
-	@Override
-	public RolePermission create(RolePermission rolePermission) {
-		save("com.easy.admin.dao.RolePermissionDao.create", rolePermission);
-		return rolePermission;
-	}
-
-	/**
-	 * @see com.easy.admin.dao.RolePermissionDao#update(com.easy.admin.entity.RolePermission)
-	 */
-	@Override
-	public int update(RolePermission rolePermission) {
-		return update("com.easy.admin.dao.RolePermissionDao.update", rolePermission);
-	}
- 	/**
-     * @see com.easy.admin.dao.RolePermissionDao#getByPrimaryKey(java.lang.Long ,java.lang.Long )
+    /**
+     * @see com.easy.admin.dao.RolePermissionDao#create(com.easy.admin.entity.RolePermission)
      */
     @Override
-    public RolePermission getByPrimaryKey(Long roleId ,Long permissionId ) {
+    public RolePermission create(RolePermission rolePermission) {
+        save("com.easy.admin.dao.RolePermissionDao.create", rolePermission);
+        return rolePermission;
+    }
+
+    /**
+     * @see com.easy.admin.dao.RolePermissionDao#update(com.easy.admin.entity.RolePermission)
+     */
+    @Override
+    public int update(RolePermission rolePermission) {
+        return update("com.easy.admin.dao.RolePermissionDao.update", rolePermission);
+    }
+
+    /**
+     * @see com.easy.admin.dao.RolePermissionDao#getByPrimaryKey(java.lang.Long
+     *      ,java.lang.Long )
+     */
+    @Override
+    public RolePermission getByPrimaryKey(Long roleId, Long permissionId) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleId", roleId);
@@ -51,10 +54,11 @@ public class RolePermissionDaoImpl extends MyBatisGenericDao implements RolePerm
     }
 
     /**
-     * @see com.easy.admin.dao.RolePermissionDao#deleteByPrimaryKeys(java.lang.Long ,java.lang.Long )
+     * @see com.easy.admin.dao.RolePermissionDao#deleteByPrimaryKeys(java.lang.Long
+     *      ,java.lang.Long )
      */
     @Override
-    public int deleteByPrimaryKeys(Long roleId ,Long permissionId ) {
+    public int deleteByPrimaryKeys(Long roleId, Long permissionId) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleId", roleId);

@@ -59,8 +59,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>username</tt>.
      * 
-     * @param username
-     *            value to be assigned to property username
+     * @param username value to be assigned to property username
      */
     public void setUsername(String username) {
         this.username = username;
@@ -78,8 +77,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>password</tt>.
      * 
-     * @param password
-     *            value to be assigned to property password
+     * @param password value to be assigned to property password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -97,8 +95,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>action</tt>.
      * 
-     * @param action
-     *            value to be assigned to property action
+     * @param action value to be assigned to property action
      */
     public void setAction(String action) {
         this.action = action;
@@ -116,8 +113,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>status</tt>.
      * 
-     * @param status
-     *            value to be assigned to property status
+     * @param status value to be assigned to property status
      */
     public void setStatus(String status) {
         this.status = status;
@@ -135,8 +131,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>content</tt>.
      * 
-     * @param content
-     *            value to be assigned to property content
+     * @param content value to be assigned to property content
      */
     public void setContent(String content) {
         this.content = content;
@@ -154,8 +149,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>clientIp</tt>.
      * 
-     * @param clientIp
-     *            value to be assigned to property clientIp
+     * @param clientIp value to be assigned to property clientIp
      */
     public void setClientIp(String clientIp) {
         this.clientIp = clientIp;
@@ -173,8 +167,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>clientBrowser</tt>.
      * 
-     * @param clientBrowser
-     *            value to be assigned to property clientBrowser
+     * @param clientBrowser value to be assigned to property clientBrowser
      */
     public void setClientBrowser(String clientBrowser) {
         this.clientBrowser = clientBrowser;
@@ -192,8 +185,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>loginTime</tt>.
      * 
-     * @param loginTime
-     *            value to be assigned to property loginTime
+     * @param loginTime value to be assigned to property loginTime
      */
     public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
@@ -211,8 +203,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>clientArea</tt>.
      * 
-     * @param clientArea
-     *            value to be assigned to property clientArea
+     * @param clientArea value to be assigned to property clientArea
      */
     public void setClientArea(String clientArea) {
         this.clientArea = clientArea;
@@ -230,8 +221,7 @@ public class LoginLog extends IdEntity {
     /**
      * Setter method for property <tt>clientOs</tt>.
      * 
-     * @param clientOs
-     *            value to be assigned to property clientOs
+     * @param clientOs value to be assigned to property clientOs
      */
     public void setClientOs(String clientOs) {
         this.clientOs = clientOs;

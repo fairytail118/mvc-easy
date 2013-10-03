@@ -46,6 +46,7 @@
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
 		<property name="freemarkerVariables">
 			<map>
+			    <!-- <entry key="uuid" value-ref="uuid"/> -->
 			</map>
 		</property>
 		<property name="templateLoaderPath" value="/WEB-INF/" />

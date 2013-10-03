@@ -26,12 +26,9 @@ public final class MessageResolver {
     /**
      * 获得国际化信息
      * 
-     * @param request
-     *            HttpServletRequest
-     * @param code
-     *            国际化代码
-     * @param args
-     *            替换参数
+     * @param request HttpServletRequest
+     * @param code 国际化代码
+     * @param args 替换参数
      * @return
      * @see org.springframework.context.MessageSource#getMessage(String,
      *      Object[], Locale)

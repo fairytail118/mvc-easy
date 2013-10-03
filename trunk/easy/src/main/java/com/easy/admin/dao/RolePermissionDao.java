@@ -31,30 +31,30 @@ public interface RolePermissionDao {
      */
     public int update(RolePermission rolePermission);
 
-	/**
-	 * 根据主键查询
-	 * 
-	 * @param roleId
-	 * @param permissionId
-	 * @return
-	 */
-	public RolePermission getByPrimaryKey(Long roleId ,Long permissionId );
+    /**
+     * 根据主键查询
+     * 
+     * @param roleId
+     * @param permissionId
+     * @return
+     */
+    public RolePermission getByPrimaryKey(Long roleId, Long permissionId);
 
-	/**
-	 * 根据主键删除
-	 * 
-	 * @param roleId
-	 * @param permissionId
-	 * @return
-	 */
-	public int deleteByPrimaryKeys(Long roleId ,Long permissionId );
+    /**
+     * 根据主键删除
+     * 
+     * @param roleId
+     * @param permissionId
+     * @return
+     */
+    public int deleteByPrimaryKeys(Long roleId, Long permissionId);
 
-	/**
-	 * 条件查询列表
-	 * 
-	 * @param rolePermission
-	 * @return
-	 */
-	public List<RolePermission> selectByCriteria(RolePermission rolePermission);
+    /**
+     * 条件查询列表
+     * 
+     * @param rolePermission
+     * @return
+     */
+    public List<RolePermission> selectByCriteria(RolePermission rolePermission);
 
 }

@@ -82,8 +82,7 @@ public class Result implements Serializable {
     /**
      * Setter method for property <tt>success</tt>.
      * 
-     * @param success
-     *            value to be assigned to property success
+     * @param success value to be assigned to property success
      */
     public void setSuccess(boolean success) {
         this.success = success;
@@ -101,8 +100,7 @@ public class Result implements Serializable {
     /**
      * Setter method for property <tt>message</tt>.
      * 
-     * @param message
-     *            value to be assigned to property message
+     * @param message value to be assigned to property message
      */
     public void setMessage(String message) {
         this.message = message;
@@ -120,8 +118,7 @@ public class Result implements Serializable {
     /**
      * Setter method for property <tt>data</tt>.
      * 
-     * @param data
-     *            value to be assigned to property data
+     * @param data value to be assigned to property data
      */
     public void setData(Object data) {
         this.data = data;
@@ -139,8 +136,7 @@ public class Result implements Serializable {
     /**
      * Setter method for property <tt>denied</tt>.
      * 
-     * @param denied
-     *            value to be assigned to property denied
+     * @param denied value to be assigned to property denied
      */
     public void setDenied(boolean denied) {
         this.denied = denied;

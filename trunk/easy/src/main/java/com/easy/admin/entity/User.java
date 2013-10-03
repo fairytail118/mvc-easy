@@ -61,8 +61,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>name</tt>.
      * 
-     * @param name
-     *            value to be assigned to property name
+     * @param name value to be assigned to property name
      */
     public void setName(String name) {
         this.name = name;
@@ -80,8 +79,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>email</tt>.
      * 
-     * @param email
-     *            value to be assigned to property email
+     * @param email value to be assigned to property email
      */
     public void setEmail(String email) {
         this.email = email;
@@ -99,8 +97,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>mobile</tt>.
      * 
-     * @param mobile
-     *            value to be assigned to property mobile
+     * @param mobile value to be assigned to property mobile
      */
     public void setMobile(String mobile) {
         this.mobile = mobile;
@@ -118,8 +115,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>username</tt>.
      * 
-     * @param username
-     *            value to be assigned to property username
+     * @param username value to be assigned to property username
      */
     public void setUsername(String username) {
         this.username = username;
@@ -137,8 +133,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>password</tt>.
      * 
-     * @param password
-     *            value to be assigned to property password
+     * @param password value to be assigned to property password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -156,8 +151,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>isLocked</tt>.
      * 
-     * @param isLocked
-     *            value to be assigned to property isLocked
+     * @param isLocked value to be assigned to property isLocked
      */
     public void setIsLocked(Boolean isLocked) {
         this.isLocked = isLocked;
@@ -175,8 +169,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>isEnabled</tt>.
      * 
-     * @param isEnabled
-     *            value to be assigned to property isEnabled
+     * @param isEnabled value to be assigned to property isEnabled
      */
     public void setIsEnabled(Boolean isEnabled) {
         this.isEnabled = isEnabled;
@@ -194,8 +187,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>userType</tt>.
      * 
-     * @param userType
-     *            value to be assigned to property userType
+     * @param userType value to be assigned to property userType
      */
     public void setUserType(String userType) {
         this.userType = userType;
@@ -212,8 +204,7 @@ public class User extends IdEntity implements UserDetails {
     /**
      * Setter method for property <tt>authorities</tt>.
      * 
-     * @param authorities
-     *            value to be assigned to property authorities
+     * @param authorities value to be assigned to property authorities
      */
     public void setAuthorities(Collection<GrantedAuthority> authorities) {
         this.authorities = authorities;

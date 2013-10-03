@@ -131,10 +131,8 @@ public class CookieUtil {
     /**
      * 获得cookie
      * 
-     * @param request
-     *            HttpServletRequest
-     * @param name
-     *            cookie name
+     * @param request HttpServletRequest
+     * @param name cookie name
      * @return if exist return cookie, else return null.
      */
     public static Cookie getCookie(HttpServletRequest request, String name) {

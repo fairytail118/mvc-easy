@@ -26,27 +26,27 @@
 			modifyTime = #{modifyTime},
 			</if>
 				
-			<if test="modifyUser!=null and modifyUser.trim()!=''">
+			<if test="modifyUser!=null and modifyUser!=''">
 			modifyUser = #{modifyUser},
 			</if>
 						
-			<if test="name!=null and name.trim()!=''">
+			<if test="name!=null and name!=''">
 			name = #{name},
 			</if>
 						
-			<if test="email!=null and email.trim()!=''">
+			<if test="email!=null and email!=''">
 			email = #{email},
 			</if>
 						
-			<if test="mobile!=null and mobile.trim()!=''">
+			<if test="mobile!=null and mobile!=''">
 			mobile = #{mobile},
 			</if>
 						
-			<if test="username!=null and username.trim()!=''">
+			<if test="username!=null and username!=''">
 			username = #{username},
 			</if>
 						
-			<if test="password!=null and password.trim()!=''">
+			<if test="password!=null and password!=''">
 			password = #{password},
 			</if>
 						
@@ -58,7 +58,7 @@
 			isEnabled = #{isEnabled},
 			</if>
 				
-			<if test="userType!=null and userType.trim()!=''">
+			<if test="userType!=null and userType!=''">
 			userType = #{userType},
 			</if>
 						
@@ -124,6 +124,9 @@
 			<!-- 关键字查询字段 -->
 			<if test="keyword!=null and keyword!=''">
 				AND name like "%"#{keyword}"%"
+			</if>
+			<if test="username!=null and username!=''">
+				AND username = #{username}
 			</if>
 		</where>
 	</sql>

@@ -37,8 +37,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     /**
      * Setter method for property <tt>excludeUrls</tt>.
      * 
-     * @param excludeUrls
-     *            value to be assigned to property excludeUrls
+     * @param excludeUrls value to be assigned to property excludeUrls
      */
     public void setExcludeUrls(List<String> excludeUrls) {
         this.excludeUrls = excludeUrls;
@@ -47,8 +46,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     /**
      * Setter method for property <tt>loginFormUrl</tt>.
      * 
-     * @param loginFormUrl
-     *            value to be assigned to property loginFormUrl
+     * @param loginFormUrl value to be assigned to property loginFormUrl
      */
     public void setLoginFormUrl(String loginFormUrl) {
         this.loginFormUrl = loginFormUrl;

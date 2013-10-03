@@ -73,8 +73,7 @@ public class Page<T> implements Serializable {
     /**
      * Setter method for property <tt>list</tt>.
      * 
-     * @param list
-     *            value to be assigned to property list
+     * @param list value to be assigned to property list
      */
     public void setList(List<T> list) {
         this.list = list;
@@ -92,8 +91,7 @@ public class Page<T> implements Serializable {
     /**
      * Setter method for property <tt>currentPage</tt>.
      * 
-     * @param currentPage
-     *            value to be assigned to property currentPage
+     * @param currentPage value to be assigned to property currentPage
      */
     public void setCurrentPage(Integer currentPage) {
         if (currentPage == null || currentPage < 1) {
@@ -123,8 +121,7 @@ public class Page<T> implements Serializable {
     /**
      * Setter method for property <tt>pageSize</tt>.
      * 
-     * @param pageSize
-     *            value to be assigned to property pageSize
+     * @param pageSize value to be assigned to property pageSize
      */
     public void setPageSize(Integer pageSize) {
         if (pageSize == null || pageSize < 1) {
@@ -145,8 +142,7 @@ public class Page<T> implements Serializable {
     /**
      * Setter method for property <tt>totalCount</tt>.
      * 
-     * @param totalCount
-     *            value to be assigned to property totalCount
+     * @param totalCount value to be assigned to property totalCount
      */
     public void setTotalCount(int totalCount) {
         this.totalCount = totalCount;
@@ -164,8 +160,7 @@ public class Page<T> implements Serializable {
     /**
      * Setter method for property <tt>criteria</tt>.
      * 
-     * @param criteria
-     *            value to be assigned to property criteria
+     * @param criteria value to be assigned to property criteria
      */
     public void setCriteria(T criteria) {
         this.criteria = criteria;

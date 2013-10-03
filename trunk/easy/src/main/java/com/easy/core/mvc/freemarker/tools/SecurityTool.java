@@ -71,8 +71,7 @@ public class SecurityTool implements InitializingBean {
     /**
      * 判断是否有其中任意一个权限
      * 
-     * @param privileges
-     *            权限码 以逗号隔开
+     * @param privileges 权限码 以逗号隔开
      * @return
      */
     public boolean anyGranted(String privileges) {
@@ -92,8 +91,7 @@ public class SecurityTool implements InitializingBean {
     /**
      * 判断是否有所有权限
      * 
-     * @param privileges
-     *            权限码 以逗号隔开
+     * @param privileges 权限码 以逗号隔开
      * @return
      */
     public boolean allGranted(String privileges) {
@@ -114,8 +112,7 @@ public class SecurityTool implements InitializingBean {
     /**
      * 判断是否没有该权限
      * 
-     * @param privileges
-     *            权限码 以逗号隔开
+     * @param privileges 权限码 以逗号隔开
      * @return
      */
     public boolean notGranted(String privileges) {

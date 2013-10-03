@@ -31,30 +31,30 @@ public interface UserRoleDao {
      */
     public int update(UserRole userRole);
 
-	/**
-	 * 根据主键查询
-	 * 
-	 * @param userId
-	 * @param roleId
-	 * @return
-	 */
-	public UserRole getByPrimaryKey(Long userId ,Long roleId );
+    /**
+     * 根据主键查询
+     * 
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    public UserRole getByPrimaryKey(Long userId, Long roleId);
 
-	/**
-	 * 根据主键删除
-	 * 
-	 * @param userId
-	 * @param roleId
-	 * @return
-	 */
-	public int deleteByPrimaryKeys(Long userId ,Long roleId );
+    /**
+     * 根据主键删除
+     * 
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    public int deleteByPrimaryKeys(Long userId, Long roleId);
 
-	/**
-	 * 条件查询列表
-	 * 
-	 * @param userRole
-	 * @return
-	 */
-	public List<UserRole> selectByCriteria(UserRole userRole);
+    /**
+     * 条件查询列表
+     * 
+     * @param userRole
+     * @return
+     */
+    public List<UserRole> selectByCriteria(UserRole userRole);
 
 }
