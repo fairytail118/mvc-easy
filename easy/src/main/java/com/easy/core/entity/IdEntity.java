@@ -29,8 +29,7 @@ public class IdEntity extends BaseEntity {
     /**
      * Setter method for property <tt>id</tt>.
      * 
-     * @param id
-     *            value to be assigned to property id
+     * @param id value to be assigned to property id
      */
     public void setId(Long id) {
         this.id = id;

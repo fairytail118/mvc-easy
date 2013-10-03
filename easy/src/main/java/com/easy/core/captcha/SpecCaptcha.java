@@ -44,8 +44,7 @@ public class SpecCaptcha extends Captcha {
     /**
      * 生成验证码
      * 
-     * @throws java.io.IOException
-     *             IO异常
+     * @throws java.io.IOException IO异常
      */
     @Override
     public void out(OutputStream out) {
@@ -55,10 +54,8 @@ public class SpecCaptcha extends Captcha {
     /**
      * 画随机码图
      * 
-     * @param strs
-     *            文本
-     * @param out
-     *            输出流
+     * @param strs 文本
+     * @param out 输出流
      */
     private boolean graphicsImage(char[] strs, OutputStream out) {
         boolean ok = false;

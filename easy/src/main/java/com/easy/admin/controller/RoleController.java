@@ -58,7 +58,7 @@ public class RoleController extends BaseController {
 
         return "admin/role_input";
     }
-    
+
     /**
      * 检查编码是否存在
      * 

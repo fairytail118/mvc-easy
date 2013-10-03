@@ -86,8 +86,7 @@ public class EasyUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
     /**
      * Setter method for property <tt>codeParameter</tt>.
      * 
-     * @param codeParameter
-     *            value to be assigned to property codeParameter
+     * @param codeParameter value to be assigned to property codeParameter
      */
     public void setCodeParameter(String codeParameter) {
         this.codeParameter = codeParameter;

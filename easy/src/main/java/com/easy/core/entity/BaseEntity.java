@@ -40,8 +40,7 @@ public class BaseEntity extends Criteria {
     /**
      * Setter method for property <tt>createUser</tt>.
      * 
-     * @param createUser
-     *            value to be assigned to property createUser
+     * @param createUser value to be assigned to property createUser
      */
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
@@ -59,8 +58,7 @@ public class BaseEntity extends Criteria {
     /**
      * Setter method for property <tt>createTime</tt>.
      * 
-     * @param createTime
-     *            value to be assigned to property createTime
+     * @param createTime value to be assigned to property createTime
      */
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
@@ -78,8 +76,7 @@ public class BaseEntity extends Criteria {
     /**
      * Setter method for property <tt>modifyUser</tt>.
      * 
-     * @param modifyUser
-     *            value to be assigned to property modifyUser
+     * @param modifyUser value to be assigned to property modifyUser
      */
     public void setModifyUser(String modifyUser) {
         this.modifyUser = modifyUser;
@@ -97,8 +94,7 @@ public class BaseEntity extends Criteria {
     /**
      * Setter method for property <tt>modifyTime</tt>.
      * 
-     * @param modifyTime
-     *            value to be assigned to property modifyTime
+     * @param modifyTime value to be assigned to property modifyTime
      */
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;

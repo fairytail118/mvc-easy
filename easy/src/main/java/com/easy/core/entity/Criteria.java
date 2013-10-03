@@ -45,8 +45,7 @@ public class Criteria implements Serializable {
     /**
      * Setter method for property <tt>distinct</tt>.
      * 
-     * @param distinct
-     *            value to be assigned to property distinct
+     * @param distinct value to be assigned to property distinct
      */
     public void setDistinct(boolean distinct) {
         this.distinct = distinct;
@@ -64,8 +63,7 @@ public class Criteria implements Serializable {
     /**
      * Setter method for property <tt>orderByClause</tt>.
      * 
-     * @param orderByClause
-     *            value to be assigned to property orderByClause
+     * @param orderByClause value to be assigned to property orderByClause
      */
     public void setOrderByClause(String orderByClause) {
         this.orderByClause = orderByClause;
@@ -83,8 +81,7 @@ public class Criteria implements Serializable {
     /**
      * Setter method for property <tt>keyword</tt>.
      * 
-     * @param keyword
-     *            value to be assigned to property keyword
+     * @param keyword value to be assigned to property keyword
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword;

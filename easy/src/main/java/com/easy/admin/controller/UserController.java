@@ -5,6 +5,7 @@ package com.easy.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,8 +22,10 @@ import com.easy.core.controller.BaseController;
 import com.easy.core.mvc.result.Result;
 import com.easy.core.security.util.SecurityUtil;
 import com.easy.core.utils.RequestUtil;
+import com.easy.core.validator.annotations.EmailValidator;
 import com.easy.core.validator.annotations.EqualsStringValidator;
 import com.easy.core.validator.annotations.RequiredStringValidator;
+import com.easy.core.validator.annotations.StringLengthValidator;
 import com.easy.core.validator.annotations.Validations;
 
 /**
@@ -77,12 +80,22 @@ public class UserController extends BaseController {
             @RequiredStringValidator(field = "email", message = "邮箱不能为空!", trim = true),
             @RequiredStringValidator(field = "mobile", message = "手机不能为空!", trim = true),
             @RequiredStringValidator(field = "username", message = "用户名不能为空!", trim = true),
-            @RequiredStringValidator(field = "password", message = "密码不能为空!", trim = true),
-            @RequiredStringValidator(field = "isLocked", message = "是否锁定不能为空!", trim = true),
-            @RequiredStringValidator(field = "isEnabled", message = "是否启用不能为空!", trim = true),
-            @RequiredStringValidator(field = "userType", message = "用户类型不能为空!", trim = true) })
+            @RequiredStringValidator(field = "userType", message = "用户类型不能为空!", trim = true) },
+
+    stringLengthValidators = { @StringLengthValidator(field = "username", message = "用户名只能在6-12位之间", minLength = "6", maxLength = "12") },
+
+    emailValidators = { @EmailValidator(field = "email", message = "邮箱格式不正确!") })
     @RequestMapping(value = "/user_save")
-    public String save(HttpServletRequest request, ModelMap model, User user) {
+    public String save(HttpServletRequest request, ModelMap model,
+                       @RequestParam(value = "rePassword") String rePassword, User user) {
+
+        if (user.getId() == null && StringUtils.isBlank(user.getPassword())) {
+            RequestUtil.addFormError(request, "password", "密码不能为空!");
+        } else if (StringUtils.isNotBlank(user.getPassword())
+                   && !StringUtils.equals(user.getPassword(), rePassword)) {
+            RequestUtil.addFormError(request, "rePassword", "两次密码不一致!");
+        }
+
         if (RequestUtil.hasErrors(request)) {
             return "admin/user_input";
         }
@@ -95,6 +108,36 @@ public class UserController extends BaseController {
         userService.save(user);
 
         return "redirect:user_list";
+    }
+
+    /**
+     * 检查用户名是否存在
+     * 
+     * @param request
+     * @param code 编码
+     * @param id id
+     * @return
+     */
+    @RequestMapping(value = "/user_check_username")
+    @ResponseBody
+    public Result checkCode(HttpServletRequest request,
+                            @RequestParam(value = "username", required = false) String username) {
+
+        if (StringUtils.isBlank(username)) {
+            return new Result(false, "用户名不能为空!");
+        }
+
+        try {
+            boolean exists = userService.checkUsernameExists(username);
+            if (!exists) {
+                return new Result();
+            }
+            return new Result(false, "用户名重复!");
+        }
+        catch (Exception e) {
+            log.error("检查用户名是否存在出错", e);
+            return new Result(e);
+        }
     }
 
     /**
@@ -117,27 +160,6 @@ public class UserController extends BaseController {
         userService.page(page);
         model.put("page", page);
         return "admin/user_list";
-    }
-
-    /**
-     * 批量删除
-     * 
-     * @param request
-     * @param model
-     * @param key
-     * @return
-     */
-    @RequestMapping(value = "/user_delete")
-    @ResponseBody
-    public Result delete(HttpServletRequest request, ModelMap model, Long[] key) {
-        try {
-            userService.deleteByPrimaryKeys(key);
-            return new Result();
-        }
-        catch (Exception e) {
-            log.error("user删除失败", e);
-            return new Result(e);
-        }
     }
 
     /**
@@ -190,5 +212,56 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/change_pwd", method = { RequestMethod.GET })
     public String changePasswordInput(HttpServletRequest request, ModelMap model) {
         return "admin/change_pwd";
+    }
+
+    /**
+     * 改变禁用启用状态
+     * 
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/user_switch_enable")
+    @ResponseBody
+    public Result switchEnable(HttpServletRequest request,
+                               @RequestParam(value = "id", required = false) Long id) {
+
+        if (id == null) {
+            return new Result(false, "id不能为空");
+        }
+
+        try {
+            userService.switchEnable(id);
+            return new Result();
+        }
+        catch (Exception e) {
+            log.error("改变禁用启用状态失败", e);
+            return new Result(e);
+        }
+    }
+
+    /**
+     * 改变锁定状态
+     * 
+     * @param request
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/user_switch_lock")
+    @ResponseBody
+    public Result switchLock(HttpServletRequest request,
+                             @RequestParam(value = "id", required = false) Long id) {
+        if (id == null) {
+            return new Result(false, "id不能为空");
+        }
+
+        try {
+            userService.switchLock(id);
+            return new Result();
+        }
+        catch (Exception e) {
+            log.error("改变锁定状态失败", e);
+            return new Result(e);
+        }
     }
 }

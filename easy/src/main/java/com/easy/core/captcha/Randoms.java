@@ -22,10 +22,8 @@ public class Randoms {
     /**
      * 产生两个数之间的随机数
      * 
-     * @param min
-     *            小数
-     * @param max
-     *            比min大的数
+     * @param min 小数
+     * @param max 比min大的数
      * @return int 随机数字
      */
     public static int num(int min, int max) {
@@ -35,8 +33,7 @@ public class Randoms {
     /**
      * 产生0--num的随机数,不包括num
      * 
-     * @param num
-     *            数字
+     * @param num 数字
      * @return int 随机数字
      */
     public static int num(int num) {

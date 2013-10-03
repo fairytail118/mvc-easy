@@ -31,8 +31,7 @@ public class EasyEhCacheManagerFactoryBean extends EhCacheManagerFactoryBean
     /**
      * Setter method for property <tt>initFromDisk</tt>.
      * 
-     * @param initFromDisk
-     *            value to be assigned to property initFromDisk
+     * @param initFromDisk value to be assigned to property initFromDisk
      */
     public void setInitFromDisk(boolean initFromDisk) {
         this.initFromDisk = initFromDisk;

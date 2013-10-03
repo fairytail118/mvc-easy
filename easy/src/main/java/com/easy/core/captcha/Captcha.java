@@ -87,8 +87,7 @@ public abstract class Captcha {
     /**
      * 验证码输出,抽象方法，由子类实现
      * 
-     * @param os
-     *            输出流
+     * @param os 输出流
      */
     public abstract void out(OutputStream os);
 

@@ -20,6 +20,7 @@ import com.easy.core.validator.annotations.Validations;
 
 /**
  * 验证Aop拦截
+ * 
  * <pre>
  * &lt;mvc:interceptors&gt;
  *        &lt;!-- 验证拦截 --&gt;
@@ -32,7 +33,8 @@ import com.easy.core.validator.annotations.Validations;
  *          &lt;/bean&gt;
  *      &lt;/mvc:interceptor&gt;
  *  &lt;/mvc:interceptors&gt;
- *  </pre>
+ * </pre>
+ * 
  * @author wy
  * @version v 0.1 2013-9-15 上午8:13:38 wy Exp $
  */
@@ -43,8 +45,7 @@ public class ValidatorInterceptor extends HandlerInterceptorAdapter implements I
     /**
      * Setter method for property <tt>validator</tt>.
      * 
-     * @param validator
-     *            value to be assigned to property validator
+     * @param validator value to be assigned to property validator
      */
     public void setValidator(Validator validator) {
         this.validator = validator;

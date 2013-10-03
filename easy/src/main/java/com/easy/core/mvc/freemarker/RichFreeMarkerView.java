@@ -35,7 +35,7 @@ public class RichFreeMarkerView extends FreeMarkerView {
                                                                                        throws Exception {
         super.exposeHelpers(model, request);
         model.put(CONTEXT_PATH, request.getContextPath());
-        
+
         // TODO 增加系统的配置信息,需要替换动态读取
         model.put("easySystem", new SystemConfig("Easy系统", "Version 1.0"));
 
@@ -44,7 +44,7 @@ public class RichFreeMarkerView extends FreeMarkerView {
 
         //权限判断
         model.put("sesTool", new SecurityTool());
-        
+
         //用户
         model.put("userTool", new UserTool());
 

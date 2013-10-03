@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 public class EasySaltSource implements SaltSource {
 
-    /** 
+    /**
      * @see org.springframework.security.authentication.dao.SaltSource#getSalt(org.springframework.security.core.userdetails.UserDetails)
      */
     @Override

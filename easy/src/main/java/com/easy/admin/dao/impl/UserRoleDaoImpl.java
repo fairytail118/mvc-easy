@@ -12,6 +12,7 @@ import com.easy.admin.entity.UserRole;
 import java.util.HashMap;
 import java.util.Map;
 import com.easy.core.dao.impl.MyBatisGenericDao;
+
 /**
  * 分配角色DaoImpl
  * 
@@ -21,27 +22,29 @@ import com.easy.core.dao.impl.MyBatisGenericDao;
 @Repository
 public class UserRoleDaoImpl extends MyBatisGenericDao implements UserRoleDao {
 
-	/**
-	 * @see com.easy.admin.dao.UserRoleDao#create(com.easy.admin.entity.UserRole)
-	 */
-	@Override
-	public UserRole create(UserRole userRole) {
-		save("com.easy.admin.dao.UserRoleDao.create", userRole);
-		return userRole;
-	}
-
-	/**
-	 * @see com.easy.admin.dao.UserRoleDao#update(com.easy.admin.entity.UserRole)
-	 */
-	@Override
-	public int update(UserRole userRole) {
-		return update("com.easy.admin.dao.UserRoleDao.update", userRole);
-	}
- 	/**
-     * @see com.easy.admin.dao.UserRoleDao#getByPrimaryKey(java.lang.Long ,java.lang.Long )
+    /**
+     * @see com.easy.admin.dao.UserRoleDao#create(com.easy.admin.entity.UserRole)
      */
     @Override
-    public UserRole getByPrimaryKey(Long userId ,Long roleId ) {
+    public UserRole create(UserRole userRole) {
+        save("com.easy.admin.dao.UserRoleDao.create", userRole);
+        return userRole;
+    }
+
+    /**
+     * @see com.easy.admin.dao.UserRoleDao#update(com.easy.admin.entity.UserRole)
+     */
+    @Override
+    public int update(UserRole userRole) {
+        return update("com.easy.admin.dao.UserRoleDao.update", userRole);
+    }
+
+    /**
+     * @see com.easy.admin.dao.UserRoleDao#getByPrimaryKey(java.lang.Long
+     *      ,java.lang.Long )
+     */
+    @Override
+    public UserRole getByPrimaryKey(Long userId, Long roleId) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("userId", userId);
@@ -51,10 +54,11 @@ public class UserRoleDaoImpl extends MyBatisGenericDao implements UserRoleDao {
     }
 
     /**
-     * @see com.easy.admin.dao.UserRoleDao#deleteByPrimaryKeys(java.lang.Long ,java.lang.Long )
+     * @see com.easy.admin.dao.UserRoleDao#deleteByPrimaryKeys(java.lang.Long
+     *      ,java.lang.Long )
      */
     @Override
-    public int deleteByPrimaryKeys(Long userId ,Long roleId ) {
+    public int deleteByPrimaryKeys(Long userId, Long roleId) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("userId", userId);

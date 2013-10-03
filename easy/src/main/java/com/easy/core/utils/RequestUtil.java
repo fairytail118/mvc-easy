@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.easy.core.common.Constants;
+import com.easy.core.mvc.MessageResolver;
 
 /**
  * request的操作
@@ -23,7 +26,10 @@ import com.easy.core.common.Constants;
 public class RequestUtil {
 
     /** 表单的错误 */
-    public final static String FORM_ERROR = "formErros";
+    public final static String  FORM_ERROR = "formErros";
+
+    /** 日志 */
+    private final static Logger log        = LoggerFactory.getLogger(RequestUtil.class);
 
     /**
      * 获取访问者IP
@@ -74,6 +80,42 @@ public class RequestUtil {
             request.setAttribute(FORM_ERROR, map);
         }
 
+    }
+
+    /**
+     * 添加表单的错误
+     * 
+     * @param request
+     * @param field
+     * @param message
+     */
+    public static void addFormError(HttpServletRequest request, String field, String message) {
+        addFormError(request, field, null, message);
+    }
+
+    /**
+     * 添加表单的错误
+     * 
+     * @param request
+     * @param field
+     * @param key 资源文件key
+     * @param message 默认的message
+     * @param args 格式化资源文件参数
+     */
+    public static void addFormError(HttpServletRequest request, String field, String key,
+                                    String message, Object... args) {
+        String msg = null;
+        if (StringUtils.isNotBlank(key)) {
+            msg = MessageResolver.getMessage(request, key, args);
+        }
+        if (StringUtils.isBlank(msg) && StringUtils.isBlank(message)) {
+            log.warn("表单验证field:{}时根据key{}默认message{}获取的验证错误字符串为空", new String[] { field, key,
+                    message });
+            msg = "无对应的message";
+        } else if (StringUtils.isBlank(msg)) {
+            msg = message;
+        }
+        getFormErrors(request).put(field, msg);
     }
 
     /**

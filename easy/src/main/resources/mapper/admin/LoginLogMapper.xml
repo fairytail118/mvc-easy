@@ -27,31 +27,31 @@
 			id = #{id},
 			</if>
 				
-			<if test="username!=null and username.trim()!=''">
+			<if test="username!=null and username!=''">
 			username = #{username},
 			</if>
 						
-			<if test="password!=null and password.trim()!=''">
+			<if test="password!=null and password!=''">
 			password = #{password},
 			</if>
 						
-			<if test="action!=null and action.trim()!=''">
+			<if test="action!=null and action!=''">
 			action = #{action},
 			</if>
 						
-			<if test="status!=null and status.trim()!=''">
+			<if test="status!=null and status!=''">
 			status = #{status},
 			</if>
 						
-			<if test="content!=null and content.trim()!=''">
+			<if test="content!=null and content!=''">
 			content = #{content},
 			</if>
 						
-			<if test="clientIp!=null and clientIp.trim()!=''">
+			<if test="clientIp!=null and clientIp!=''">
 			clientIp = #{clientIp},
 			</if>
 						
-			<if test="clientBrowser!=null and clientBrowser.trim()!=''">
+			<if test="clientBrowser!=null and clientBrowser!=''">
 			clientBrowser = #{clientBrowser},
 			</if>
 						
@@ -59,11 +59,11 @@
 			loginTime = #{loginTime},
 			</if>
 				
-			<if test="clientArea!=null and clientArea.trim()!=''">
+			<if test="clientArea!=null and clientArea!=''">
 			clientArea = #{clientArea},
 			</if>
 						
-			<if test="clientOs!=null and clientOs.trim()!=''">
+			<if test="clientOs!=null and clientOs!=''">
 			clientOs = #{clientOs},
 			</if>
 						
@@ -119,16 +119,16 @@
 	<sql id="defaultCriteria">
 		<where>
 			<!-- 关键字查询字段 -->
-			<if test="keyword!=null and keyword.trim()!=''">
+			<if test="keyword!=null and keyword!=''">
 				AND username like "%"#{keyword}"%"
 			</if>
-			<if test="username!=null and username.trim()!=''">
+			<if test="username!=null and username!=''">
 				AND username = #{username}
 			</if>
-			<if test="action!=null and action.trim()!=''">
+			<if test="action!=null and action!=''">
 				AND action = #{action}
 			</if>
-			<if test="status!=null and status.trim()!=''">
+			<if test="status!=null and status!=''">
 				AND status = #{status}
 			</if>
 			<if test="criteria.startDate!=null">

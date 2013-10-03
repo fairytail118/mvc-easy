@@ -92,8 +92,7 @@ public class ValidatorResult implements Serializable {
     /**
      * Setter method for property <tt>success</tt>.
      * 
-     * @param success
-     *            value to be assigned to property success
+     * @param success value to be assigned to property success
      */
     public void setSuccess(boolean success) {
         this.success = success;
@@ -111,8 +110,7 @@ public class ValidatorResult implements Serializable {
     /**
      * Setter method for property <tt>values</tt>.
      * 
-     * @param values
-     *            value to be assigned to property values
+     * @param values value to be assigned to property values
      */
     public void setValues(String[] values) {
         this.values = values;

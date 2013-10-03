@@ -9,6 +9,8 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.dao.SaltSource;
@@ -57,20 +59,23 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User save(User user) {
+
+        if (StringUtils.isNotBlank(user.getPassword())) {
+            user.setPassword(encodePassword(user.getUsername(), user));
+        }
+
         if (user.getId() == null) {
+            //检查用户名是否存在
+            if (this.checkUsernameExists(user.getUsername())) {
+                throw new EasyException("用户名已经存在!");
+            }
+
             userDao.create(user);
         } else {
+            user.setUsername(null);
             userDao.update(user);
         }
         return user;
-    }
-
-    /**
-     * @see com.easy.admin.service.UserService#deleteByPrimaryKeys(java.lang.Long[])
-     */
-    @Override
-    public void deleteByPrimaryKeys(java.lang.Long[] keys) {
-        userDao.deleteByPrimaryKeys(keys);
     }
 
     /**
@@ -137,7 +142,64 @@ public class UserServiceImpl implements UserService {
             throw new EasyException("原密码不正确");
         }
         //密码
-        user.setPassword(passwordEncoder.encodePassword(newPassword, saltSource.getSalt(user)));
+        user.setPassword(encodePassword(newPassword, user));
         userDao.update(user);
     }
+
+    /**
+     * @see com.easy.admin.service.UserService#switchLock(java.lang.Long)
+     */
+    @Override
+    public void switchLock(Long id) {
+        User user = userDao.getByPrimaryKey(id);
+        if (user == null) {
+            throw new EasyException("找不到需要锁定的用户");
+        }
+
+        user.setIsLocked(BooleanUtils.isFalse(user.getIsLocked()));
+        user.setModifyTime(null);
+        user.setModifyUser(null);
+
+        userDao.update(user);
+
+    }
+
+    /**
+     * @see com.easy.admin.service.UserService#switchEnable(java.lang.Long)
+     */
+    @Override
+    public void switchEnable(Long id) {
+        User user = userDao.getByPrimaryKey(id);
+        if (user == null) {
+            throw new EasyException("找不到需要启用禁用的用户");
+        }
+
+        user.setIsEnabled(BooleanUtils.isFalse(user.getIsEnabled()));
+        user.setModifyTime(null);
+        user.setModifyUser(null);
+
+        userDao.update(user);
+    }
+
+    /**
+     * @see com.easy.admin.service.UserService#checkUsernameExists(java.lang.String)
+     */
+    @Override
+    public boolean checkUsernameExists(String username) {
+        User user = new User();
+        user.setUsername(username);
+        return userDao.countByCriteria(user) > 0;
+    }
+
+    /**
+     * 加密
+     * 
+     * @param newPassword
+     * @param user
+     * @return
+     */
+    private String encodePassword(String newPassword, User user) {
+        return passwordEncoder.encodePassword(newPassword, saltSource.getSalt(user));
+    }
+
 }
