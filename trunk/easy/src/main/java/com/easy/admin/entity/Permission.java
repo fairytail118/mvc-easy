@@ -3,6 +3,8 @@
  */
 package com.easy.admin.entity;
 
+import java.util.List;
+
 import com.easy.core.entity.IdEntity;
 
 /**
@@ -27,6 +29,9 @@ public class Permission extends IdEntity {
 
     /** 父权限 */
     private Permission        parentPermission;
+
+    /** 子权限 */
+    private List<Permission>  list;
 
     /**
      * Getter method for property <tt>parentId</tt>.
@@ -98,6 +103,24 @@ public class Permission extends IdEntity {
      */
     public void setParentPermission(Permission parentPermission) {
         this.parentPermission = parentPermission;
+    }
+
+    /**
+     * Getter method for property <tt>list</tt>.
+     * 
+     * @return property value of list
+     */
+    public List<Permission> getList() {
+        return list;
+    }
+
+    /**
+     * Setter method for property <tt>list</tt>.
+     * 
+     * @param list value to be assigned to property list
+     */
+    public void setList(List<Permission> list) {
+        this.list = list;
     }
 
 }

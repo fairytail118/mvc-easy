@@ -3,14 +3,14 @@
  */
 package com.easy.admin.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import com.easy.admin.dao.RolePermissionDao;
 import com.easy.admin.entity.RolePermission;
-import java.util.HashMap;
-import java.util.Map;
 import com.easy.core.dao.impl.MyBatisGenericDao;
 
 /**
@@ -50,7 +50,7 @@ public class RolePermissionDaoImpl extends MyBatisGenericDao implements RolePerm
         params.put("roleId", roleId);
         params.put("permissionId", permissionId);
 
-        return get("com.easy.dao.RolePermissionDao.getByPrimaryKey", params);
+        return get("com.easy.admin.dao.RolePermissionDao.getByPrimaryKey", params);
     }
 
     /**
@@ -64,7 +64,7 @@ public class RolePermissionDaoImpl extends MyBatisGenericDao implements RolePerm
         params.put("roleId", roleId);
         params.put("permissionId", permissionId);
 
-        return get("com.easy.dao.RolePermissionDao.deleteByPrimaryKeys", params);
+        return delete("com.easy.admin.dao.RolePermissionDao.deleteByPrimaryKeys", params);
     }
 
     /**
@@ -72,6 +72,6 @@ public class RolePermissionDaoImpl extends MyBatisGenericDao implements RolePerm
      */
     @Override
     public List<RolePermission> selectByCriteria(RolePermission rolePermission) {
-        return list("com.easy.dao.RolePermissionDao.selectByCriteria", rolePermission);
+        return list("com.easy.admin.dao.RolePermissionDao.selectByCriteria", rolePermission);
     }
 }

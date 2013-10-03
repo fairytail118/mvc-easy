@@ -134,8 +134,9 @@ public class Criteria implements Serializable {
      * @return
      * @see java.util.Map#get(java.lang.Object)
      */
-    public Object get(Object key) {
-        return criteria.get(key);
+    @SuppressWarnings("unchecked")
+    public <T> T get(Object key) {
+        return (T) criteria.get(key);
     }
 
     /**

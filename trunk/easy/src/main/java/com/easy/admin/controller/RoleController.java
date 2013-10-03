@@ -3,6 +3,9 @@
  */
 package com.easy.admin.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easy.admin.entity.Role;
+import com.easy.admin.entity.RolePermission;
+import com.easy.admin.service.PermissionService;
 import com.easy.admin.service.RoleService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
@@ -35,7 +40,11 @@ public class RoleController extends BaseController {
 
     /** 角色service */
     @Autowired
-    private RoleService roleService;
+    private RoleService       roleService;
+
+    /** 权限 */
+    @Autowired
+    private PermissionService permissionService;
 
     /**
      * 进入编辑页面
@@ -52,9 +61,19 @@ public class RoleController extends BaseController {
         if (id != null) {
             Role role = roleService.getByPrimaryKey(id);
             model.put("role", role);
+            if (role != null && role.getCriteria().get("grantList") != null) {
+                List<RolePermission> permissionList = role.get("grantList");
+                List<Long> grantList = new ArrayList<Long>(permissionList.size());
+                for (RolePermission rp : permissionList) {
+                    grantList.add(rp.getPermissionId());
+                }
+                model.put("grantList", grantList);
+            }
         } else {
             model.put("role", new Role());
         }
+
+        model.put("gradeList", permissionService.gradeList());
 
         return "admin/role_input";
     }
@@ -96,6 +115,7 @@ public class RoleController extends BaseController {
      * @param request
      * @param model
      * @param role
+     * @param grantList 分配的权限
      * @return
      */
     @Validations(
@@ -104,7 +124,8 @@ public class RoleController extends BaseController {
             @RequiredStringValidator(field = "name", message = "角色名称不能为空!", trim = true),
             @RequiredStringValidator(field = "code", message = "角色编码不能为空!", trim = true) })
     @RequestMapping(value = "/role_save")
-    public String save(HttpServletRequest request, ModelMap model, Role role) {
+    public String save(HttpServletRequest request, ModelMap model, Role role,
+                       @RequestParam(value = "permissionId", required = false) List<Long> grantList) {
         if (RequestUtil.hasErrors(request)) {
             return "admin/role_input";
         }
@@ -114,7 +135,7 @@ public class RoleController extends BaseController {
         BeanUtils.copyProperties(role, entity, new String[] { "createUser", "createTime",
                 "modifyUser", "modifyTime" });
 
-        roleService.save(role);
+        roleService.save(role, grantList);
 
         return "redirect:role_list";
     }
