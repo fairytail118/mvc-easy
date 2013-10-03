@@ -10,7 +10,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.easy.admin.dao.RoleDao;
+import com.easy.admin.dao.RolePermissionDao;
 import com.easy.admin.entity.Role;
+import com.easy.admin.entity.RolePermission;
 import com.easy.admin.service.RoleService;
 import com.easy.core.common.Page;
 import com.easy.core.exceptions.EasyException;
@@ -25,13 +27,17 @@ import com.easy.core.exceptions.EasyException;
 public class RoleServiceImpl implements RoleService {
 
     @Resource
-    private RoleDao roleDao;
+    private RoleDao           roleDao;
+
+    @Resource
+    private RolePermissionDao rolePermissionDao;
 
     /**
-     * @see com.easy.admin.service.RoleService#save(com.easy.admin.entity.Role)
+     * @see com.easy.admin.service.RoleService#save(com.easy.admin.entity.Role,
+     *      java.util.List)
      */
     @Override
-    public Role save(Role role) {
+    public Role save(Role role, List<Long> grantList) {
         if (this.checkCodeExists(role.getCode(), role.getId())) {
             throw new EasyException("编码已经存在!");
         }
@@ -39,6 +45,13 @@ public class RoleServiceImpl implements RoleService {
             roleDao.create(role);
         } else {
             roleDao.update(role);
+            rolePermissionDao.deleteByPrimaryKeys(role.getId(), null);
+        }
+        RolePermission rolePermission = new RolePermission();
+        for (Long permissionId : grantList) {
+            rolePermission.setPermissionId(permissionId);
+            rolePermission.setRoleId(role.getId());
+            rolePermissionDao.create(rolePermission);
         }
         return role;
     }
@@ -57,7 +70,18 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role getByPrimaryKey(Long id) {
 
-        return roleDao.getByPrimaryKey(id);
+        Role role = roleDao.getByPrimaryKey(id);
+
+        if (role != null) {
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setRoleId(role.getId());
+
+            List<RolePermission> list = rolePermissionDao.selectByCriteria(rolePermission);
+
+            role.put("grantList", list);
+        }
+
+        return role;
     }
 
     /**

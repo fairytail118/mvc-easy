@@ -109,4 +109,22 @@ public class PermissionServiceImpl implements PermissionService {
         return true;
     }
 
+    /**
+     * @see com.easy.admin.service.PermissionService#gradeList()
+     */
+    @Override
+    public List<Permission> gradeList() {
+
+        List<Permission> list = this.firstPermissionList();
+
+        Permission query = new Permission();
+
+        for (Permission permission : list) {
+            query.setParentId(permission.getId());
+            List<Permission> sonList = permissionDao.selectByCriteria(query);
+            permission.setList(sonList);
+        }
+        return list;
+    }
+
 }

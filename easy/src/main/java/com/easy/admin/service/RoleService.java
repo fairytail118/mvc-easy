@@ -3,6 +3,8 @@
  */
 package com.easy.admin.service;
 
+import java.util.List;
+
 import com.easy.admin.entity.Role;
 import com.easy.core.common.Page;
 
@@ -18,9 +20,10 @@ public interface RoleService {
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param role
+     * @param grantList
      * @return
      */
-    public Role save(Role role);
+    public Role save(Role role, List<Long> grantList);
 
     /**
      * 根据主键删除

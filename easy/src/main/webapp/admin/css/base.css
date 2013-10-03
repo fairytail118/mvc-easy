@@ -15,6 +15,7 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 /**显示*/
 .display_n{display: none}
 .display_b{display: block;}
+.display_i{display: inline;}
 
 /**文字位置*/
 .text_r{text-align: right}
@@ -24,7 +25,10 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 /**浮动*/
 .float_r{float: right}
 .float_l{float: left}
-.float_c{float:none;}
+.clear_b{clear: both;}
+
+/**边框*/
+.border_t_n{border-top: none}
 
 /** color*/
 .c666{color: #666;}
@@ -32,6 +36,9 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 .wathet{color:#7ac5cc}
 .green{color: green;}
 .red{color: #D34600;}
+
+/** 背景颜色 */
+.bc_wathet{background-color: #EFF4FA}
 
 /**width */
 .w20{width: 20px;}
@@ -43,9 +50,18 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 
 
 /**height*/
+.h25{height: 25px}
+.h28{height: 28px}
 .h120{height: 120px;}
+
+/**行距*/
+.lh25{line-height: 25px}
 
 /**边距*/
 .ml5{margin-left: 5px}
+.ml10{margin-left: 10px}
 .ml20{margin-left: 20px}
 .mt5{margin-top: 5px}
+.pl12{padding-left: 12px}
+.p5{padding: 5px;}
+.m5{margin: 5px;}

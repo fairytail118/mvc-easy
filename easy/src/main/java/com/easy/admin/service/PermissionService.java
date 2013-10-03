@@ -63,4 +63,11 @@ public interface PermissionService {
      */
     public boolean checkCodeExists(String code, Long id);
 
+    /**
+     * 获取一二级关系的权限
+     * 
+     * @return
+     */
+    public List<Permission> gradeList();
+
 }

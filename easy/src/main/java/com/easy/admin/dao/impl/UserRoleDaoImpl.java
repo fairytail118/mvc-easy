@@ -3,14 +3,14 @@
  */
 package com.easy.admin.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
 import com.easy.admin.dao.UserRoleDao;
 import com.easy.admin.entity.UserRole;
-import java.util.HashMap;
-import java.util.Map;
 import com.easy.core.dao.impl.MyBatisGenericDao;
 
 /**
@@ -50,7 +50,7 @@ public class UserRoleDaoImpl extends MyBatisGenericDao implements UserRoleDao {
         params.put("userId", userId);
         params.put("roleId", roleId);
 
-        return get("com.easy.dao.UserRoleDao.getByPrimaryKey", params);
+        return get("com.easy.admin.dao.UserRoleDao.getByPrimaryKey", params);
     }
 
     /**
@@ -64,7 +64,7 @@ public class UserRoleDaoImpl extends MyBatisGenericDao implements UserRoleDao {
         params.put("userId", userId);
         params.put("roleId", roleId);
 
-        return get("com.easy.dao.UserRoleDao.deleteByPrimaryKeys", params);
+        return delete("com.easy.admin.dao.UserRoleDao.deleteByPrimaryKeys", params);
     }
 
     /**
@@ -72,6 +72,6 @@ public class UserRoleDaoImpl extends MyBatisGenericDao implements UserRoleDao {
      */
     @Override
     public List<UserRole> selectByCriteria(UserRole userRole) {
-        return list("com.easy.dao.UserRoleDao.selectByCriteria", userRole);
+        return list("com.easy.admin.dao.UserRoleDao.selectByCriteria", userRole);
     }
 }

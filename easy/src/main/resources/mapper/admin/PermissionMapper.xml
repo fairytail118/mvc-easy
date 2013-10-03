@@ -21,7 +21,7 @@
 	<update id="update" parameterType="Permission">
 		UPDATE
 			permission
-		<set>		
+		<set>
 			parentId = #{parentId},
 								
 			<if test="modifyTime!=null">
@@ -123,6 +123,9 @@
 			</if>
 			<if test="code!=null and code!=''">
 			    AND code = #{code}
+			</if>
+			<if test="parentId!=null and parentId!=''">
+			    AND parentId = #{parentId}
 			</if>
 		</where>
 	</sql>
