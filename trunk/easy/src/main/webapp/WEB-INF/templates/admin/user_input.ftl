@@ -129,7 +129,7 @@ $(document).ready(function(){
 				<td>
 					<select name="userType">
 					<#list enumTool.values('com.easy.admin.enums.UserType') as item>
-						<option value="${item.code}">${item.desc}</option>
+						<option value="${item.code}" <#if user.userType??&&user.userType==item.code> selected="selected"</#if>>${item.desc}</option>
 					</#list>
 					</select>
 					<@easy.fieldError field="userType"/>
