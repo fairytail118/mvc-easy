@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
@@ -50,9 +49,6 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserRoleDao     userRoleDao;
-
-    @Value("${easy.permisson.prefix}")
-    private String          prefixPermission;
 
     @Resource
     private SaltSource      saltSource;
@@ -144,8 +140,7 @@ public class UserServiceImpl implements UserService {
         Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
 
         for (Role role : list) {
-            authorities.add(new GrantedAuthorityImpl(SecurityUtil.getPermission(prefixPermission,
-                role.getCode())));
+            authorities.add(new GrantedAuthorityImpl(SecurityUtil.getRole(role.getCode())));
         }
 
         user.setAuthorities(authorities);

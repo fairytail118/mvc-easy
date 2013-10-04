@@ -18,6 +18,7 @@ import com.easy.admin.entity.RoleResource;
 import com.easy.admin.service.RoleService;
 import com.easy.core.common.Page;
 import com.easy.core.exceptions.EasyException;
+import com.easy.core.security.mapping.JdbcRoleUrlMapping;
 
 /**
  * 角色ServiceImpl
@@ -65,6 +66,7 @@ public class RoleServiceImpl implements RoleService {
                 roleResourceDao.create(reoleResource);
             }
         }
+        JdbcRoleUrlMapping.shouldUpdate();
         return role;
     }
 
@@ -72,8 +74,19 @@ public class RoleServiceImpl implements RoleService {
      * @see com.easy.admin.service.RoleService#deleteByPrimaryKeys(java.lang.Long[])
      */
     @Override
-    public void deleteByPrimaryKeys(java.lang.Long[] keys) {
+    public void deleteByPrimaryKeys(Long[] keys) {
+
+        for (Long id : keys) {
+            Role entity = roleDao.getByPrimaryKey(id);
+            if (entity == null) {
+                throw new EasyException("找不到Role[" + id + "]");
+            } else if (BooleanUtils.isTrue(entity.getIsSystem())) {
+                throw new EasyException("Role[" + id + "].IsSystem为true,不能修改");
+            }
+            roleResourceDao.deleteByPrimaryKeys(id, null);
+        }
         roleDao.deleteByPrimaryKeys(keys);
+        JdbcRoleUrlMapping.shouldUpdate();
     }
 
     /**

@@ -41,7 +41,7 @@ public class LoginLogServiceImpl implements LoginLogService {
      * @see com.easy.admin.service.LoginLogService#deleteByPrimaryKeys(java.lang.Long[])
      */
     @Override
-    public void deleteByPrimaryKeys(java.lang.Long[] keys) {
+    public void deleteByPrimaryKeys(Long[] keys) {
         loginLogDao.deleteByPrimaryKeys(keys);
     }
 

@@ -5,8 +5,10 @@ package com.easy.admin.service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.easy.admin.entity.Resource;
+import com.easy.admin.entity.Role;
 import com.easy.core.common.Page;
 
 /**
@@ -63,5 +65,12 @@ public interface ResourceService {
      * @return
      */
     public LinkedHashMap<String, List<Resource>> groupMapList();
+
+    /**
+     * 资源和角色的映射关系
+     * 
+     * @return
+     */
+    public Map<String, List<Role>> resourceRoleMap();
 
 }

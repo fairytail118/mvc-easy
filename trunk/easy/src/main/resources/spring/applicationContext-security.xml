@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                         http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
 
@@ -12,10 +11,17 @@
 		<!-- 无需进行权限验证的路径 -->
 		<intercept-url pattern="/login" filters="none" />
 		<intercept-url pattern="/captcha" filters="none" />
-		<intercept-url pattern="/admin/css/**" filters="none" />
-		<intercept-url pattern="/admin/js/**" filters="none" />
-		<intercept-url pattern="/admin/imgs/**" filters="none" />
-		<intercept-url pattern="/*.html" filters="none" />
+		<intercept-url pattern="*.js" filters="none" />
+		<intercept-url pattern="*.css" filters="none" />
+		<intercept-url pattern="*.gif" filters="none" />
+		<intercept-url pattern="*.png" filters="none" />
+		<intercept-url pattern="*.jpg" filters="none" />
+		<intercept-url pattern="*.jpeg" filters="none" />
+		<intercept-url pattern="*.eot" filters="none" />
+		<intercept-url pattern="*.svg" filters="none" />
+		<intercept-url pattern="*.ttf" filters="none" />
+		<intercept-url pattern="*.html" filters="none" />
+		<intercept-url pattern="*.htm" filters="none" />
 
 		<!-- 退出 -->
 		<logout invalidate-session="true" logout-url="/logout" logout-success-url="/login?status=logout" />
@@ -42,7 +48,7 @@
 
 	<!-- 密码混淆 -->
 	<beans:bean id="easyPasswordEncoder" class="com.easy.core.security.EasyPasswordEncoder" />
-	
+
 	<!-- 密码混淆 -->
 	<beans:bean id="easySaltSource" class="com.easy.core.security.EasySaltSource" />
 
@@ -55,19 +61,15 @@
 		</authentication-provider>
 	</authentication-manager>
 
-	<!-- 资源加载 -->
-	<beans:bean id="mapRelation" class="com.easy.core.security.PropertiesPermissionMapRelation">
-		<beans:property name="resources">
-			<beans:list>
-				<beans:value>classpath:config/permission.properties</beans:value>
-			</beans:list>
+	<!-- 角色url映射关系加载 -->
+	<beans:bean id="roleUrlMapping" class="com.easy.core.security.mapping.JdbcRoleUrlMapping">
+		<beans:property name="resourceService">
+			<beans:ref bean="resourceServiceImpl" />
 		</beans:property>
-		<beans:property name="prefixPermission" value="${easy.permisson.prefix}" />
 	</beans:bean>
 
 	<!-- 登录配置 -->
-	<!-- TODO 需要重写，验证验证码 -->
-	<beans:bean id="authenticationProcessingFilter" class="com.easy.core.security.EasyUsernamePasswordAuthenticationFilter">
+	<beans:bean id="authenticationProcessingFilter" class="com.easy.core.security.filter.EasyUsernamePasswordAuthenticationFilter">
 		<beans:property name="authenticationDetailsSource" ref="easyAuthenticationDetailsSource" />
 		<beans:property name="authenticationManager" ref="authenticationManager" />
 		<beans:property name="filterProcessesUrl" value="/loginvalidate" />
@@ -100,8 +102,7 @@
 	</beans:bean>
 
 	<!-- 登录成功处理 -->
-	<beans:bean id="authenticationSuccessHandler"
-		class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+	<beans:bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
 		<beans:property name="defaultTargetUrl" value="/admin/index" />
 		<beans:property name="alwaysUseDefaultTargetUrl" value="true" />
 	</beans:bean>
@@ -118,8 +119,8 @@
 		<beans:property name="clazz" value="com.easy.core.security.EasyWebAuthenticationDetails"></beans:property>
 	</beans:bean>
 
-	<!-- 自定义的过滤器easySecurityFilter -->
-	<beans:bean id="easySecurityFilter" class="com.easy.core.security.EasySecurityFilter">
+	<!-- 自定义的过滤器easySecurity -->
+	<beans:bean id="easySecurityFilter" class="com.easy.core.security.filter.EasySecurityFilter">
 		<beans:property name="authenticationManager" ref="authenticationManager" />
 		<beans:property name="accessDecisionManager" ref="easyAccessDecisionManager" />
 		<beans:property name="securityMetadataSource" ref="easyInvocationSecurityMetadataSource" />
@@ -127,18 +128,14 @@
 
 	<!-- 资源源数据定义，即定义某一资源可以被哪些角色访问 -->
 	<beans:bean id="easyInvocationSecurityMetadataSource" class="com.easy.core.security.EasyInvocationSecurityMetadataSource">
-		<beans:property name="mapRelation" ref="mapRelation" />
+		<beans:property name="roleUrlMapping" ref="roleUrlMapping" />
 	</beans:bean>
 
 	<!--访问决策器 -->
-	<beans:bean id="easyAccessDecisionManager" class="com.easy.core.security.EasyAccessDecisionManager">
+	<beans:bean id="easyAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<beans:property name="decisionVoters">
 			<beans:list>
-				<beans:bean class="org.springframework.security.access.vote.RoleVoter">
-					<!-- 可修改默认角色前缀 -->
-					<beans:property name="rolePrefix" value="${easy.permisson.prefix}" />
-				</beans:bean>
-				<beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+				<beans:bean class="com.easy.core.security.vote.EasyRoleVoter" />
 			</beans:list>
 		</beans:property>
 	</beans:bean>

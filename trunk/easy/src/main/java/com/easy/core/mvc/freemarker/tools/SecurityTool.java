@@ -7,11 +7,9 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 import com.easy.core.security.util.SecurityUtil;
 
@@ -23,19 +21,6 @@ import com.easy.core.security.util.SecurityUtil;
  */
 @Component
 public class SecurityTool implements InitializingBean {
-
-    /** 权限前缀 */
-    private static String prefixPermission;
-
-    /**
-     * 设置默认的权限前缀
-     * 
-     * @param prefixPermission
-     */
-    @Value("${easy.permisson.prefix}")
-    public void setPrefixPermission(String prefixPermission) {
-        SecurityTool.prefixPermission = prefixPermission;
-    }
 
     /**
      * 是否有权限
@@ -60,8 +45,7 @@ public class SecurityTool implements InitializingBean {
             return false;
         }
         for (GrantedAuthority ga : list) {
-            if (SecurityUtil.getPermission(prefixPermission, permission).equalsIgnoreCase(
-                ga.getAuthority())) {
+            if (SecurityUtil.getRole(permission).equalsIgnoreCase(ga.getAuthority())) {
                 return true;
             }
         }
@@ -127,7 +111,7 @@ public class SecurityTool implements InitializingBean {
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.isTrue(StringUtils.isNotBlank(prefixPermission), "权限前缀不能为空");
+        
     }
 
 }

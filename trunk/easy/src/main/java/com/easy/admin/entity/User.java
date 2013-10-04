@@ -239,7 +239,16 @@ public class User extends IdEntity implements UserDetails {
      */
     @Override
     public boolean isEnabled() {
-        return BooleanUtils.isTrue(this.getIsEnabled());
+        return BooleanUtils.isTrue(isEnabled);
+    }
+
+    /**
+     * 妈的，这变态的freemarker字段跟方法重复报错，换个方法来取
+     * 
+     * @return
+     */
+    public Boolean getUserEnable() {
+        return this.isEnabled;
     }
 
 }

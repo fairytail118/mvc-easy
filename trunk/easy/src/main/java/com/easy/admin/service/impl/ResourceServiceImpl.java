@@ -3,19 +3,25 @@
  */
 package com.easy.admin.service.impl;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import com.easy.admin.dao.ResourceDao;
+import com.easy.admin.dao.RoleDao;
 import com.easy.admin.entity.Resource;
+import com.easy.admin.entity.Role;
 import com.easy.admin.enums.ResourceGroup;
 import com.easy.admin.service.ResourceService;
 import com.easy.core.common.Page;
 import com.easy.core.enums.EnumsUtil;
 import com.easy.core.exceptions.EasyException;
+import com.easy.core.security.mapping.JdbcRoleUrlMapping;
+import com.easy.core.security.util.SecurityUtil;
 
 /**
  * 资源ServiceImpl
@@ -28,6 +34,9 @@ public class ResourceServiceImpl implements ResourceService {
 
     @javax.annotation.Resource
     private ResourceDao resourceDao;
+
+    @javax.annotation.Resource
+    private RoleDao     roleDao;
 
     /**
      * @see com.easy.admin.service.ResourceService#save(com.easy.admin.entity.Resource)
@@ -59,6 +68,7 @@ public class ResourceServiceImpl implements ResourceService {
             }
             resourceDao.update(resource);
         }
+        JdbcRoleUrlMapping.shouldUpdate();
         return resource;
     }
 
@@ -66,8 +76,9 @@ public class ResourceServiceImpl implements ResourceService {
      * @see com.easy.admin.service.ResourceService#deleteByPrimaryKeys(java.lang.Long[])
      */
     @Override
-    public void deleteByPrimaryKeys(java.lang.Long[] keys) {
+    public void deleteByPrimaryKeys(Long[] keys) {
         resourceDao.deleteByPrimaryKeys(keys);
+        JdbcRoleUrlMapping.shouldUpdate();
     }
 
     /**
@@ -93,7 +104,7 @@ public class ResourceServiceImpl implements ResourceService {
      */
     @Override
     public boolean checkUrlExists(String url, Long id) {
-        url = getUrl(url);
+        url = SecurityUtil.getUrl(url);
         Resource resource = new Resource();
         resource.setUrl(url);
         List<Resource> list = resourceDao.selectByCriteria(resource);
@@ -107,19 +118,6 @@ public class ResourceServiceImpl implements ResourceService {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 转换url
-     * 
-     * @param url
-     * @return
-     */
-    private String getUrl(String url) {
-        if (url.charAt(0) != '/') {
-            return "/" + url;
-        }
-        return url;
     }
 
     /**
@@ -144,6 +142,23 @@ public class ResourceServiceImpl implements ResourceService {
         }
 
         return groupMap;
+    }
+
+    /**
+     * @see com.easy.admin.service.ResourceService#resourceRoleMap()
+     */
+    @Override
+    public Map<String, List<Role>> resourceRoleMap() {
+
+        Resource resource = new Resource();
+        Map<String, List<Role>> map = new HashMap<String, List<Role>>();
+        List<Resource> list = resourceDao.selectByCriteria(resource);
+
+        for (Resource r : list) {
+            map.put(r.getUrl(), roleDao.selectByResourceId(r.getId()));
+        }
+
+        return map;
     }
 
 }
