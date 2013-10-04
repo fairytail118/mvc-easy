@@ -80,7 +80,7 @@ $(document).ready(function(){
 		<table class="table_add">
 			<tr>
 				<td class="w80  text_r">原密码:</td>
-				<td><input type="password" name="password" class="input w200"/><@fieldError field="password"/></td>
+				<td><input type="password" name="password" class="input w200"/><@easy.fieldError field="password"/></td>
 			</tr>
 			<tr>
 				<td class="w80  text_r">新密码:</td>
