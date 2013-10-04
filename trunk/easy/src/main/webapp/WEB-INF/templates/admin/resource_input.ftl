@@ -12,14 +12,26 @@ $(document).ready(function(){
 					required:true
 				},
 				url:{
-					required:true
-				},
-				isSystem:{
-					required:true
+					required:true,
+					maxlength:120,
+					remoteResult:{
+						url: "${base}/admin/resource_check_url",
+                        type: "post",
+                        dataType: "json",
+                        data: {  
+        					code:function(){
+        						return $("input[name='url']").val();
+        					},
+        					id:function(){
+        						return $("input[name='id']").val();
+        					}
+                          }
+					}
 				},
 				groupCode:{
 					required:true
-				}			}
+				}			
+			}
 		});
 		$("input[type='reset']").click(function(){
 			valid.resetForm();
@@ -33,7 +45,7 @@ $(document).ready(function(){
 	<input type="hidden" name="id" value="${(resource.id)!}"/>
 		<table class="action">
 			<tr>
-				<td class="title">管理员<#if resource??&&resource.id??>编辑 <#else>添加</#if></td>
+				<td class="title">资源<#if resource??&&resource.id??>编辑 <#else>添加</#if></td>
 				<td>
 					<ul class="action_ct">
 						<li class="history"><a href="${base}/admin/resource_list"><em class="ico-history"></em>&nbsp;返回</a></li>
@@ -46,19 +58,25 @@ $(document).ready(function(){
 		<table class="table_add">
 			<tr>
 				<td class="w80  text_r">名称:</td>
-				<td><input type="text" name="name" value="${(resource.name)!}" class="input w200"/><@easy.fieldError field="name"/></td>
+				<td><input type="text" name="name" maxlength="32" value="${(resource.name)!}" class="input w200"/><@easy.fieldError field="name"/></td>
 			</tr>
 			<tr>
 				<td class=" text_r">URL:</td>
-				<td><input type="text" name="url" value="${(resource.url)!}" class="input w200"/><@easy.fieldError field="url"/></td>
+				<td>
+				<textarea class="w525 h50" name="url">${(resource.url)!}</textarea><label class="green ml5">如:/admin/resource_input</label>
+				<@easy.fieldError field="url"/>
+				</td>
 			</tr>
 			<tr>
-				<td class=" text_r">是否系统:</td>
-				<td><input type="text" name="isSystem" value="${(resource.isSystem)!}" class="input w200"/><@easy.fieldError field="isSystem"/></td>
-			</tr>
-			<tr>
-				<td class=" text_r">组编码:</td>
-				<td><input type="text" name="groupCode" value="${(resource.groupCode)!}" class="input w200"/><@easy.fieldError field="groupCode"/></td>
+				<td class=" text_r">所属组:</td>
+				<td>
+				<select name="groupCode">
+					<option value="">-请选择-</option>
+				<#list enumTool.values('com.easy.admin.enums.ResourceGroup') as item>
+					<option value="${item.code}" <#if resource.groupCode??&&item.code==resource.groupCode> selected="selected"</#if>>${item.desc}</option>
+				</#list>
+				</select>
+				<@easy.fieldError field="groupCode"/></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

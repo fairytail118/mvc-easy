@@ -106,6 +106,9 @@
 			<if test="keyword!=null and keyword!=''">
 				AND name like "%"#{keyword}"%"
 			</if>
+			<if test="url!=null and url!=''">
+				AND url = #{url}
+			</if>
 		</where>
 	</sql>
 	

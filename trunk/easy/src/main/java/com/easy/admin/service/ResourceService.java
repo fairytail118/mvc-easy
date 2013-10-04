@@ -13,12 +13,12 @@ import com.easy.core.common.Page;
  * @version v 0.1 2013-10-04 上午 00:11:33 wy Exp $
  */
 public interface ResourceService {
-    
+
     /**
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param resource
-     * @return 
+     * @return
      */
     public Resource save(Resource resource);
 
@@ -33,8 +33,8 @@ public interface ResourceService {
     /**
      * 根据主键查询
      * 
-     * @param  id 
-          * @return
+     * @param id
+     * @return
      */
     public Resource getByPrimaryKey(Long id);
 
@@ -44,6 +44,14 @@ public interface ResourceService {
      * @param page
      */
     public void page(Page<Resource> page);
-    
+
+    /**
+     * 检查url是否存在
+     * 
+     * @param url
+     * @param id
+     * @return
+     */
+    public boolean checkUrlExists(String url, Long id);
 
 }
