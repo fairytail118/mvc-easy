@@ -46,7 +46,7 @@ public class JdbcRoleUrlMapping implements RoleUrlMapping, InitializingBean {
      */
     public static void shouldUpdate() {
         log.debug("需要更新系统的url和角色的映射关系...");
-        if (SHOULD_UPDATE_RESOURCE.get()) {
+        if (!SHOULD_UPDATE_RESOURCE.get()) {
             SHOULD_UPDATE_RESOURCE.set(true);
         }
     }

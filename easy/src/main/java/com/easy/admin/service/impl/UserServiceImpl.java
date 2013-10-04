@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
     public User save(User user, List<Long> roleList) {
 
         if (StringUtils.isNotBlank(user.getPassword())) {
-            user.setPassword(encodePassword(user.getUsername(), user));
+            user.setPassword(encodePassword(user.getPassword(), user));
         }
 
         if (user.getId() == null) {
