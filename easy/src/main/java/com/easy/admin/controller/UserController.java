@@ -3,6 +3,8 @@
  */
 package com.easy.admin.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easy.admin.entity.User;
+import com.easy.admin.service.RoleService;
 import com.easy.admin.service.UserService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
@@ -42,6 +45,9 @@ public class UserController extends BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     /**
      * 进入编辑页面
      * 
@@ -57,10 +63,16 @@ public class UserController extends BaseController {
         if (id != null) {
             User user = userService.getByPrimaryKey(id);
             model.put("user", user);
+            if (user != null) {
+                List<Long> roleList = user.get("roleList");
+                model.put("roleGrantList", roleList);
+            }
         } else {
             //设置一个空的
             model.put("user", new User());
         }
+
+        model.put("roleList", roleService.roleList());
 
         return "admin/user_input";
     }
@@ -82,12 +94,13 @@ public class UserController extends BaseController {
             @RequiredStringValidator(field = "username", message = "用户名不能为空!", trim = true),
             @RequiredStringValidator(field = "userType", message = "用户类型不能为空!", trim = true) },
 
-    stringLengthValidators = { @StringLengthValidator(field = "username", message = "用户名只能在6-12位之间", minLength = "6", maxLength = "12") },
+    stringLengthValidators = { @StringLengthValidator(field = "username", message = "用户名只能在6-12位之间", minLength = "5", maxLength = "12") },
 
     emailValidators = { @EmailValidator(field = "email", message = "邮箱格式不正确!") })
     @RequestMapping(value = "/user_save")
     public String save(HttpServletRequest request, ModelMap model,
-                       @RequestParam(value = "rePassword") String rePassword, User user) {
+                       @RequestParam(value = "rePassword") String rePassword, User user,
+                       @RequestParam(value = "roleId", required = false) List<Long> roleList) {
 
         if (user.getId() == null && StringUtils.isBlank(user.getPassword())) {
             RequestUtil.addFormError(request, "password", "密码不能为空!");
@@ -105,7 +118,7 @@ public class UserController extends BaseController {
         BeanUtils.copyProperties(user, entity, new String[] { "createUser", "createTime",
                 "modifyUser", "modifyTime", "isLocked", "isEnabled" });
 
-        userService.save(user);
+        userService.save(user, roleList);
 
         return "redirect:user_list";
     }

@@ -109,6 +109,9 @@
 			<if test="url!=null and url!=''">
 				AND url = #{url}
 			</if>
+			<if test="groupCode!=null and groupCode!=''">
+				AND groupCode = #{groupCode}
+			</if>
 		</where>
 	</sql>
 	

@@ -39,7 +39,7 @@
 			<tbody>
 				<#list page.list as item>
 				<tr>
-					<td><input type="checkbox" name="key" value="${item.id}" /></td>
+					<td><#if !(item.isSystem??&&item.isSystem)><input type="checkbox" name="key" value="${item.id}" /><#else>&nbsp;</#if></td>
 					<td>${(item.name)!"&nbsp;"}</td>
 					<td>${(item.url)!"&nbsp;"}</td>
 					<td>${(item.isSystem??&&item.isSystem)?string('是','否')}</td>

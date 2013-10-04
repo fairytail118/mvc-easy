@@ -82,4 +82,12 @@ public class RoleDaoImpl extends MyBatisGenericDao implements RoleDao {
         page.setList(list);
         page.setTotalCount(countByCriteria(page.getCriteria()));
     }
+
+    /**
+     * @see com.easy.admin.dao.RoleDao#selectByUserId(java.lang.Long)
+     */
+    @Override
+    public List<Role> selectByUserId(Long userId) {
+        return list("com.easy.admin.dao.RoleDao.selectByUserId",userId);
+    }
 }

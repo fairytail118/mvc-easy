@@ -3,6 +3,8 @@
  */
 package com.easy.admin.service;
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.easy.admin.entity.User;
@@ -20,9 +22,10 @@ public interface UserService extends UserDetailsService {
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param user
+     * @param roleList
      * @return
      */
-    public User save(User user);
+    public User save(User user, List<Long> roleList);
 
     /**
      * 根据主键查询

@@ -37,7 +37,7 @@
 			<tbody>
 				<#list page.list as item>
 				<tr>
-					<td><input type="checkbox" name="key" value="${item.id}" /></td>
+					<td><#if !(item.isSystem??&&item.isSystem)><input type="checkbox" name="key" value="${item.id}" /><#else>&nbsp;</#if></td>
 					<td>${(item.name)!"&nbsp;"}</td>
 					<td>${(item.code)!"&nbsp;"}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>

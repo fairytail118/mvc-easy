@@ -3,8 +3,10 @@
  */
 package com.easy.admin.service.impl;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import com.easy.admin.dao.ResourceDao;
@@ -32,6 +34,7 @@ public class ResourceServiceImpl implements ResourceService {
      */
     @Override
     public Resource save(Resource resource) {
+
         resource.setIsSystem(false);
         //检查URL是否存在
         if (this.checkUrlExists(resource.getUrl(), resource.getId())) {
@@ -48,6 +51,12 @@ public class ResourceServiceImpl implements ResourceService {
         if (resource.getId() == null) {
             resourceDao.create(resource);
         } else {
+            Resource entity = resourceDao.getByPrimaryKey(resource.getId());
+            if (entity == null) {
+                throw new EasyException("找不到Resource[" + resource.getId() + "]");
+            } else if (BooleanUtils.isTrue(entity.getIsSystem())) {
+                throw new EasyException("Resource[" + resource.getId() + "].IsSystem为true,不能修改");
+            }
             resourceDao.update(resource);
         }
         return resource;
@@ -111,6 +120,30 @@ public class ResourceServiceImpl implements ResourceService {
             return "/" + url;
         }
         return url;
+    }
+
+    /**
+     * @see com.easy.admin.service.ResourceService#groupMapList()
+     */
+    @Override
+    public LinkedHashMap<String, List<Resource>> groupMapList() {
+
+        LinkedHashMap<String, List<Resource>> groupMap = new LinkedHashMap<String, List<Resource>>();
+
+        Resource resource = new Resource();
+
+        List<Resource> list = null;
+        for (ResourceGroup resourceGroup : ResourceGroup.values()) {
+            resource.setGroupCode(resourceGroup.getCode());
+            list = resourceDao.selectByCriteria(resource);
+            if (list.isEmpty()) {
+                continue;
+            }
+            groupMap.put(resourceGroup.getCode(), list);
+
+        }
+
+        return groupMap;
     }
 
 }
