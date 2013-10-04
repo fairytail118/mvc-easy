@@ -10,9 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.easy.admin.dao.RoleDao;
-import com.easy.admin.dao.RolePermissionDao;
 import com.easy.admin.entity.Role;
-import com.easy.admin.entity.RolePermission;
 import com.easy.admin.service.RoleService;
 import com.easy.core.common.Page;
 import com.easy.core.exceptions.EasyException;
@@ -29,8 +27,6 @@ public class RoleServiceImpl implements RoleService {
     @Resource
     private RoleDao           roleDao;
 
-    @Resource
-    private RolePermissionDao rolePermissionDao;
 
     /**
      * @see com.easy.admin.service.RoleService#save(com.easy.admin.entity.Role,
@@ -45,14 +41,14 @@ public class RoleServiceImpl implements RoleService {
             roleDao.create(role);
         } else {
             roleDao.update(role);
-            rolePermissionDao.deleteByPrimaryKeys(role.getId(), null);
+            //rolePermissionDao.deleteByPrimaryKeys(role.getId(), null);
         }
-        RolePermission rolePermission = new RolePermission();
-        for (Long permissionId : grantList) {
-            rolePermission.setPermissionId(permissionId);
-            rolePermission.setRoleId(role.getId());
-            rolePermissionDao.create(rolePermission);
-        }
+//        RolePermission rolePermission = new RolePermission();
+//        for (Long permissionId : grantList) {
+//            rolePermission.setPermissionId(permissionId);
+//            rolePermission.setRoleId(role.getId());
+//            rolePermissionDao.create(rolePermission);
+//        }
         return role;
     }
 
@@ -73,12 +69,12 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleDao.getByPrimaryKey(id);
 
         if (role != null) {
-            RolePermission rolePermission = new RolePermission();
-            rolePermission.setRoleId(role.getId());
-
-            List<RolePermission> list = rolePermissionDao.selectByCriteria(rolePermission);
-
-            role.put("grantList", list);
+//            RolePermission rolePermission = new RolePermission();
+//            rolePermission.setRoleId(role.getId());
+//
+//            List<RolePermission> list = rolePermissionDao.selectByCriteria(rolePermission);
+//
+//            role.put("grantList", list);
         }
 
         return role;

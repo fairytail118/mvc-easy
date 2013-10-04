@@ -2,21 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<title>权限管理-${easySystem.name} ${easySystem.version}</title>
+<title>资源-${easySystem.name} ${easySystem.version}</title>
 <#include "/templates/common/admin_head.ftl">
 </head>
 <body>
-	<form action="${base}/admin/permission_list" method="post" name="listForm">
+	<form action="${base}/admin/resource_list" method="post" name="listForm">
 		<table class="action">
 			<tr>
-				<td class="title">权限管理</td>
+				<td class="title">资源管理</td>
 				<td>
 					<ul class="action_ct">
-						<li><a id="action_list" href="${base}/admin/permission_list"><em class="ico-list"></em>&nbsp;列表</a></li>
+						<li><a id="action_list" href="${base}/admin/resource_list"><em class="ico-list"></em>&nbsp;列表</a></li>
 						<li><a id="action_search" href="javascript:;"><em class="ico-search"></em>&nbsp;搜索</a></li>
-						<li><a id="action_add" href="${base}/admin/permission_input"><em class="ico-add"></em>&nbsp;添加</a></li>
-						<li><a id="action_edit" href="javascript:;" url="${base}/admin/permission_input?id="><em class="ico-edit"></em>&nbsp;编辑</a></li>
-						<li><a id="action_delete" href="javascript:;" url="${base}/admin/permission_delete"><em class="ico-del"></em>&nbsp;删除</a></li>
+						<li><a id="action_add" href="${base}/admin/resource_input"><em class="ico-add"></em>&nbsp;添加</a></li>
+						<li><a id="action_edit" href="javascript:;" url="${base}/admin/resource_input?id="><em class="ico-edit"></em>&nbsp;编辑</a></li>
+						<li><a id="action_delete" href="javascript:;" url="${base}/admin/resource_delete"><em class="ico-del"></em>&nbsp;删除</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -27,31 +27,29 @@
 		<table class="table_list">
 			<tr class="title">
 				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
-				<td>父权限</td>
+				<td>主键ID</td>
 				<td>创建时间</td>
 				<td>创建人</td>
 				<td>修改时间</td>
 				<td>修改人</td>
-				<td>权限名称</td>
-				<td>权限编码</td>
+				<td>名称</td>
+				<td>URL</td>
+				<td>是否系统</td>
+				<td>组编码</td>
 			</tr>
 			<tbody>
 				<#list page.list as item>
 				<tr>
 					<td><input type="checkbox" name="key" value="${item.id}" /></td>
-					<td>
-					<#if item.parentId??>
-						${(item.parentPermission.name)!''}
-					<#else>
-						顶级权限
-					</#if>
-					</td>
+					<td>${(item.id)!}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>
 					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.modifyUser)!"&nbsp;"}</td>
 					<td>${(item.name)!"&nbsp;"}</td>
-					<td>${(item.code)!"&nbsp;"}</td>
+					<td>${(item.url)!"&nbsp;"}</td>
+					<td>${(item.isSystem??&&item.isSystem)?string('是','否')}</td>
+					<td>${(item.groupCode)!"&nbsp;"}</td>
 				</tr>
 				</#list>
 			</tbody>
