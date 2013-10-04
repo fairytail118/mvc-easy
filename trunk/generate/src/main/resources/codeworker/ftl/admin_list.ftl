@@ -43,11 +43,13 @@ ${r" <#include"} "/templates/common/admin_head.ftl">
 					<#list colums as item>
 					<#if item.column=="modifyTime" || item.column=="modifyUser" || item.column=="id">
 					<#else>
-					<#if item.typeClass="Boolean" || item.typeClass="java.lang.Boolean">
-					<td>${r"${("}${lower_entity}.${item.column}${r"?? && "} ${lower_entity}.${item.column}${r")?string('是','否')}"}</td>
-					<#else>
-					<td>${r"${(item."}${item.column}${r" )!"} "&nbsp;"</td>
-					</#if>
+						<#if item.typeClass="Boolean" || item.typeClass="java.lang.Boolean">
+						<td>${r"${("}${lower_entity}.${item.column}${r"?? && "} ${lower_entity}.${item.column}${r")?string('是','否')}"}</td>
+						<#elseif item.typeClass="java.util.Date">
+						<td>${r"${("}${lower_entity}.${item.column}${r"?? && "} ${lower_entity}.${item.column}${r")?string('yyyy-MM-dd HH:mm:ss')}"}</td>	
+						<#else>
+						<td>${r"${(item."}${item.column}${r" )!"} "&nbsp;"</td>
+						</#if>
 					</#if>
 					</#list>
 				</tr>
