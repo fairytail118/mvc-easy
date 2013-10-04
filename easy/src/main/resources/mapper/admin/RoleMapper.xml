@@ -104,6 +104,16 @@
 		EXISTS(SELECT 1 FROM user_role u where u.roleId=t.id AND u.userId=#{userId})
 	</select>
 	
+	<!-- 查询资源对应的所有角色 -->
+	<select id="selectByResourceId" resultMap="resultMap" parameterType="java.lang.Long">
+		SELECT
+		<include refid="columns"/>
+		FROM
+			role t
+		WHERE
+		EXISTS(SELECT 1 FROM role_resource u where u.roleId=t.id AND u.resourceId=#{resourceId})
+	</select>
+	
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
 		<where>

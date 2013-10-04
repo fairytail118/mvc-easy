@@ -47,7 +47,7 @@
 					<td>${(item.mobile)!"&nbsp;"}</td>
 					<td>${(item.username)!"&nbsp;"}</td>
 					<td><a title="${(item.isLocked??&&item.isLocked)?string('点击解锁','点击锁定')}" href="javascript:;">&nbsp;<#if item.isLocked??&&item.isLocked> <em class="ico-locked"></em> <#else> <em class="ico-unlocked"></em> </#if>&nbsp;</a></td>
-					<td><a title="${(item.enable??&&item.enable)?string('点击禁用','点击启用')}" href="javascript:;">&nbsp;<#if item.enable??&&item.enable> <em class="ico-enable"></em> <#else> <em class="ico-disable"></em> </#if>&nbsp;</a></td>
+					<td><a title="${(item.userEnable??&&item.userEnable)?string('点击禁用','点击启用')}" href="javascript:;">&nbsp;<#if item.userEnable??&&item.userEnable> <em class="ico-enable"></em> <#else> <em class="ico-disable"></em> </#if>&nbsp;</a></td>
 					<td>${enumTool.valueOf('com.easy.admin.enums.UserType',item.userType).desc}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.core.security;
+package com.easy.core.security.mapping;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,10 +29,10 @@ import com.easy.core.security.util.SecurityUtil;
  * @author wy
  * @version v 0.1 2013-9-25 下午9:54:05 wy Exp $
  */
-public class PropertiesPermissionMapRelation implements MapRelation, InitializingBean {
+public class PropertiesRoleUrlMapping implements RoleUrlMapping, InitializingBean {
 
     protected final Logger                                  log                = LoggerFactory
-                                                                                   .getLogger(PropertiesPermissionMapRelation.class);
+                                                                                   .getLogger(PropertiesRoleUrlMapping.class);
 
     /** 加载的资源文件 */
     private List<Resource>                                  resources;
@@ -42,10 +41,7 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     private String                                          fileEncoding;
 
     /** url对应的权限列表 */
-    private final static Map<String, List<ConfigAttribute>> URL_PERMISSION_MAP = new HashMap<String, List<ConfigAttribute>>();
-
-    /** 权限前缀 */
-    private String                                          prefixPermission;
+    private final static Map<String, List<ConfigAttribute>> URL_ROLE_MAPPING = new HashMap<String, List<ConfigAttribute>>();
 
     /**
      * Setter method for property <tt>resources</tt>.
@@ -54,15 +50,6 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
      */
     public void setResources(List<Resource> resources) {
         this.resources = resources;
-    }
-
-    /**
-     * Setter method for property <tt>prefixPermission</tt>.
-     * 
-     * @param prefixPermission value to be assigned to property prefixPermission
-     */
-    public void setPrefixPermission(String prefixPermission) {
-        this.prefixPermission = prefixPermission;
     }
 
     /**
@@ -75,11 +62,11 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
     }
 
     /**
-     * @see com.easy.core.security.MapRelation#getAllMapRelation()
+     * @see com.easy.core.security.MapRelation#getAllMapping()
      */
     @Override
-    public Map<String, List<ConfigAttribute>> getAllMapRelation() {
-        return URL_PERMISSION_MAP;
+    public Map<String, List<ConfigAttribute>> getAllMapping() {
+        return URL_ROLE_MAPPING;
     }
 
     /**
@@ -87,7 +74,6 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        Assert.isTrue(StringUtils.isNotBlank(prefixPermission), "权限前缀不能为空");
         Assert.notEmpty(resources, "权限文件不能为空");
         Properties properties = new Properties();
         for (Resource location : resources) {
@@ -113,12 +99,12 @@ public class PropertiesPermissionMapRelation implements MapRelation, Initializin
             String permission = properties.getProperty(url);
 
             String resUrl = SecurityUtil.getUrl(url);
-            List<ConfigAttribute> list = URL_PERMISSION_MAP.get(resUrl);
+            List<ConfigAttribute> list = URL_ROLE_MAPPING.get(resUrl);
             if (list == null) {
                 list = new ArrayList<ConfigAttribute>();
-                URL_PERMISSION_MAP.put(resUrl, list);
+                URL_ROLE_MAPPING.put(resUrl, list);
             }
-            for (String p : SecurityUtil.getPermissions(prefixPermission, permission)) {
+            for (String p : SecurityUtil.getRoles(permission)) {
                 SecurityConfig securityConfig = new SecurityConfig(p);
                 if (!list.contains(securityConfig)) {
                     list.add(securityConfig);

@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2012-2013 All Rights Reserved.
  */
-package com.easy.core.security;
+package com.easy.core.security.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

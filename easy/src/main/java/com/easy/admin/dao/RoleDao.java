@@ -79,4 +79,12 @@ public interface RoleDao {
      */
     public List<Role> selectByUserId(Long userId);
 
+    /**
+     * 查找资源所需角色
+     * 
+     * @param resourceId
+     * @return
+     */
+    public List<Role> selectByResourceId(Long resourceId);
+
 }

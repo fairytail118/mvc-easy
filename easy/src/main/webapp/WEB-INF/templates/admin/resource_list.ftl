@@ -29,7 +29,7 @@
 				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
 				<td>名称</td>
 				<td>URL</td>
-				<td>是否系统</td>
+				<td>系统资源</td>
 				<td>所属组</td>
 				<td>创建时间</td>
 				<td>创建人</td>

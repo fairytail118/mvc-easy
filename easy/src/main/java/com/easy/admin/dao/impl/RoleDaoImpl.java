@@ -5,11 +5,11 @@ package com.easy.admin.dao.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
 import com.easy.admin.dao.RoleDao;
 import com.easy.admin.entity.Role;
-import org.apache.ibatis.session.RowBounds;
 import com.easy.core.common.Page;
 import com.easy.core.dao.impl.MyBatisGenericDao;
 
@@ -88,6 +88,14 @@ public class RoleDaoImpl extends MyBatisGenericDao implements RoleDao {
      */
     @Override
     public List<Role> selectByUserId(Long userId) {
-        return list("com.easy.admin.dao.RoleDao.selectByUserId",userId);
+        return list("com.easy.admin.dao.RoleDao.selectByUserId", userId);
+    }
+
+    /**
+     * @see com.easy.admin.dao.RoleDao#selectByResourceId(java.lang.Long)
+     */
+    @Override
+    public List<Role> selectByResourceId(Long resourceId) {
+        return list("com.easy.admin.dao.RoleDao.selectByResourceId", resourceId);
     }
 }

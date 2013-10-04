@@ -16,6 +16,8 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.util.AntUrlPathMatcher;
 import org.springframework.security.web.util.UrlMatcher;
 
+import com.easy.core.security.mapping.RoleUrlMapping;
+
 /**
  * 资源源数据定义，即定义某一资源可以被哪些角色访问
  * 
@@ -25,10 +27,10 @@ import org.springframework.security.web.util.UrlMatcher;
 public class EasyInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
     //URL匹配 *匹配
-    private UrlMatcher  urlMatcher = new AntUrlPathMatcher();
+    private UrlMatcher     urlMatcher = new AntUrlPathMatcher();
 
     /** 关联关系 */
-    private MapRelation mapRelation;
+    private RoleUrlMapping roleUlrMapping;
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
@@ -39,12 +41,12 @@ public class EasyInvocationSecurityMetadataSource implements FilterInvocationSec
 
         String url = ((FilterInvocation) object).getRequestUrl();
 
-        Iterator<String> ite = mapRelation.getAllMapRelation().keySet().iterator();
+        Iterator<String> ite = roleUlrMapping.getAllMapping().keySet().iterator();
         List<ConfigAttribute> list = new ArrayList<ConfigAttribute>();
         while (ite.hasNext()) {
             String resURL = ite.next();
             if (urlMatcher.pathMatchesUrl(resURL, url)) {
-                list.addAll(mapRelation.getAllMapRelation().get(resURL));
+                list.addAll(roleUlrMapping.getAllMapping().get(resURL));
             }
         }
         return list;
@@ -58,8 +60,8 @@ public class EasyInvocationSecurityMetadataSource implements FilterInvocationSec
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
         Set<ConfigAttribute> allAttributes = new HashSet<ConfigAttribute>();
-        for (String key : mapRelation.getAllMapRelation().keySet()) {
-            allAttributes.addAll(mapRelation.getAllMapRelation().get(key));
+        for (String key : roleUlrMapping.getAllMapping().keySet()) {
+            allAttributes.addAll(roleUlrMapping.getAllMapping().get(key));
         }
         return allAttributes;
     }
@@ -74,12 +76,12 @@ public class EasyInvocationSecurityMetadataSource implements FilterInvocationSec
     }
 
     /**
-     * Setter method for property <tt>mapRelation</tt>.
+     * Setter method for property <tt>roleUlrMapping</tt>.
      * 
-     * @param mapRelation value to be assigned to property mapRelation
+     * @param roleUlrMapping value to be assigned to property roleUlrMapping
      */
-    public void setMapRelation(MapRelation mapRelation) {
-        this.mapRelation = mapRelation;
+    public void setRoleUrlMapping(RoleUrlMapping roleUlrMapping) {
+        this.roleUlrMapping = roleUlrMapping;
     }
 
 }

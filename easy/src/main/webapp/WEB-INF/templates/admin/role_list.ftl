@@ -29,6 +29,7 @@
 				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
 				<td>角色名称</td>
 				<td>角色编码</td>
+				<td>系统角色</td>
 				<td>创建时间</td>
 				<td>创建人</td>
 				<td>修改时间</td>
@@ -40,6 +41,7 @@
 					<td><#if !(item.isSystem??&&item.isSystem)><input type="checkbox" name="key" value="${item.id}" /><#else>&nbsp;</#if></td>
 					<td>${(item.name)!"&nbsp;"}</td>
 					<td>${(item.code)!"&nbsp;"}</td>
+					<td>${(item.isSystem??&&item.isSystem)?string('是','否')}</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>
 					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>

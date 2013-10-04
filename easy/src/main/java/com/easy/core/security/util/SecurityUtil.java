@@ -115,31 +115,25 @@ public class SecurityUtil {
     /**
      * 权限码以','切分
      * 
-     * @param prefixPermission
-     * @param permission
+     * @param role
      * @return
      */
-    public static String[] getPermissions(String prefixPermission, String permission) {
-        String[] permissions = permission.split(",");
-        for (int i = 0; i < permissions.length; i++) {
-            permissions[i] = getPermission(prefixPermission, permissions[i]);
+    public static String[] getRoles(String role) {
+        String[] roles = role.split(",");
+        for (int i = 0; i < roles.length; i++) {
+            roles[i] = getRole(roles[i]);
         }
-        return permissions;
+        return roles;
     }
 
     /**
      * 权限码转换
      * 
-     * @param prefixPermission
      * @param permission
      * @return
      */
-    public static String getPermission(String prefixPermission, String permission) {
-        if (permission.trim().toUpperCase().startsWith(prefixPermission.toUpperCase())) {
-            return permission.trim().toUpperCase();
-        } else {
-            return (prefixPermission + permission.trim()).toUpperCase();
-        }
+    public static String getRole(String role) {
+        return role.trim().toUpperCase();
     }
 
 }
