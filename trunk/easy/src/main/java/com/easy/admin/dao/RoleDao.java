@@ -71,4 +71,12 @@ public interface RoleDao {
      */
     public void page(Page<Role> page);
 
+    /**
+     * 查找用户的所有角色
+     * 
+     * @param userId
+     * @return
+     */
+    public List<Role> selectByUserId(Long userId);
+
 }

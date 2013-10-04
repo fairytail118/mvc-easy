@@ -20,10 +20,10 @@ public interface RoleService {
      * 保存管理员,根据ID判断是保存还是更新
      * 
      * @param role
-     * @param grantList
+     * @param resourceList
      * @return
      */
-    public Role save(Role role, List<Long> grantList);
+    public Role save(Role role, List<Long> resourceList);
 
     /**
      * 根据主键删除
@@ -56,5 +56,12 @@ public interface RoleService {
      * @return
      */
     public boolean checkCodeExists(String code, Long id);
+
+    /**
+     * 查询所有的角色
+     * 
+     * @return
+     */
+    public List<Role> roleList();
 
 }

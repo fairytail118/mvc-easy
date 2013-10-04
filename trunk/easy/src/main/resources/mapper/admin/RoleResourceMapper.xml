@@ -79,9 +79,11 @@
 	<!-- 默认的查询条件 -->
 	<sql id="defaultCriteria">
 		<where>
-			<!-- 关键字查询字段 -->
-			<if test="keyword!=null and keyword!=''">
-				AND name like "%"#{keyword}"%"
+			<if test="roleId!=null">
+				AND roleId = #{roleId}
+			</if>
+			<if test="resourceId!=null">
+				AND resourceId = #{resourceId}
 			</if>
 		</where>
 	</sql>

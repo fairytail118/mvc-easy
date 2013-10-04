@@ -57,7 +57,7 @@ $(document).ready(function(){
 		<!-- Content -->
 		<table class="table_add">
 			<tr>
-				<td class="w80  text_r">名称:</td>
+				<td class="w80 text_r">名称:</td>
 				<td><input type="text" name="name" maxlength="32" value="${(resource.name)!}" class="input w200"/><@easy.fieldError field="name"/></td>
 			</tr>
 			<tr>

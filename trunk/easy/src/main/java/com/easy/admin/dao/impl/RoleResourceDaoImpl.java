@@ -12,6 +12,7 @@ import com.easy.admin.entity.RoleResource;
 import java.util.HashMap;
 import java.util.Map;
 import com.easy.core.dao.impl.MyBatisGenericDao;
+
 /**
  * 角色资源DaoImpl
  * 
@@ -21,27 +22,29 @@ import com.easy.core.dao.impl.MyBatisGenericDao;
 @Repository
 public class RoleResourceDaoImpl extends MyBatisGenericDao implements RoleResourceDao {
 
-	/**
-	 * @see com.easy.admin.dao.RoleResourceDao#create(com.easy.admin.entity.RoleResource)
-	 */
-	@Override
-	public RoleResource create(RoleResource roleResource) {
-		save("com.easy.admin.dao.RoleResourceDao.create", roleResource);
-		return roleResource;
-	}
-
-	/**
-	 * @see com.easy.admin.dao.RoleResourceDao#update(com.easy.admin.entity.RoleResource)
-	 */
-	@Override
-	public int update(RoleResource roleResource) {
-		return update("com.easy.admin.dao.RoleResourceDao.update", roleResource);
-	}
- 	/**
-     * @see com.easy.admin.dao.RoleResourceDao#getByPrimaryKey(java.lang.Long ,java.lang.Long )
+    /**
+     * @see com.easy.admin.dao.RoleResourceDao#create(com.easy.admin.entity.RoleResource)
      */
     @Override
-    public RoleResource getByPrimaryKey(Long roleId ,Long resourceId ) {
+    public RoleResource create(RoleResource roleResource) {
+        save("com.easy.admin.dao.RoleResourceDao.create", roleResource);
+        return roleResource;
+    }
+
+    /**
+     * @see com.easy.admin.dao.RoleResourceDao#update(com.easy.admin.entity.RoleResource)
+     */
+    @Override
+    public int update(RoleResource roleResource) {
+        return update("com.easy.admin.dao.RoleResourceDao.update", roleResource);
+    }
+
+    /**
+     * @see com.easy.admin.dao.RoleResourceDao#getByPrimaryKey(java.lang.Long
+     *      ,java.lang.Long )
+     */
+    @Override
+    public RoleResource getByPrimaryKey(Long roleId, Long resourceId) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleId", roleId);
@@ -51,10 +54,11 @@ public class RoleResourceDaoImpl extends MyBatisGenericDao implements RoleResour
     }
 
     /**
-     * @see com.easy.admin.dao.RoleResourceDao#deleteByPrimaryKeys(java.lang.Long ,java.lang.Long )
+     * @see com.easy.admin.dao.RoleResourceDao#deleteByPrimaryKeys(java.lang.Long
+     *      ,java.lang.Long )
      */
     @Override
-    public int deleteByPrimaryKeys(Long roleId ,Long resourceId ) {
+    public int deleteByPrimaryKeys(Long roleId, Long resourceId) {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("roleId", roleId);

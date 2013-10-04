@@ -21,7 +21,7 @@ $(document).ready(function(){
 				<#if !(user??&&user.id??)>
 				username:{
 					required:true,
-					minlength:6,
+					minlength:5,
 					maxlength:12,
 					remoteResult:{
 						url: "${base}/admin/user_check_username",
@@ -106,7 +106,7 @@ $(document).ready(function(){
 			</#if>
 			<tr>
 				<td class=" text_r">密码:</td>
-				<td><input type="password" name="password" value="" class="input w200"/><#if user??&&user.id??><label class="wathet ml5">为空表示不修改</label></#if><@easy.fieldError field="password"/></td>
+				<td><input type="password" name="password" value="" class="input w200"/><#if user??&&user.id??><label class="green ml5">为空表示不修改</label></#if><@easy.fieldError field="password"/></td>
 			</tr>
 			<tr>
 				<td class=" text_r">确认密码:</td>
@@ -136,6 +136,14 @@ $(document).ready(function(){
 				</td>
 			</tr>
 			<tr>
+				<td class=" text_r">角色列表:</td>
+				<td>
+					<#list roleList as item>
+						<label class="ml10 float_l w100"><input type="checkbox" name="roleId" value="${item.id}"/>&nbsp;${item.name}</label>
+					</#list>
+				</td>
+			</tr>
+			<tr>
 				<td>&nbsp;</td>
 				<td>
 					<input type="submit" class="btn_submit" value="保存" />
@@ -144,5 +152,16 @@ $(document).ready(function(){
 			</tr>
 		</table>
 	</form>
+	<script type="text/javascript">
+	
+		$(document).ready(function(){
+			<#if roleGrantList??>
+			<#list roleGrantList as item>
+			$("input[name='roleId'][value='${item}']").attr("checked",true);
+			</#list>
+			</#if>
+		});
+		
+	</script>
 </body>
 </html>

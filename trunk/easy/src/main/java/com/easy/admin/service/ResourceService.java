@@ -3,6 +3,9 @@
  */
 package com.easy.admin.service;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+
 import com.easy.admin.entity.Resource;
 import com.easy.core.common.Page;
 
@@ -53,5 +56,12 @@ public interface ResourceService {
      * @return
      */
     public boolean checkUrlExists(String url, Long id);
+
+    /**
+     * 所有的资源分组显示 freemarker循环，key必须为string
+     * 
+     * @return
+     */
+    public LinkedHashMap<String, List<Resource>> groupMapList();
 
 }

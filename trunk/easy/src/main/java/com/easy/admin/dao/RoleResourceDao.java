@@ -31,30 +31,30 @@ public interface RoleResourceDao {
      */
     public int update(RoleResource roleResource);
 
-	/**
-	 * 根据主键查询
-	 * 
-	 * @param roleId
-	 * @param resourceId
-	 * @return
-	 */
-	public RoleResource getByPrimaryKey(Long roleId ,Long resourceId );
+    /**
+     * 根据主键查询
+     * 
+     * @param roleId
+     * @param resourceId
+     * @return
+     */
+    public RoleResource getByPrimaryKey(Long roleId, Long resourceId);
 
-	/**
-	 * 根据主键删除
-	 * 
-	 * @param roleId
-	 * @param resourceId
-	 * @return
-	 */
-	public int deleteByPrimaryKeys(Long roleId ,Long resourceId );
+    /**
+     * 根据主键删除
+     * 
+     * @param roleId
+     * @param resourceId
+     * @return
+     */
+    public int deleteByPrimaryKeys(Long roleId, Long resourceId);
 
-	/**
-	 * 条件查询列表
-	 * 
-	 * @param roleResource
-	 * @return
-	 */
-	public List<RoleResource> selectByCriteria(RoleResource roleResource);
+    /**
+     * 条件查询列表
+     * 
+     * @param roleResource
+     * @return
+     */
+    public List<RoleResource> selectByCriteria(RoleResource roleResource);
 
 }

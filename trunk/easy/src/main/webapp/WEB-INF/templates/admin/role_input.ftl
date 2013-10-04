@@ -63,17 +63,18 @@ $(document).ready(function(){
 				<td><input type="text" name="code" value="${(role.code)!}" class="input w200"/><@easy.fieldError field="code"/></td>
 			</tr>
 			<tr>
-				<td class="text_r">分配权限:</td>
+				<td class="text_r">访问资源:</td>
 				<td>
-				<#list gradeList as item>
-					<div class="h25 lh25 clear_b m5"><label class="ml10"><input type="checkbox" name="permissionId" value="${item.id}"/>&nbsp;${item.name!''}</label></div>
-					<div class="bc_wathet h25 lh25 pl12">
-						<#list item.list as s>
-						<label class="ml10 float_l w150"><input type="checkbox" name="permissionId" value="${s.id}"/>&nbsp;${s.name!''}</label>
+				<#list groupMapList?keys as key>
+					<div class="h25 lh25">
+						<label class="ml10 float_l w80 check_box"><a href="javascript:;" class="check_none">&nbsp;${enumTool.valueOf('com.easy.admin.enums.ResourceGroup',key).desc}</a></label>
+						<#assign groupList = groupMapList[key]> 
+						<#list groupList as item>
+						<label class="ml10 float_l w100"><input type="checkbox" name="resourceId" value="${item.id}"/>&nbsp;${item.name}</label>
 						</#list>
 					</div>
-				</td>
 				</#list>
+				</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -87,28 +88,53 @@ $(document).ready(function(){
 	<script type="text/javascript">
 	
 		$(document).ready(function(){
-			//加载已经选择的权限
-			<#if grantList??>
-				<#list grantList as item>
-				$("input[name='permissionId'][value='${item}']").attr("checked",true);
-				</#list>
-			</#if>
 			
-			$("input[name='permissionId']").click(function(){
+			$("input[name='resourceId']").click(function(){
 				var check = this.checked;
-				var div = $(this).parent().parent();
-				var index = div.parents().children("div").index(div);
-				//一级
-				if(index%2==0){
-					div.next().find("input[name='permissionId']").attr("checked",check);
+				var label = $(this).parent();
+				if(check){
+					var allCheck = (label.siblings().find("input[name='resourceId']").size()==label.siblings().find("input[name='resourceId']:checked").size());
+					if(allCheck){
+						label.siblings(".check_box").find("a").removeClass("check_none").addClass("check_all");
+					}
+					else{
+						label.siblings(".check_box").find("a").removeClass("check_all").addClass("check_none");
+					}
 				}
 				else{
-					div.prev().find("input[name='permissionId']").attr("checked",div.find("input[name='permissionId']").size()==div.find("input[name='permissionId']:checked").size())
+					label.siblings(".check_box").find("a").removeClass("check_all").addClass("check_none");
+				}
+			});
+			
+			/**
+			 * 全部选择 - 全部不选择
+			 */
+			$("label.check_box a").click(function() {
+				var checkboxes = $(this).parent().siblings().find("input[name='resourceId']");
+				if ($(this).hasClass("check_none")) {
+					checkboxes.attr("checked", "checked")
+					$(this).removeClass("check_none").addClass("check_all");
+				} else {
+					checkboxes.removeAttr("checked")
+					$(this).removeClass("check_all").addClass("check_none");
 				}
 			});
 		});
 		
-	
+		<#if resourceList??>
+			<#list resourceList as item>
+			$("input[name='resourceId'][value='${item}']").attr("checked",true);
+			</#list>
+			$("label.check_box").each(function(){
+				if($(this).siblings().find("input[name='resourceId']").size()==$(this).siblings().find("input[name='resourceId']:checked").size()){
+					$(this).find("a").removeClass("check_none").addClass("check_all");
+				}
+				else{
+					$(this).find("a").removeClass("check_all").addClass("check_none");
+				}
+				
+			});
+		</#if>
 	</script>
 </body>
 </html>
