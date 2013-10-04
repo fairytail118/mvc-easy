@@ -3,7 +3,6 @@
  */
 package com.easy.admin.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.easy.admin.entity.Role;
-import com.easy.admin.entity.RolePermission;
-import com.easy.admin.service.PermissionService;
 import com.easy.admin.service.RoleService;
 import com.easy.core.common.Page;
 import com.easy.core.controller.BaseController;
@@ -40,11 +37,7 @@ public class RoleController extends BaseController {
 
     /** 角色service */
     @Autowired
-    private RoleService       roleService;
-
-    /** 权限 */
-    @Autowired
-    private PermissionService permissionService;
+    private RoleService roleService;
 
     /**
      * 进入编辑页面
@@ -62,18 +55,18 @@ public class RoleController extends BaseController {
             Role role = roleService.getByPrimaryKey(id);
             model.put("role", role);
             if (role != null && role.getCriteria().get("grantList") != null) {
-                List<RolePermission> permissionList = role.get("grantList");
-                List<Long> grantList = new ArrayList<Long>(permissionList.size());
-                for (RolePermission rp : permissionList) {
-                    grantList.add(rp.getPermissionId());
-                }
-                model.put("grantList", grantList);
+                //                List<RolePermission> permissionList = role.get("grantList");
+                //                List<Long> grantList = new ArrayList<Long>(permissionList.size());
+                //                for (RolePermission rp : permissionList) {
+                //                    grantList.add(rp.getPermissionId());
+                //                }
+                //model.put("grantList", grantList);
             }
         } else {
             model.put("role", new Role());
         }
 
-        model.put("gradeList", permissionService.gradeList());
+        //model.put("gradeList", permissionService.gradeList());
 
         return "admin/role_input";
     }

@@ -10,10 +10,10 @@
 		keyProperty="id">
 		INSERT INTO
 			role(
-				 id, createTime, createUser, modifyTime, modifyUser, name, code				
+				 id, createTime, createUser, modifyTime, modifyUser, name, code ,isSystem			
 			)
 		VALUES(
-			 #{id}, #{createTime}, #{createUser}, #{modifyTime}, #{modifyUser}, #{name}, #{code}			
+			 #{id}, #{createTime}, #{createUser}, #{modifyTime}, #{modifyUser}, #{name}, #{code}, #{isSystem}			
 		)
 	</insert>
 
@@ -41,6 +41,9 @@
 						
 			<if test="code!=null and code!=''">
 			code = #{code},
+			</if>
+			<if test="isSystem!=null and isSystem!=''">
+			isSystem = #{isSystem}
 			</if>
 						
 		</set>
@@ -112,7 +115,7 @@
 	
 	<!-- 默认的数据库字段 -->
 	<sql id="columns">
-		id,createTime,createUser,modifyTime,modifyUser,name,code	
+		id,createTime,createUser,modifyTime,modifyUser,name,code,isSystem	
 	</sql>
 
 
@@ -132,6 +135,8 @@
 		<result property="name" column="name" />
 		<!-- 角色编码 -->
 		<result property="code" column="code" />
+		<!-- 是否系统 -->
+		<result property="isSystem" column="isSystem" />
 	
 	</resultMap>
 </mapper>

@@ -9,18 +9,21 @@ import com.easy.core.entity.IdEntity;
  * 角色
  * 
  * @author wy
- * @version v 0.1 13-09-23 下午 20:32:33 wy Exp $
+ * @version v 0.1 2013-10-04 上午 00:09:15 wy Exp $
  */
 public class Role extends IdEntity {
 
     /** serialVersionUID */
-    private static final long serialVersionUID = -448040363634190564L;
+    private static final long serialVersionUID = -765606215091270305L;
 
     /** 角色名称 */
     private String            name;
 
     /** 角色编码 */
     private String            code;
+
+    /** 是否系统 */
+    private Boolean           isSystem;
 
     /**
      * Getter method for property <tt>name</tt>.
@@ -56,6 +59,24 @@ public class Role extends IdEntity {
      */
     public void setCode(String code) {
         this.code = code;
+    }
+
+    /**
+     * Getter method for property <tt>isSystem</tt>.
+     * 
+     * @return property value of isSystem
+     */
+    public Boolean getIsSystem() {
+        return isSystem;
+    }
+
+    /**
+     * Setter method for property <tt>isSystem</tt>.
+     * 
+     * @param isSystem value to be assigned to property isSystem
+     */
+    public void setIsSystem(Boolean isSystem) {
+        this.isSystem = isSystem;
     }
 
 }

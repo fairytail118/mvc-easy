@@ -79,7 +79,7 @@
 									<li><a target="mainframe" href="${base}/admin/sysytem_setting"><em class="ico-setting"></em>&nbsp;&nbsp;系统设置</a></li>
 									<li><a target="mainframe" href="${base}/admin/user_list"><em class="ico-user"></em>&nbsp;&nbsp;用户管理</a></li>
 									<li><a target="mainframe" href="${base}/admin/role_list"><em class="ico-role"></em>&nbsp;&nbsp;角色管理</a></li>
-									<li><a target="mainframe" href="${base}/admin/permission_list"><em class="ico-permission"></em>&nbsp;&nbsp;权限管理</a></li>
+									<li><a target="mainframe" href="${base}/admin/resource_list"><em class="ico-permission"></em>&nbsp;&nbsp;资源管理</a></li>
 								</ul>
 								<div class="menu_an_bg1 UI">
 									<span class="title">系统日志</span><span class="jia UI">&nbsp;</span>

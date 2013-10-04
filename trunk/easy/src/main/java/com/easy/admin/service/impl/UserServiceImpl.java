@@ -3,10 +3,6 @@
  */
 package com.easy.admin.service.impl;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.BooleanUtils;
@@ -15,20 +11,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.easy.admin.dao.PermissionDao;
 import com.easy.admin.dao.UserDao;
-import com.easy.admin.entity.Permission;
 import com.easy.admin.entity.User;
 import com.easy.admin.service.UserService;
 import com.easy.core.common.Page;
 import com.easy.core.exceptions.EasyException;
-import com.easy.core.security.util.SecurityUtil;
 
 /**
  * 用户ServiceImpl
@@ -41,9 +32,6 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserDao         userDao;
-
-    @Resource
-    private PermissionDao   permissionDao;
 
     @Value("${easy.permisson.prefix}")
     private String          prefixPermission;
@@ -107,18 +95,18 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("用户[" + username + "]不存在!");
         }
-        //查询用户的权限
-        List<Permission> list = permissionDao.selectByUserId(user.getId());
+        //        //查询用户的权限
+        //        List<Permission> list = permissionDao.selectByUserId(user.getId());
+        //
+        //        //security 权限
+        //        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+        //
+        //        for (Permission p : list) {
+        //            authorities.add(new GrantedAuthorityImpl(SecurityUtil.getPermission(prefixPermission,
+        //                p.getCode())));
+        //        }
 
-        //security 权限
-        Set<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-
-        for (Permission p : list) {
-            authorities.add(new GrantedAuthorityImpl(SecurityUtil.getPermission(prefixPermission,
-                p.getCode())));
-        }
-
-        user.setAuthorities(authorities);
+        //user.setAuthorities(authorities);
 
         return user;
     }

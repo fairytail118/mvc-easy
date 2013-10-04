@@ -4,25 +4,28 @@
     "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.easy.admin.dao.PermissionDao">
+<mapper namespace="com.easy.admin.dao.ResourceDao">
 	<!-- 增加操作 -->
-	<insert id="create" parameterType="Permission" useGeneratedKeys="true"
+	<insert id="create" parameterType="Resource" useGeneratedKeys="true"
 		keyProperty="id">
 		INSERT INTO
-			permission(
-				 id, parentId, createTime, createUser, modifyTime, modifyUser, name, code				
+			resource(
+				 id, createTime, createUser, modifyTime, modifyUser, name, url, isSystem, groupCode				
 			)
 		VALUES(
-			 #{id}, #{parentId}, #{createTime}, #{createUser}, #{modifyTime}, #{modifyUser}, #{name}, #{code}			
+			 #{id}, #{createTime}, #{createUser}, #{modifyTime}, #{modifyUser}, #{name}, #{url}, #{isSystem}, #{groupCode}			
 		)
 	</insert>
 
 	<!-- 更新操作 -->
-	<update id="update" parameterType="Permission">
+	<update id="update" parameterType="Resource">
 		UPDATE
-			permission
+			resource
 		<set>
-			parentId = #{parentId},
+
+			<if test="id!=null">
+			id = #{id},
+			</if>
 								
 			<if test="modifyTime!=null">
 			modifyTime = #{modifyTime},
@@ -36,8 +39,16 @@
 			name = #{name},
 			</if>
 						
-			<if test="code!=null and code!=''">
-			code = #{code},
+			<if test="url!=null and url!=''">
+			url = #{url},
+			</if>
+						
+			<if test="isSystem!=null">
+			isSystem = #{isSystem},
+			</if>
+				
+			<if test="groupCode!=null and groupCode!=''">
+			groupCode = #{groupCode},
 			</if>
 						
 		</set>
@@ -49,7 +60,7 @@
 	<!-- 根据主键删除 -->
 	<delete id="deleteByPrimaryKeys">
 		DELETE FROM
-			permission
+			resource
 		WHERE
 			id IN
 		
@@ -63,18 +74,18 @@
 		SELECT
 		<include refid="columns"/>
 		FROM
-			permission
+			resource
 		WHERE
 			id = #{id}
 				
 	</select>
 	
 	<!-- 根据参数查询列表 -->
-	<select id="selectByCriteria" resultMap="resultMap" parameterType="Permission">
+	<select id="selectByCriteria" resultMap="resultMap" parameterType="Resource">
 		SELECT
 		<include refid="columns"/>
 		FROM
-			permission
+			resource
 		<include refid="defaultCriteria"/>
 		<include refid="orderByClause"/>
 	</select>
@@ -84,34 +95,8 @@
 		SELECT
 			count(*)
 		FROM
-			permission
+			resource
 		<include refid="defaultCriteria"/>
-	</select>
-	
-	<!-- 查询用户所具有的权限 -->
-	<select id="selectByUserId" resultMap="resultMap" parameterType="java.lang.Long">
-		SELECT
-		<include refid="columns"/>
-		FROM
-			permission t
-		where 
-			EXISTS(
-				SELECT 1 FROM user_role u where u.userId=#{userId} 
-				AND EXISTS(SELECT 1 FROM role_permission r WHERE 
-					(r.permissionId=t.id OR r.permissionId=t.parentId) 
-				AND r.roleId=u.roleId)
-			)
-		ORDER BY id DESC
-	</select> 
-	
-	<!-- 一级的权限 -->
-	<select id="firstPermissionList" resultMap="resultMap">
-		SELECT
-		<include refid="columns"/>
-		FROM
-			permission
-		where parentId is NULL
-		ORDER BY id DESC
 	</select>
 	
 	<!-- 默认的查询条件 -->
@@ -119,13 +104,7 @@
 		<where>
 			<!-- 关键字查询字段 -->
 			<if test="keyword!=null and keyword!=''">
-				AND (name LIKE "%"#{keyword}"%" or code LIKE "%"#{keyword}"%" )
-			</if>
-			<if test="code!=null and code!=''">
-			    AND code = #{code}
-			</if>
-			<if test="parentId!=null and parentId!=''">
-			    AND parentId = #{parentId}
+				AND name like "%"#{keyword}"%"
 			</if>
 		</where>
 	</sql>
@@ -139,16 +118,14 @@
 	
 	<!-- 默认的数据库字段 -->
 	<sql id="columns">
-		id,parentId,createTime,createUser,modifyTime,modifyUser,name,code	
+		id,createTime,createUser,modifyTime,modifyUser,name,url,isSystem,groupCode	
 	</sql>
 
 
 	<!-- 默认的数据库映射 -->
-	<resultMap type="Permission" id="resultMap">
+	<resultMap type="Resource" id="resultMap">
 		<!-- 主键ID -->
 		<result property="id" column="id" />
-		<!-- 父权限ID -->
-		<result property="parentId" column="parentId" />
 		<!-- 创建时间 -->
 		<result property="createTime" column="createTime" />
 		<!-- 创建人 -->
@@ -157,10 +134,14 @@
 		<result property="modifyTime" column="modifyTime" />
 		<!-- 修改人 -->
 		<result property="modifyUser" column="modifyUser" />
-		<!-- 权限名称 -->
+		<!-- 名称 -->
 		<result property="name" column="name" />
-		<!-- 权限编码 -->
-		<result property="code" column="code" />
+		<!-- URL -->
+		<result property="url" column="url" />
+		<!-- 是否系统 -->
+		<result property="isSystem" column="isSystem" />
+		<!-- 组编码 -->
+		<result property="groupCode" column="groupCode" />
 	
 	</resultMap>
 </mapper>
