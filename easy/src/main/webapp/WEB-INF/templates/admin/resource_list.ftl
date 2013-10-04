@@ -27,29 +27,29 @@
 		<table class="table_list">
 			<tr class="title">
 				<td width="20" class="check_box"><a href="javascript:;" class="check_all"></a></td>
-				<td>主键ID</td>
+				<td>名称</td>
+				<td>URL</td>
+				<td>是否系统</td>
+				<td>所属组</td>
 				<td>创建时间</td>
 				<td>创建人</td>
 				<td>修改时间</td>
 				<td>修改人</td>
-				<td>名称</td>
-				<td>URL</td>
-				<td>是否系统</td>
-				<td>组编码</td>
 			</tr>
 			<tbody>
 				<#list page.list as item>
 				<tr>
 					<td><input type="checkbox" name="key" value="${item.id}" /></td>
-					<td>${(item.id)!}</td>
+					<td>${(item.name)!"&nbsp;"}</td>
+					<td>${(item.url)!"&nbsp;"}</td>
+					<td>${(item.isSystem??&&item.isSystem)?string('是','否')}</td>
+					<td>
+						${enumTool.valueOf('com.easy.admin.enums.ResourceGroup',item.groupCode).desc}
+					</td>
 					<td>${item.createTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.createUser)!"&nbsp;"}</td>
 					<td>${item.modifyTime?string('yyyy-MM-dd HH:mm:ss')}</td>
 					<td>${(item.modifyUser)!"&nbsp;"}</td>
-					<td>${(item.name)!"&nbsp;"}</td>
-					<td>${(item.url)!"&nbsp;"}</td>
-					<td>${(item.isSystem??&&item.isSystem)?string('是','否')}</td>
-					<td>${(item.groupCode)!"&nbsp;"}</td>
 				</tr>
 				</#list>
 			</tbody>

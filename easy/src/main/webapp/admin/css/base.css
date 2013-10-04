@@ -47,11 +47,14 @@ input:focus, textarea:focus{border-color: rgba(153, 153, 153, 0.8); box-shadow: 
 .w120{width: 120px;}
 .w150{width: 150px;}
 .w200{width: 200px;}
+.w300{width: 300px}
+.w525{width: 525px}
 
 
 /**height*/
 .h25{height: 25px}
 .h28{height: 28px}
+.h50{height: 50px}
 .h120{height: 120px;}
 
 /**行距*/

@@ -13,6 +13,12 @@ import com.easy.core.enums.IEnum;
  */
 public enum ResourceGroup implements IEnum {
 
+    /** 资源管理 */
+    RESOURCE("resource", "资源管理"),
+
+    /** 角色管理 */
+    ROLE("role", "角色管理"),
+
     /** 管理员管理 */
     ADMIN("admin", "管理员管理"),
 
